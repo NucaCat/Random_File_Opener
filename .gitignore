@@ -1,0 +1,61 @@
+*.swp
+*.*~
+project.lock.json
+.DS_Store
+*.pyc
+nupkg/
+
+# Visual Studio Code
+.vscode
+package-lock.json
+
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# Visual Studio
+.vs/
+/Src/Apps/Mi.AuthManagement/Mi.AuthManagement/dist/*
+/Src/ApiGateway/Mi.ApiGateway/Properties/PublishProfiles/*
+/Src/Apps/Mi.AuthManagement/Mi.AuthManagement/Properties/PublishProfiles/*
+/Src/Services/Mi.AuthService/Mi.AuthService/Properties/PublishProfiles/*
+Src/Apps/Mi.AuthManagement/ng_src/.idea/vcs.xml
+Src/Apps/Mi.AuthManagement/ng_src/.idea/workspace.xml
+/Src/Apps/Mi.AuthManagement/Mi.AuthManagement/dist/*
+/Src/Apps/Mi.AuthManagement/Mi.AuthManagement/ClientsApp/*
+
+# User-specific stuff:
+.idea/
+/Src/Apps/Mi.MediaOrders/Web/Mi.MediaOrders.Web/ClientsApp/*
+/Src/Apps/Mi.MediaOrders/Web/Mi.MediaOrders.Web/files/*
+/Src/Apps/Mi.MediaOrders/Web/Mi.MediaOrders.Web/Properties/PublishProfiles/*
+Src/Apps/Mi.MediaOrders/Web/Mi.MediaOrders.DocumentationHost/Properties/PublishProfiles/*.pubxml
+Src/Apps/Mi.MediaOrders.DataSync/Mi.MediaOrders.DataSync.Web/Dumps/
+/Src/Apps/Mi.MediaOrders.DataSync/Mi.MediaOrders.DataSync.Web/Properties/PublishProfiles/*.pubxml
+internal-nlog.txt
+/Src/Apps/Mi.MediaOrders.DataSync/Web/Mi.MediaOrders.DataSync.Web/Dumps/*
+Src/Apps/Mi.AuthManagement/ng_src/MiAuthManagementClient/dist
+Src/Apps/Mi.AuthManagement/ng_src/MiAuthManagementClient/node_modules
+/Src/Services/Mi.HealthCheck/Mi.HealthCheck/Properties/PublishProfiles/*
+Src/Apps/Mi.MediaOrders/Web/Mi.MediaOrders.Web/App_Data/MediaPlans/Errors/*.xlsx
+Src/Apps/Mi.MediaOrders/Web/Mi.MediaOrders.Web/App_Data/MediaPlans/Original/*.xlsx
+/Src/Apps/Mi.MediaOrders/Mi.MediaOrders/wwwroot/*
