@@ -84,6 +84,7 @@
             // 
             // DirectoryTextBox
             // 
+            this.DirectoryTextBox.Enabled = false;
             this.DirectoryTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.DirectoryTextBox.Location = new System.Drawing.Point(12, 342);
             this.DirectoryTextBox.Multiline = true;
