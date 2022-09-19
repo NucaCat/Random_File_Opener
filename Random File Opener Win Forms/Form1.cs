@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Random_File_Opener_Win_Forms
 {
@@ -137,16 +138,17 @@ namespace Random_File_Opener_Win_Forms
 
         private void ChangeDirectory_Click(object sender, EventArgs e)
         {
-            using(var openFolderDialog = new FolderBrowserDialog
+            using (var openFolderDialog = new CommonOpenFileDialog
                   {
-                      SelectedPath = _currentDirectory
+                      InitialDirectory = _currentDirectory,
+                      IsFolderPicker = true
                   })
             {
                 var result = openFolderDialog.ShowDialog();
 
-                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(openFolderDialog.SelectedPath))
+                if (result == CommonFileDialogResult.Ok && !string.IsNullOrWhiteSpace(openFolderDialog.FileName))
                 {
-                    Initialize(openFolderDialog.SelectedPath);
+                    Initialize(openFolderDialog.FileName);
                 }
             }
         }
