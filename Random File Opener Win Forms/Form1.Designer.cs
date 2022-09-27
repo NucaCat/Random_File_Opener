@@ -35,6 +35,8 @@
             this.ChangeDirectory = new System.Windows.Forms.Button();
             this.DirectoryTextBox = new System.Windows.Forms.TextBox();
             this.ClearButton = new System.Windows.Forms.Button();
+            this.FilterTextBox = new System.Windows.Forms.TextBox();
+            this.ApplyFilter = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBox1
@@ -44,7 +46,7 @@
             this.listBox1.ItemHeight = 29;
             this.listBox1.Location = new System.Drawing.Point(250, 12);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(1002, 613);
+            this.listBox1.Size = new System.Drawing.Size(1002, 758);
             this.listBox1.TabIndex = 0;
             this.listBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox1_KeyDown);
             this.listBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDoubleClick);
@@ -52,9 +54,9 @@
             // NextFileButton
             // 
             this.NextFileButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.NextFileButton.Location = new System.Drawing.Point(12, 484);
+            this.NextFileButton.Location = new System.Drawing.Point(12, 624);
             this.NextFileButton.Name = "NextFileButton";
-            this.NextFileButton.Size = new System.Drawing.Size(232, 159);
+            this.NextFileButton.Size = new System.Drawing.Size(232, 146);
             this.NextFileButton.TabIndex = 1;
             this.NextFileButton.Text = "Следующий файл";
             this.NextFileButton.UseVisualStyleBackColor = true;
@@ -95,7 +97,7 @@
             // ClearButton
             // 
             this.ClearButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ClearButton.Location = new System.Drawing.Point(12, 400);
+            this.ClearButton.Location = new System.Drawing.Point(12, 540);
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(232, 78);
             this.ClearButton.TabIndex = 5;
@@ -103,11 +105,33 @@
             this.ClearButton.UseVisualStyleBackColor = true;
             this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
             // 
+            // FilterTextBox
+            // 
+            this.FilterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.FilterTextBox.Location = new System.Drawing.Point(12, 400);
+            this.FilterTextBox.Multiline = true;
+            this.FilterTextBox.Name = "FilterTextBox";
+            this.FilterTextBox.Size = new System.Drawing.Size(232, 52);
+            this.FilterTextBox.TabIndex = 6;
+            // 
+            // ApplyFilter
+            // 
+            this.ApplyFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ApplyFilter.Location = new System.Drawing.Point(12, 458);
+            this.ApplyFilter.Name = "ApplyFilter";
+            this.ApplyFilter.Size = new System.Drawing.Size(232, 78);
+            this.ApplyFilter.TabIndex = 7;
+            this.ApplyFilter.Text = "Применить фильтр";
+            this.ApplyFilter.UseVisualStyleBackColor = true;
+            this.ApplyFilter.Click += new System.EventHandler(this.ApplyFilter_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1264, 655);
+            this.ClientSize = new System.Drawing.Size(1264, 777);
+            this.Controls.Add(this.ApplyFilter);
+            this.Controls.Add(this.FilterTextBox);
             this.Controls.Add(this.ClearButton);
             this.Controls.Add(this.DirectoryTextBox);
             this.Controls.Add(this.ChangeDirectory);
@@ -119,6 +143,9 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.TextBox FilterTextBox;
+        private System.Windows.Forms.Button ApplyFilter;
 
         private System.Windows.Forms.Button ClearButton;
 

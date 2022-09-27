@@ -15,14 +15,17 @@ namespace Random_File_Opener_Win_Forms
         private HashSet<int> _generatedIndexes = new HashSet<int>();
         private Random _random = new Random();
         private string _currentDirectory = string.Empty;
+        private string _filter = "*.mp4";
+        private string _emptyFilter = "*";
 
-        private void Initialize(string directory)
+        private void Initialize(string directory, string filter)
         {
             _currentDirectory = directory;
+            _filter = filter;
             DirectoryTextBox.Text = directory.Substring(directory.LastIndexOf('\\') + 1);
 
             listBox1.Items.Clear();
-            _files = Directory.GetFiles(directory, "*.mp4", _searchOption)
+            _files = Directory.GetFiles(directory, filter, _searchOption)
                 .Select(u => {
                     var lastIndex = u.LastIndexOf("\\", StringComparison.InvariantCulture);
                     return new ListItem
@@ -64,10 +67,11 @@ namespace Random_File_Opener_Win_Forms
             InitializeComponent();
 
             SearchModeButton.Text = SearchOptionFriendlyString(_searchOption);
+            FilterTextBox.Text = _filter;
 
             var currentDirectory = Directory.GetCurrentDirectory();
 
-            Initialize(currentDirectory);
+            Initialize(currentDirectory, _filter);
         }
 
         private string SearchOptionFriendlyString(SearchOption searchOption)
@@ -125,7 +129,7 @@ namespace Random_File_Opener_Win_Forms
 
             SearchModeButton.Text = SearchOptionFriendlyString(_searchOption);
             
-            Initialize(_currentDirectory);
+            Initialize(_currentDirectory, _filter);
         }
 
         private SearchOption ChangeSearchOptions(SearchOption searchOption)
@@ -148,7 +152,7 @@ namespace Random_File_Opener_Win_Forms
 
                 if (result == CommonFileDialogResult.Ok && !string.IsNullOrWhiteSpace(openFolderDialog.FileName))
                 {
-                    Initialize(openFolderDialog.FileName);
+                    Initialize(openFolderDialog.FileName, _filter);
                 }
             }
         }
@@ -173,6 +177,18 @@ namespace Random_File_Opener_Win_Forms
 
             public override string ToString()
                 => DisplayValue;
+        }
+
+        private void ApplyFilter_Click(object sender, EventArgs e)
+        {
+            if (FilterTextBox.Text == _filter)
+                return;
+            
+            if (string.IsNullOrWhiteSpace(FilterTextBox.Text))
+                FilterTextBox.Text = _emptyFilter;
+
+            _filter = FilterTextBox.Text;
+            Initialize(_currentDirectory, _filter);
         }
     }
 }
