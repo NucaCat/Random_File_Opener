@@ -112,15 +112,32 @@ namespace Random_File_Opener_Win_Forms
 
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            var listItem = (ListItem)listBox1.Items[listBox1.IndexFromPoint(e.Location)];
-            
-            var startInfo = new ProcessStartInfo
+            try
             {
-                Arguments = listItem.Path,
-                FileName = "explorer.exe"
-            };
+                var listItem = (ListItem)listBox1.Items[listBox1.IndexFromPoint(e.Location)];
+            
+                var startInfo = new ProcessStartInfo
+                {
+                    Arguments = listItem.Path,
+                    FileName = "explorer.exe"
+                };
 
-            Process.Start(startInfo);
+                Process.Start(startInfo);
+            }
+            catch (Exception exception)
+            {
+                using (var writer = new StreamWriter("log.txt"))
+                {
+                    writer.WriteLine(exception.Message);
+                    writer.WriteLine();
+                    writer.WriteLine(exception.StackTrace);
+                    writer.WriteLine();
+                    writer.WriteLine($"index: {listBox1.IndexFromPoint(e.Location)}");
+                    writer.WriteLine($"listBox1.Items.Count: {listBox1.Items.Count}");
+                    Dump(writer);
+                }
+                throw;
+            }
         }
 
         private void SearchModeButton_Click(object sender, EventArgs e)
@@ -189,6 +206,22 @@ namespace Random_File_Opener_Win_Forms
 
             _filter = FilterTextBox.Text;
             Initialize(_currentDirectory, _filter);
+        }
+
+        private void Dump(StreamWriter writer)
+        {
+            writer.WriteLine($"_searchOption: {_searchOption.ToString()}");
+            writer.WriteLine($"_currentDirectory: {_currentDirectory}");
+
+            writer.WriteLine();
+            writer.WriteLine($"_files.Count: {_files.Length}");
+
+            writer.WriteLine();
+            writer.WriteLine($"_generatedIndexes.Count: {_generatedIndexes.Count}");
+            foreach (var index in _generatedIndexes)
+            {
+                writer.WriteLine($"    {index}");
+            }
         }
     }
 }
