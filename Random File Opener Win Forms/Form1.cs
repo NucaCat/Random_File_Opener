@@ -114,7 +114,11 @@ namespace Random_File_Opener_Win_Forms
         {
             try
             {
-                var listItem = (ListItem)listBox1.Items[listBox1.IndexFromPoint(e.Location)];
+                var indexFromPoint = listBox1.IndexFromPoint(e.Location);
+                if (indexFromPoint == -1)
+                    return;
+
+                var listItem = (ListItem)listBox1.Items[indexFromPoint];
             
                 var startInfo = new ProcessStartInfo
                 {
