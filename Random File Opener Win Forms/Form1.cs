@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using Newtonsoft.Json;
 
 namespace Random_File_Opener_Win_Forms
 {
@@ -15,8 +16,36 @@ namespace Random_File_Opener_Win_Forms
         private HashSet<int> _generatedIndexes = new HashSet<int>();
         private Random _random = new Random();
         private string _currentDirectory = string.Empty;
-        private string _filter = "*.mp4";
+        private string _filter;
         private string _emptyFilter = "*";
+
+        public Form1()
+        {
+            InitializeComponent();
+
+            var settings = GetSettingsFromFile();
+
+            _filter = settings?.Filter ?? _emptyFilter;
+            FilterTextBox.Text = _filter;
+
+            SearchModeButton.Text = SearchOptionFriendlyString(_searchOption);
+
+            var currentDirectory = Directory.GetCurrentDirectory();
+
+            Initialize(currentDirectory, _filter);
+        }
+
+        private static Settings GetSettingsFromFile()
+        {
+            var fileExists = File.Exists("appsettings.json");
+            if (!fileExists)
+                return null;
+            
+            var settingsJson = new StreamReader("appsettings.json").ReadToEnd();
+
+            var settings = JsonConvert.DeserializeObject<Settings>(settingsJson);
+            return settings;
+        }
 
         private void Initialize(string directory, string filter)
         {
@@ -60,18 +89,6 @@ namespace Random_File_Opener_Win_Forms
                 return substring.Substring(0, substring.Length - 1);
 
             return substring;
-        }
-
-        public Form1()
-        {
-            InitializeComponent();
-
-            SearchModeButton.Text = SearchOptionFriendlyString(_searchOption);
-            FilterTextBox.Text = _filter;
-
-            var currentDirectory = Directory.GetCurrentDirectory();
-
-            Initialize(currentDirectory, _filter);
         }
 
         private string SearchOptionFriendlyString(SearchOption searchOption)
