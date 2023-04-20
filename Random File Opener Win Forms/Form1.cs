@@ -129,36 +129,40 @@ namespace Random_File_Opener_Win_Forms
 
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            try
-            {
-                var indexFromPoint = listBox1.IndexFromPoint(e.Location);
-                if (indexFromPoint == -1)
-                    return;
+            var indexFromPoint = listBox1.IndexFromPoint(e.Location);
+            if (indexFromPoint == -1)
+                return;
 
-                var listItem = (ListItem)listBox1.Items[indexFromPoint];
-            
-                var startInfo = new ProcessStartInfo
-                {
-                    Arguments = listItem.Path,
-                    FileName = "explorer.exe"
-                };
+            var listItem = (ListItem)listBox1.Items[indexFromPoint];
+            GetFileAndOpen(listItem, OpenVariants.OpenFile);
+        }
 
-                Process.Start(startInfo);
-            }
-            catch (Exception exception)
+        private void listBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.C)
             {
-                using (var writer = new StreamWriter("log.txt"))
-                {
-                    writer.WriteLine(exception.Message);
-                    writer.WriteLine();
-                    writer.WriteLine(exception.StackTrace);
-                    writer.WriteLine();
-                    writer.WriteLine($"index: {listBox1.IndexFromPoint(e.Location)}");
-                    writer.WriteLine($"listBox1.Items.Count: {listBox1.Items.Count}");
-                    Dump(writer);
-                }
-                throw;
+                Clipboard.SetData(DataFormats.StringFormat, listBox1.SelectedItem.ToString());
+                return;
             }
+
+            if (e.KeyCode == Keys.Enter)
+            {
+                GetFileAndOpen((ListItem)listBox1.SelectedItem, OpenVariants.OpenInExplorer);
+                return;
+            }
+        }
+
+        private void GetFileAndOpen(ListItem item, OpenVariants openVariants)
+        {
+            var startInfo = new ProcessStartInfo
+            {
+                Arguments = openVariants == OpenVariants.OpenFile
+                ? item.Path
+                : $"/select, \"{item.Path}\"",
+                FileName = "explorer.exe",
+            };
+
+            Process.Start(startInfo);
         }
 
         private void SearchModeButton_Click(object sender, EventArgs e)
@@ -200,14 +204,6 @@ namespace Random_File_Opener_Win_Forms
             listBox1.Items.Clear();
         }
 
-        private void listBox1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.C)
-            {
-                Clipboard.SetData(DataFormats.StringFormat, listBox1.SelectedItem.ToString());
-            }
-        }
-
         private class ListItem
         {
             public string DisplayValue { get; set; }
@@ -228,21 +224,11 @@ namespace Random_File_Opener_Win_Forms
             _filter = FilterTextBox.Text;
             Initialize(_currentDirectory, _filter);
         }
-
-        private void Dump(StreamWriter writer)
+        
+        private enum OpenVariants
         {
-            writer.WriteLine($"_searchOption: {_searchOption.ToString()}");
-            writer.WriteLine($"_currentDirectory: {_currentDirectory}");
-
-            writer.WriteLine();
-            writer.WriteLine($"_files.Count: {_files.Length}");
-
-            writer.WriteLine();
-            writer.WriteLine($"_generatedIndexes.Count: {_generatedIndexes.Count}");
-            foreach (var index in _generatedIndexes)
-            {
-                writer.WriteLine($"    {index}");
-            }
+            OpenFile = 0,
+            OpenInExplorer = 1
         }
     }
 }
