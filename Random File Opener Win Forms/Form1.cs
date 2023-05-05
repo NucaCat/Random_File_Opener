@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -11,13 +12,17 @@ namespace Random_File_Opener_Win_Forms
 {
     public partial class Form1 : Form
     {
+        private static readonly string _emptyFilter = "*";
+        private static readonly string _settingsFileName = "!appsettings.json";
+
         private SearchOption _searchOption = SearchOption.AllDirectories;
         private ListItem[] _files;
         private HashSet<int> _generatedIndexes = new HashSet<int>();
         private Random _random = new Random();
         private string _currentDirectory = string.Empty;
         private string _filter;
-        private string _emptyFilter = "*";
+
+        private Point? _itemLocation = null;
 
         public Form1()
         {
@@ -37,11 +42,11 @@ namespace Random_File_Opener_Win_Forms
 
         private static Settings GetSettingsFromFile()
         {
-            var fileExists = File.Exists("appsettings.json");
+            var fileExists = File.Exists(_settingsFileName);
             if (!fileExists)
                 return null;
             
-            var settingsJson = new StreamReader("appsettings.json").ReadToEnd();
+            var settingsJson = new StreamReader(_settingsFileName).ReadToEnd();
 
             var settings = JsonConvert.DeserializeObject<Settings>(settingsJson);
             return settings;
@@ -57,12 +62,14 @@ namespace Random_File_Opener_Win_Forms
             _files = Directory.GetFiles(directory, filter, _searchOption)
                 .Select(u => {
                     var lastIndex = u.LastIndexOf("\\", StringComparison.InvariantCulture);
+                    var fileName = ExtractFileName(u, lastIndex);
                     return new ListItem
                     {
                         Path = u,
-                        DisplayValue = ExtractFileName(u, lastIndex) 
+                        DisplayValue = fileName 
                                        + " "
-                                       + ExtractDirectory(directory, u, lastIndex) 
+                                       + ExtractDirectory(directory, u, lastIndex),
+                        FileName = fileName
                     };
                 })
                 .ToArray();
@@ -129,12 +136,17 @@ namespace Random_File_Opener_Win_Forms
 
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            var indexFromPoint = listBox1.IndexFromPoint(e.Location);
+            GetFileFromPointAndOpen(e.Location, OpenVariants.OpenInExplorer);
+        }
+
+        private ListItem ListItemFromPoint(Point point)
+        {
+            var indexFromPoint = listBox1.IndexFromPoint(point);
             if (indexFromPoint == -1)
-                return;
+                return null;
 
             var listItem = (ListItem)listBox1.Items[indexFromPoint];
-            GetFileAndOpen(listItem, OpenVariants.OpenFile);
+            return listItem;
         }
 
         private void listBox1_KeyDown(object sender, KeyEventArgs e)
@@ -204,15 +216,6 @@ namespace Random_File_Opener_Win_Forms
             listBox1.Items.Clear();
         }
 
-        private class ListItem
-        {
-            public string DisplayValue { get; set; }
-            public string Path { get; set; }
-
-            public override string ToString()
-                => DisplayValue;
-        }
-
         private void ApplyFilter_Click(object sender, EventArgs e)
         {
             if (FilterTextBox.Text == _filter)
@@ -223,6 +226,84 @@ namespace Random_File_Opener_Win_Forms
 
             _filter = FilterTextBox.Text;
             Initialize(_currentDirectory, _filter);
+        }
+
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!_itemLocation.HasValue)
+            {
+                MessageBox.Show($"{nameof(_itemLocation)} is null");
+                return;
+            }
+            GetFileFromPointAndOpen(_itemLocation.Value, OpenVariants.OpenFile);
+        }
+
+        private void OpenInExplorerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!_itemLocation.HasValue)
+            {
+                MessageBox.Show($"{nameof(_itemLocation)} is null");
+                return;
+            }
+            GetFileFromPointAndOpen(_itemLocation.Value, OpenVariants.OpenInExplorer);
+        }
+
+        private void GetFileFromPointAndOpen(Point location, OpenVariants openVariant)
+        {
+            var listItem = ListItemFromPoint(location);
+            if (listItem == null)
+                return;
+
+            GetFileAndOpen(listItem, openVariant);
+        }
+
+        private void listBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            _itemLocation = null;
+            
+            if (e.Button != MouseButtons.Right) 
+                return;
+
+            var item = ListItemFromPoint(e.Location);
+            if (item != null)
+            {
+                _itemLocation = e.Location;
+                ListBoxContextMenuStrip.Show(Cursor.Position);
+            }
+        }
+
+        private void FileAddressToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!_itemLocation.HasValue)
+            {
+                MessageBox.Show($"{nameof(_itemLocation)} is null");
+                return;
+            }
+            
+            var fileFromLocation = ListItemFromPoint(_itemLocation.Value);
+            Clipboard.SetData(DataFormats.StringFormat, fileFromLocation.Path);
+        }
+
+        private void FileNameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!_itemLocation.HasValue)
+            {
+                MessageBox.Show($"{nameof(_itemLocation)} is null");
+                return;
+            }
+            
+            var fileFromLocation = ListItemFromPoint(_itemLocation.Value);
+            Clipboard.SetData(DataFormats.StringFormat, fileFromLocation.FileName);
+        }
+
+        private class ListItem
+        {
+            public string DisplayValue { get; set; }
+            public string Path { get; set; }
+            public string FileName { get; set; }
+
+            public override string ToString()
+                => DisplayValue;
         }
         
         private enum OpenVariants

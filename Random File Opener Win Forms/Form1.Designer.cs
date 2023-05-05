@@ -29,6 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.NextFileButton = new System.Windows.Forms.Button();
             this.SearchModeButton = new System.Windows.Forms.Button();
@@ -37,6 +38,13 @@
             this.ClearButton = new System.Windows.Forms.Button();
             this.FilterTextBox = new System.Windows.Forms.TextBox();
             this.ApplyFilter = new System.Windows.Forms.Button();
+            this.ListBoxContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.OpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OpenInExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.скопироватьАдресВБуферОбменаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FileAddressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FileNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ListBoxContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // listBox1
@@ -50,6 +58,7 @@
             this.listBox1.TabIndex = 0;
             this.listBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox1_KeyDown);
             this.listBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDoubleClick);
+            this.listBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseUp);
             // 
             // NextFileButton
             // 
@@ -125,6 +134,47 @@
             this.ApplyFilter.UseVisualStyleBackColor = true;
             this.ApplyFilter.Click += new System.EventHandler(this.ApplyFilter_Click);
             // 
+            // ListBoxContextMenuStrip
+            // 
+            this.ListBoxContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.OpenToolStripMenuItem, this.OpenInExplorerToolStripMenuItem, this.скопироватьАдресВБуферОбменаToolStripMenuItem });
+            this.ListBoxContextMenuStrip.Name = "ListBoxContextMenuStrip";
+            this.ListBoxContextMenuStrip.Size = new System.Drawing.Size(287, 98);
+            // 
+            // OpenToolStripMenuItem
+            // 
+            this.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
+            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(286, 24);
+            this.OpenToolStripMenuItem.Text = "Открыть";
+            this.OpenToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
+            // 
+            // OpenInExplorerToolStripMenuItem
+            // 
+            this.OpenInExplorerToolStripMenuItem.Name = "OpenInExplorerToolStripMenuItem";
+            this.OpenInExplorerToolStripMenuItem.Size = new System.Drawing.Size(286, 24);
+            this.OpenInExplorerToolStripMenuItem.Text = "Открыть в проводнике";
+            this.OpenInExplorerToolStripMenuItem.Click += new System.EventHandler(this.OpenInExplorerToolStripMenuItem_Click);
+            // 
+            // скопироватьАдресВБуферОбменаToolStripMenuItem
+            // 
+            this.скопироватьАдресВБуферОбменаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.FileAddressToolStripMenuItem, this.FileNameToolStripMenuItem });
+            this.скопироватьАдресВБуферОбменаToolStripMenuItem.Name = "скопироватьАдресВБуферОбменаToolStripMenuItem";
+            this.скопироватьАдресВБуферОбменаToolStripMenuItem.Size = new System.Drawing.Size(286, 24);
+            this.скопироватьАдресВБуферОбменаToolStripMenuItem.Text = "Скопировать в буфер обмена";
+            // 
+            // FileAddressToolStripMenuItem
+            // 
+            this.FileAddressToolStripMenuItem.Name = "FileAddressToolStripMenuItem";
+            this.FileAddressToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.FileAddressToolStripMenuItem.Text = "Адрес";
+            this.FileAddressToolStripMenuItem.Click += new System.EventHandler(this.FileAddressToolStripMenuItem_Click);
+            // 
+            // FileNameToolStripMenuItem
+            // 
+            this.FileNameToolStripMenuItem.Name = "FileNameToolStripMenuItem";
+            this.FileNameToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.FileNameToolStripMenuItem.Text = "Название";
+            this.FileNameToolStripMenuItem.Click += new System.EventHandler(this.FileNameToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -139,10 +189,20 @@
             this.Controls.Add(this.NextFileButton);
             this.Controls.Add(this.listBox1);
             this.Name = "Form1";
-            this.Text = "Генератор случайных фалов";
+            this.Text = "Генератор случайных файлов";
+            this.ListBoxContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.ToolStripMenuItem FileAddressToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem FileNameToolStripMenuItem;
+
+        private System.Windows.Forms.ToolStripMenuItem скопироватьАдресВБуферОбменаToolStripMenuItem;
+
+        private System.Windows.Forms.ContextMenuStrip ListBoxContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem OpenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem OpenInExplorerToolStripMenuItem;
 
         private System.Windows.Forms.TextBox FilterTextBox;
         private System.Windows.Forms.Button ApplyFilter;
