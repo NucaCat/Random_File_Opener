@@ -182,14 +182,14 @@ namespace Random_File_Opener_Win_Forms
 
             if (height > PictureBox.Size.Height)
             {
-                var ratio = (double)sourceImage.Height / PictureBox.Size.Height;
+                var ratio = (double)height / PictureBox.Size.Height;
                 height = (int)Math.Ceiling(height / ratio);
                 width = (int)Math.Ceiling(width / ratio);
             }
 
             if (width > PictureBox.Size.Width)
             {
-                var ratio = (double)sourceImage.Width / PictureBox.Size.Width;
+                var ratio = (double)width / PictureBox.Size.Width;
                 height = (int)Math.Ceiling(height / ratio);
                 width = (int)Math.Ceiling(width / ratio);
             }
