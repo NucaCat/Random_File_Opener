@@ -152,8 +152,15 @@ namespace Random_File_Opener_Win_Forms
 
         private void NextFileButton_Click(object sender, EventArgs e)
         {
-            if (_generatedIndexes.Count == _files.Length)
+            if (_files.Length == 0 || _files.Length == 1)
                 return;
+            
+            if (_generatedIndexes.Count != 0 && _generatedIndexes.Count == _files.Length)
+            {
+                var lastGeneratedIndex = _generatedIndexes.Last(); 
+                _generatedIndexes.Clear();
+                _generatedIndexes.Add(lastGeneratedIndex);
+            }
             
             var index = GetNewIndex();
 
