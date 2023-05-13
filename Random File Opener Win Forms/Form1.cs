@@ -11,12 +11,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json;
+// ReSharper disable LocalizableElement
 
 namespace Random_File_Opener_Win_Forms
 {
     public partial class Form1 : Form
     {
-        private static readonly HashSet<string> ImageExtensions = new HashSet<string>
+        private static readonly HashSet<string> _imageExtensions = new HashSet<string>
         {
             "JPG", "JPEG", "JPE", "BMP", "GIF", "PNG",
         };
@@ -37,6 +38,12 @@ namespace Random_File_Opener_Win_Forms
         private static bool _shouldAutoGenerate = false;
         private TimeSpan _autoGenerateCooldown = TimeSpan.FromSeconds(2);
 
+        private static readonly Dictionary<GenerateButtonColors, Color> _generateButtonColors = new Dictionary<GenerateButtonColors, Color>
+        {
+            { GenerateButtonColors.Green, Color.FromArgb(240, 255, 185)},
+            { GenerateButtonColors.Red, Color.FromArgb(255, 198, 185)}
+        };
+
         public Form1()
         {
             InitializeComponent();
@@ -48,12 +55,13 @@ namespace Random_File_Opener_Win_Forms
 
             SearchModeButton.Text = SearchOptionFriendlyString(_searchOption);
 
-            AutoGenerateButton.BackColor = generateButtonColors[_currentGenerateButtonColor];
+            AutoGenerateButton.BackColor = _generateButtonColors[_currentGenerateButtonColor];
 
             var currentDirectory = Directory.GetCurrentDirectory();
 
             Initialize(currentDirectory, _filter);
 
+            // ReSharper disable once PossibleLossOfFraction
             AutoGenerateNumericUpDown.Value = (int)_autoGenerateCooldown.TotalMilliseconds / 1000;
 
             Task.Run(StartAutoGenerate);
@@ -70,6 +78,7 @@ namespace Random_File_Opener_Win_Forms
 
                 Thread.Sleep(_autoGenerateCooldown);
             }
+            // ReSharper disable once FunctionNeverReturns
         }
 
         private static Settings GetSettingsFromFile()
@@ -163,7 +172,7 @@ namespace Random_File_Opener_Win_Forms
 
         private void AddImageToPreview(ListItem file)
         {
-            if (!ImageExtensions.Contains(ExtractExtension(file.FileName)))
+            if (!_imageExtensions.Contains(ExtractExtension(file.FileName)))
                 return;
 
             var sourceImage = new Bitmap(file.Path);
@@ -425,7 +434,7 @@ namespace Random_File_Opener_Win_Forms
         {
             _currentGenerateButtonColor = ChangeGenerateButtonColors(_currentGenerateButtonColor);
 
-            AutoGenerateButton.BackColor = generateButtonColors[_currentGenerateButtonColor];
+            AutoGenerateButton.BackColor = _generateButtonColors[_currentGenerateButtonColor];
 
             _shouldAutoGenerate = !_shouldAutoGenerate;
         }
@@ -439,21 +448,15 @@ namespace Random_File_Opener_Win_Forms
             return GenerateButtonColors.Green;
         }
 
-        private static Dictionary<GenerateButtonColors, Color> generateButtonColors = new Dictionary<GenerateButtonColors, Color>
+        private void AutoGenerateNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            { GenerateButtonColors.Green, Color.FromArgb(240, 255, 185)},
-            { GenerateButtonColors.Red, Color.FromArgb(255, 198, 185)}
-        };
+            _autoGenerateCooldown = TimeSpan.FromMilliseconds((int)(AutoGenerateNumericUpDown.Value * 1000));
+        }
 
         private enum GenerateButtonColors
         {
             Green = 0,
             Red = 1
-        }
-
-        private void AutoGenerateNumericUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            _autoGenerateCooldown = TimeSpan.FromMilliseconds((int)(AutoGenerateNumericUpDown.Value * 1000));
         }
     }
 }
