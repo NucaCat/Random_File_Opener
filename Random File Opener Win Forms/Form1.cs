@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json;
@@ -12,6 +16,11 @@ namespace Random_File_Opener_Win_Forms
 {
     public partial class Form1 : Form
     {
+        private static readonly HashSet<string> ImageExtensions = new HashSet<string>
+        {
+            "JPG", "JPEG", "JPE", "BMP", "GIF", "PNG",
+        };
+        
         private static readonly string _emptyFilter = "*";
         private static readonly string _settingsFileName = "!appsettings.json";
 
@@ -21,8 +30,12 @@ namespace Random_File_Opener_Win_Forms
         private Random _random = new Random();
         private string _currentDirectory = string.Empty;
         private string _filter;
+        private GenerateButtonColors _currentGenerateButtonColor = GenerateButtonColors.Red;
 
         private Point? _itemLocation = null;
+
+        private static bool _shouldAutoGenerate = false;
+        private TimeSpan _autoGenerateCooldown = TimeSpan.FromSeconds(2);
 
         public Form1()
         {
@@ -35,9 +48,28 @@ namespace Random_File_Opener_Win_Forms
 
             SearchModeButton.Text = SearchOptionFriendlyString(_searchOption);
 
+            AutoGenerateButton.BackColor = generateButtonColors[_currentGenerateButtonColor];
+
             var currentDirectory = Directory.GetCurrentDirectory();
 
             Initialize(currentDirectory, _filter);
+
+            AutoGenerateNumericUpDown.Value = (int)_autoGenerateCooldown.TotalMilliseconds / 1000;
+
+            Task.Run(StartAutoGenerate);
+        }
+
+        private Task StartAutoGenerate()
+        {
+            for (;;)
+            {
+                if (_shouldAutoGenerate)
+                {
+                    NextFileButton_Click(null, null);
+                }
+
+                Thread.Sleep(_autoGenerateCooldown);
+            }
         }
 
         private static Settings GetSettingsFromFile()
@@ -69,7 +101,7 @@ namespace Random_File_Opener_Win_Forms
                         DisplayValue = fileName 
                                        + " "
                                        + ExtractDirectory(directory, u, lastIndex),
-                        FileName = fileName
+                        FileName = fileName,
                     };
                 })
                 .ToArray();
@@ -118,8 +150,79 @@ namespace Random_File_Opener_Win_Forms
 
             var file = _files[index];
 
-            listBox1.Items.Add(file);
+            if (listBox1.InvokeRequired)
+            {
+                Action action = () => listBox1.Items.Add(file);
+                listBox1.Invoke(action);
+            }
+            if (!listBox1.InvokeRequired)
+                listBox1.Items.Add(file);
+
+            AddImageToPreview(file);
         }
+
+        private void AddImageToPreview(ListItem file)
+        {
+            if (!ImageExtensions.Contains(ExtractExtension(file.FileName)))
+                return;
+
+            var sourceImage = new Bitmap(file.Path);
+
+            var height = sourceImage.Height;
+            var width = sourceImage.Width;
+
+            if (height > PictureBox.Size.Height)
+            {
+                var ratio = (double)sourceImage.Height / PictureBox.Size.Height;
+                height = (int)Math.Ceiling(height / ratio);
+                width = (int)Math.Ceiling(width / ratio);
+            }
+
+            if (width > PictureBox.Size.Width)
+            {
+                var ratio = (double)sourceImage.Width / PictureBox.Size.Width;
+                height = (int)Math.Ceiling(height / ratio);
+                width = (int)Math.Ceiling(width / ratio);
+            }
+
+            var resized = ResizeImage(sourceImage, width, height);
+            
+            if (PictureBox.InvokeRequired)
+            {
+                Action action = () => PictureBox.Image = resized;
+                PictureBox.Invoke(action);
+            }
+            if (!PictureBox.InvokeRequired)
+                PictureBox.Image = resized;
+        }
+
+        private static Bitmap ResizeImage(Image image, int width, int height)
+        {
+            var destRect = new Rectangle(0, 0, width, height);
+            var destImage = new Bitmap(width, height);
+
+            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width,image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+
+            return destImage;
+        }
+
+        private string ExtractExtension(string fileName)
+            => fileName.Substring(fileName.LastIndexOf('.') + 1).ToUpper();
 
         private int GetNewIndex()
         {
@@ -261,14 +364,20 @@ namespace Random_File_Opener_Win_Forms
         {
             _itemLocation = null;
             
-            if (e.Button != MouseButtons.Right) 
+            var item = ListItemFromPoint(e.Location);
+            if (item == null)
                 return;
 
-            var item = ListItemFromPoint(e.Location);
-            if (item != null)
+            if (e.Button == MouseButtons.Right)
             {
                 _itemLocation = e.Location;
                 ListBoxContextMenuStrip.Show(Cursor.Position);
+                return;
+            }
+
+            if (e.Button == MouseButtons.Left)
+            {
+                AddImageToPreview(item);
             }
         }
 
@@ -310,6 +419,41 @@ namespace Random_File_Opener_Win_Forms
         {
             OpenFile = 0,
             OpenInExplorer = 1
+        }
+
+        private void AutoGenerate_Click(object sender, EventArgs e)
+        {
+            _currentGenerateButtonColor = ChangeGenerateButtonColors(_currentGenerateButtonColor);
+
+            AutoGenerateButton.BackColor = generateButtonColors[_currentGenerateButtonColor];
+
+            _shouldAutoGenerate = !_shouldAutoGenerate;
+        }
+        
+
+        private GenerateButtonColors ChangeGenerateButtonColors(GenerateButtonColors searchOption)
+        {
+            if (searchOption == GenerateButtonColors.Green)
+                return GenerateButtonColors.Red;
+
+            return GenerateButtonColors.Green;
+        }
+
+        private static Dictionary<GenerateButtonColors, Color> generateButtonColors = new Dictionary<GenerateButtonColors, Color>
+        {
+            { GenerateButtonColors.Green, Color.FromArgb(240, 255, 185)},
+            { GenerateButtonColors.Red, Color.FromArgb(255, 198, 185)}
+        };
+
+        private enum GenerateButtonColors
+        {
+            Green = 0,
+            Red = 1
+        }
+
+        private void AutoGenerateNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            _autoGenerateCooldown = TimeSpan.FromMilliseconds((int)(AutoGenerateNumericUpDown.Value * 1000));
         }
     }
 }

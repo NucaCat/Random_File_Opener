@@ -44,7 +44,12 @@
             this.скопироватьАдресВБуферОбменаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FileAddressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FileNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PictureBox = new System.Windows.Forms.PictureBox();
+            this.AutoGenerateButton = new System.Windows.Forms.Button();
+            this.AutoGenerateNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.ListBoxContextMenuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AutoGenerateNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // listBox1
@@ -52,9 +57,9 @@
             this.listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 29;
-            this.listBox1.Location = new System.Drawing.Point(250, 12);
+            this.listBox1.Location = new System.Drawing.Point(896, 12);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(1002, 758);
+            this.listBox1.Size = new System.Drawing.Size(869, 845);
             this.listBox1.TabIndex = 0;
             this.listBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox1_KeyDown);
             this.listBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDoubleClick);
@@ -63,7 +68,7 @@
             // NextFileButton
             // 
             this.NextFileButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.NextFileButton.Location = new System.Drawing.Point(12, 624);
+            this.NextFileButton.Location = new System.Drawing.Point(12, 711);
             this.NextFileButton.Name = "NextFileButton";
             this.NextFileButton.Size = new System.Drawing.Size(232, 146);
             this.NextFileButton.TabIndex = 1;
@@ -76,7 +81,7 @@
             this.SearchModeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.SearchModeButton.Location = new System.Drawing.Point(12, 12);
             this.SearchModeButton.Name = "SearchModeButton";
-            this.SearchModeButton.Size = new System.Drawing.Size(232, 159);
+            this.SearchModeButton.Size = new System.Drawing.Size(232, 78);
             this.SearchModeButton.TabIndex = 2;
             this.SearchModeButton.Text = "С подпапками или без";
             this.SearchModeButton.UseVisualStyleBackColor = true;
@@ -85,7 +90,7 @@
             // ChangeDirectory
             // 
             this.ChangeDirectory.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ChangeDirectory.Location = new System.Drawing.Point(12, 177);
+            this.ChangeDirectory.Location = new System.Drawing.Point(12, 96);
             this.ChangeDirectory.Name = "ChangeDirectory";
             this.ChangeDirectory.Size = new System.Drawing.Size(232, 159);
             this.ChangeDirectory.TabIndex = 3;
@@ -97,7 +102,7 @@
             // 
             this.DirectoryTextBox.Enabled = false;
             this.DirectoryTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.DirectoryTextBox.Location = new System.Drawing.Point(12, 342);
+            this.DirectoryTextBox.Location = new System.Drawing.Point(12, 261);
             this.DirectoryTextBox.Multiline = true;
             this.DirectoryTextBox.Name = "DirectoryTextBox";
             this.DirectoryTextBox.Size = new System.Drawing.Size(232, 52);
@@ -106,7 +111,7 @@
             // ClearButton
             // 
             this.ClearButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ClearButton.Location = new System.Drawing.Point(12, 540);
+            this.ClearButton.Location = new System.Drawing.Point(12, 461);
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(232, 78);
             this.ClearButton.TabIndex = 5;
@@ -117,7 +122,7 @@
             // FilterTextBox
             // 
             this.FilterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.FilterTextBox.Location = new System.Drawing.Point(12, 400);
+            this.FilterTextBox.Location = new System.Drawing.Point(12, 319);
             this.FilterTextBox.Multiline = true;
             this.FilterTextBox.Name = "FilterTextBox";
             this.FilterTextBox.Size = new System.Drawing.Size(232, 52);
@@ -126,7 +131,7 @@
             // ApplyFilter
             // 
             this.ApplyFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ApplyFilter.Location = new System.Drawing.Point(12, 458);
+            this.ApplyFilter.Location = new System.Drawing.Point(12, 377);
             this.ApplyFilter.Name = "ApplyFilter";
             this.ApplyFilter.Size = new System.Drawing.Size(232, 78);
             this.ApplyFilter.TabIndex = 7;
@@ -138,7 +143,7 @@
             // 
             this.ListBoxContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.OpenToolStripMenuItem, this.OpenInExplorerToolStripMenuItem, this.скопироватьАдресВБуферОбменаToolStripMenuItem });
             this.ListBoxContextMenuStrip.Name = "ListBoxContextMenuStrip";
-            this.ListBoxContextMenuStrip.Size = new System.Drawing.Size(287, 98);
+            this.ListBoxContextMenuStrip.Size = new System.Drawing.Size(287, 76);
             // 
             // OpenToolStripMenuItem
             // 
@@ -164,22 +169,60 @@
             // FileAddressToolStripMenuItem
             // 
             this.FileAddressToolStripMenuItem.Name = "FileAddressToolStripMenuItem";
-            this.FileAddressToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.FileAddressToolStripMenuItem.Size = new System.Drawing.Size(146, 24);
             this.FileAddressToolStripMenuItem.Text = "Адрес";
             this.FileAddressToolStripMenuItem.Click += new System.EventHandler(this.FileAddressToolStripMenuItem_Click);
             // 
             // FileNameToolStripMenuItem
             // 
             this.FileNameToolStripMenuItem.Name = "FileNameToolStripMenuItem";
-            this.FileNameToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.FileNameToolStripMenuItem.Size = new System.Drawing.Size(146, 24);
             this.FileNameToolStripMenuItem.Text = "Название";
             this.FileNameToolStripMenuItem.Click += new System.EventHandler(this.FileNameToolStripMenuItem_Click);
+            // 
+            // PictureBox
+            // 
+            this.PictureBox.Location = new System.Drawing.Point(250, 12);
+            this.PictureBox.Name = "PictureBox";
+            this.PictureBox.Size = new System.Drawing.Size(640, 840);
+            this.PictureBox.TabIndex = 8;
+            this.PictureBox.TabStop = false;
+            // 
+            // AutoGenerateButton
+            // 
+            this.AutoGenerateButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.AutoGenerateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.AutoGenerateButton.ForeColor = System.Drawing.Color.Black;
+            this.AutoGenerateButton.Location = new System.Drawing.Point(12, 626);
+            this.AutoGenerateButton.Name = "AutoGenerateButton";
+            this.AutoGenerateButton.Size = new System.Drawing.Size(232, 78);
+            this.AutoGenerateButton.TabIndex = 9;
+            this.AutoGenerateButton.Text = "Автогенерация";
+            this.AutoGenerateButton.UseVisualStyleBackColor = false;
+            this.AutoGenerateButton.Click += new System.EventHandler(this.AutoGenerate_Click);
+            // 
+            // AutoGenerateNumericUpDown
+            // 
+            this.AutoGenerateNumericUpDown.DecimalPlaces = 2;
+            this.AutoGenerateNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.AutoGenerateNumericUpDown.Increment = new decimal(new int[] { 25, 0, 0, 131072 });
+            this.AutoGenerateNumericUpDown.Location = new System.Drawing.Point(12, 581);
+            this.AutoGenerateNumericUpDown.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
+            this.AutoGenerateNumericUpDown.Minimum = new decimal(new int[] { 25, 0, 0, 131072 });
+            this.AutoGenerateNumericUpDown.Name = "AutoGenerateNumericUpDown";
+            this.AutoGenerateNumericUpDown.Size = new System.Drawing.Size(120, 40);
+            this.AutoGenerateNumericUpDown.TabIndex = 10;
+            this.AutoGenerateNumericUpDown.Value = new decimal(new int[] { 25, 0, 0, 131072 });
+            this.AutoGenerateNumericUpDown.ValueChanged += new System.EventHandler(this.AutoGenerateNumericUpDown_ValueChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1264, 777);
+            this.ClientSize = new System.Drawing.Size(1777, 862);
+            this.Controls.Add(this.AutoGenerateNumericUpDown);
+            this.Controls.Add(this.AutoGenerateButton);
+            this.Controls.Add(this.PictureBox);
             this.Controls.Add(this.ApplyFilter);
             this.Controls.Add(this.FilterTextBox);
             this.Controls.Add(this.ClearButton);
@@ -191,9 +234,17 @@
             this.Name = "Form1";
             this.Text = "Генератор случайных файлов";
             this.ListBoxContextMenuStrip.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AutoGenerateNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.NumericUpDown AutoGenerateNumericUpDown;
+
+        private System.Windows.Forms.Button AutoGenerateButton;
+
+        private System.Windows.Forms.PictureBox PictureBox;
 
         private System.Windows.Forms.ToolStripMenuItem FileAddressToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem FileNameToolStripMenuItem;
