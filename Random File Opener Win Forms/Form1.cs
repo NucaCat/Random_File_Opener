@@ -136,7 +136,7 @@ namespace Random_File_Opener_Win_Forms
 
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            GetFileFromPointAndOpen(e.Location, OpenVariants.OpenInExplorer);
+            GetFileFromPointAndOpen(e.Location, OpenVariants.OpenFile);
         }
 
         private ListItem ListItemFromPoint(Point point)
