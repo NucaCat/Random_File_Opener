@@ -67,7 +67,7 @@ namespace Random_File_Opener_Win_Forms
             Task.Run(StartAutoGenerate);
         }
 
-        private Task StartAutoGenerate()
+        private async Task StartAutoGenerate()
         {
             for (;;)
             {
@@ -76,7 +76,7 @@ namespace Random_File_Opener_Win_Forms
                     NextFileButton_Click(null, null);
                 }
 
-                Thread.Sleep(_autoGenerateCooldown);
+                await Task.Delay(_autoGenerateCooldown);
             }
             // ReSharper disable once FunctionNeverReturns
         }
