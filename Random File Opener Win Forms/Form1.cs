@@ -166,13 +166,7 @@ namespace Random_File_Opener_Win_Forms
 
             var file = _files[index];
 
-            if (listBox1.InvokeRequired)
-            {
-                Action action = () => listBox1.Items.Add(file);
-                listBox1.Invoke(action);
-            }
-            if (!listBox1.InvokeRequired)
-                listBox1.Items.Add(file);
+            listBox1.InvokeIfRequired(() => listBox1.Items.Add(file));
 
             AddImageToPreview(file);
         }
@@ -203,13 +197,7 @@ namespace Random_File_Opener_Win_Forms
 
             var resized = ResizeImage(sourceImage, width, height);
             
-            if (PictureBox.InvokeRequired)
-            {
-                Action action = () => PictureBox.Image = resized;
-                PictureBox.Invoke(action);
-            }
-            if (!PictureBox.InvokeRequired)
-                PictureBox.Image = resized;
+            PictureBox.InvokeIfRequired(() => PictureBox.Image = resized);
         }
 
         private static Bitmap ResizeImage(Image image, int width, int height)
@@ -464,6 +452,21 @@ namespace Random_File_Opener_Win_Forms
         {
             Green = 0,
             Red = 1
+        }
+    }
+    
+
+    internal static class ControlExtensions
+    {
+        public static void InvokeIfRequired(this Control control, Action action)
+        {
+            if (control.InvokeRequired)
+            {
+                control.Invoke(action);
+                return;
+            }
+
+            action();
         }
     }
 }
