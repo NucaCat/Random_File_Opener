@@ -178,6 +178,21 @@ namespace Random_File_Opener_Win_Forms
 
             var sourceImage = new Bitmap(file.Path);
 
+            var resized = ResizeImageToFitPictureBox(sourceImage);
+
+            PictureBox.InvokeIfRequired(() => PictureBox.Image = resized);
+        }
+
+        private Bitmap ResizeImageToFitPictureBox(Bitmap sourceImage)
+        {
+            var (height, width) = DimensionsToFitPictureBox(sourceImage);
+
+            var resized = ResizeImage(sourceImage, width, height);
+            return resized;
+        }
+
+        private (int height, int width) DimensionsToFitPictureBox(Bitmap sourceImage)
+        {
             var height = sourceImage.Height;
             var width = sourceImage.Width;
 
@@ -195,9 +210,7 @@ namespace Random_File_Opener_Win_Forms
                 width = (int)Math.Ceiling(width / ratio);
             }
 
-            var resized = ResizeImage(sourceImage, width, height);
-            
-            PictureBox.InvokeIfRequired(() => PictureBox.Image = resized);
+            return (height, width);
         }
 
         private static Bitmap ResizeImage(Image image, int width, int height)
