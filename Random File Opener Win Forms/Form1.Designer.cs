@@ -47,6 +47,7 @@
             this.PictureBox = new System.Windows.Forms.PictureBox();
             this.AutoGenerateButton = new System.Windows.Forms.Button();
             this.AutoGenerateNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ListBoxContextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AutoGenerateNumericUpDown)).BeginInit();
@@ -161,7 +162,7 @@
             // 
             // скопироватьАдресВБуферОбменаToolStripMenuItem
             // 
-            this.скопироватьАдресВБуферОбменаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.FileAddressToolStripMenuItem, this.FileNameToolStripMenuItem });
+            this.скопироватьАдресВБуферОбменаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.FileToolStripMenuItem, this.FileAddressToolStripMenuItem, this.FileNameToolStripMenuItem });
             this.скопироватьАдресВБуферОбменаToolStripMenuItem.Name = "скопироватьАдресВБуферОбменаToolStripMenuItem";
             this.скопироватьАдресВБуферОбменаToolStripMenuItem.Size = new System.Drawing.Size(286, 24);
             this.скопироватьАдресВБуферОбменаToolStripMenuItem.Text = "Скопировать в буфер обмена";
@@ -169,14 +170,14 @@
             // FileAddressToolStripMenuItem
             // 
             this.FileAddressToolStripMenuItem.Name = "FileAddressToolStripMenuItem";
-            this.FileAddressToolStripMenuItem.Size = new System.Drawing.Size(146, 24);
+            this.FileAddressToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.FileAddressToolStripMenuItem.Text = "Адрес";
             this.FileAddressToolStripMenuItem.Click += new System.EventHandler(this.FileAddressToolStripMenuItem_Click);
             // 
             // FileNameToolStripMenuItem
             // 
             this.FileNameToolStripMenuItem.Name = "FileNameToolStripMenuItem";
-            this.FileNameToolStripMenuItem.Size = new System.Drawing.Size(146, 24);
+            this.FileNameToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.FileNameToolStripMenuItem.Text = "Название";
             this.FileNameToolStripMenuItem.Click += new System.EventHandler(this.FileNameToolStripMenuItem_Click);
             // 
@@ -215,6 +216,13 @@
             this.AutoGenerateNumericUpDown.Value = new decimal(new int[] { 25, 0, 0, 131072 });
             this.AutoGenerateNumericUpDown.ValueChanged += new System.EventHandler(this.AutoGenerateNumericUpDown_ValueChanged);
             // 
+            // FileToolStripMenuItem
+            // 
+            this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
+            this.FileToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.FileToolStripMenuItem.Text = "Файл";
+            this.FileToolStripMenuItem.Click += new System.EventHandler(this.FileToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -239,6 +247,8 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.ToolStripMenuItem FileToolStripMenuItem;
 
         private System.Windows.Forms.NumericUpDown AutoGenerateNumericUpDown;
 

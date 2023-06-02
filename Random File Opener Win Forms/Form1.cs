@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -273,7 +273,10 @@ namespace Random_File_Opener_Win_Forms
         {
             if (e.Control && e.KeyCode == Keys.C)
             {
-                Clipboard.SetData(DataFormats.StringFormat, listBox1.SelectedItem.ToString());
+                Clipboard.SetFileDropList(new StringCollection
+                {
+                    ((ListItem)listBox1.SelectedItem).Path,
+                });
                 return;
             }
 
@@ -408,6 +411,21 @@ namespace Random_File_Opener_Win_Forms
             
             var fileFromLocation = ListItemFromPoint(_itemLocation.Value);
             Clipboard.SetData(DataFormats.StringFormat, fileFromLocation.Path);
+        }
+
+        private void FileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!_itemLocation.HasValue)
+            {
+                MessageBox.Show($"{nameof(_itemLocation)} is null");
+                return;
+            }
+            
+            var fileFromLocation = ListItemFromPoint(_itemLocation.Value);
+            Clipboard.SetFileDropList(new StringCollection
+            {
+                fileFromLocation.Path,
+            });
         }
 
         private void FileNameToolStripMenuItem_Click(object sender, EventArgs e)
