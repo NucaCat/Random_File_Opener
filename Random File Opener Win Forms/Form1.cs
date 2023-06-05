@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using Microsoft.WindowsAPICodePack.Shell;
 using Newtonsoft.Json;
 // ReSharper disable LocalizableElement
 
@@ -20,6 +21,10 @@ namespace Random_File_Opener_Win_Forms
         private static readonly HashSet<string> _imageExtensions = new HashSet<string>
         {
             "JPG", "JPEG", "JPE", "BMP", "GIF", "PNG",
+        };
+        private static readonly HashSet<string> _videoExtensions = new HashSet<string>
+        {
+            "MP4",
         };
         
         private static readonly string _emptyFilter = "*";
@@ -173,14 +178,24 @@ namespace Random_File_Opener_Win_Forms
 
         private void AddImageToPreview(ListItem file)
         {
-            if (!_imageExtensions.Contains(ExtractExtension(file.FileName)))
-                return;
-
-            var sourceImage = new Bitmap(file.Path);
+            var sourceImage = GetSourceImage(file);
 
             var resized = ResizeImageToFitPictureBox(sourceImage);
 
             PictureBox.InvokeIfRequired(() => PictureBox.Image = resized);
+        }
+
+        private Bitmap GetSourceImage(ListItem file)
+        {
+            var extension = ExtractExtension(file.FileName);
+            
+            if (_imageExtensions.Contains(extension))
+                return new Bitmap(file.Path);
+
+            if (_videoExtensions.Contains(extension))
+                return ShellFile.FromFilePath(file.Path).Thumbnail.Bitmap;
+
+            return null;
         }
 
         private Bitmap ResizeImageToFitPictureBox(Bitmap sourceImage)
@@ -195,6 +210,17 @@ namespace Random_File_Opener_Win_Forms
         {
             var height = sourceImage.Height;
             var width = sourceImage.Width;
+
+            if (height < PictureBox.Size.Height && width < PictureBox.Size.Width)
+            {
+                var hRatio = PictureBox.Size.Height / (double)height;
+                var wRatio = PictureBox.Size.Width / (double)width;
+
+                var minRatio = Math.Min(hRatio, wRatio);
+                height = (int)(height * minRatio);
+                width = (int)(width * minRatio);
+                return (height, width);
+            }
 
             if (height > PictureBox.Size.Height)
             {
