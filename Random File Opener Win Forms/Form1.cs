@@ -10,7 +10,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using NReco.VideoConverter;
 using Random_File_Opener_Win_Forms.Settings;
 using Random_File_Opener_Win_Forms.Style;
 
@@ -23,7 +22,7 @@ namespace Random_File_Opener_Win_Forms
         private PictureBox[] _pictureBoxesInSequence;
 
         private SearchOption _searchOption = SearchOption.AllDirectories;
-        private ListItem[] _files;
+        private GeneratedFileListItem[] _files;
         private HashSet<int> _generatedIndexes = new HashSet<int>();
         private Random _random = new Random();
         private string _currentDirectory = string.Empty;
@@ -34,6 +33,8 @@ namespace Random_File_Opener_Win_Forms
 
         private static bool _shouldAutoGenerate = false;
         private TimeSpan _autoGenerateCooldown = TimeSpan.FromSeconds(2);
+
+        private ImageService _imageService = new ImageService();
 
         public Form1()
         {
@@ -97,7 +98,7 @@ namespace Random_File_Opener_Win_Forms
                 .Select(u => {
                     var lastIndex = u.LastIndexOf("\\", StringComparison.InvariantCulture);
                     var fileName = Utilities.ExtractFileName(u, lastIndex);
-                    return new ListItem
+                    return new GeneratedFileListItem
                     {
                         Path = u,
                         DisplayValue = fileName 
@@ -131,22 +132,18 @@ namespace Random_File_Opener_Win_Forms
             AddImageToPreview(file);
         }
 
-        private void AddImageToPreview(ListItem file)
+        private void AddImageToPreview(GeneratedFileListItem file)
         {
-            var sourceImage = GetSourceImage(file);
+            var images = _imageService.GetFitImages(file, ImagePictureBox, _pictureBoxesInSequence);
 
-            if (sourceImage.Length == 0)
+            if (images.Length == 0)
                 return;
-
-            var resized = sourceImage
-                .Select(ResizeImageToFitPictureBox)
-                .ToArray();
             
-            if (resized.Length == 1)
+            if (images.Length == 1)
             {
                 ImagePictureBox.InvokeIfRequired(() =>
                 {
-                    ImagePictureBox.Image = resized[0];
+                    ImagePictureBox.Image = images[0];
                     ImagePictureBox.Visible = true;
                 });
                 foreach (var pictureBox in _pictureBoxesInSequence)
@@ -158,19 +155,19 @@ namespace Random_File_Opener_Win_Forms
                 }
             }
             
-            if (resized.Length != 1)
+            if (images.Length != 1)
             {
                 ImagePictureBox.InvokeIfRequired(() =>
                 {
                     ImagePictureBox.Visible = false;
                 });
 
-                var images = resized.Length < _pictureBoxesInSequence.Length
-                    ? resized.Concat(Enumerable.Range(0, _pictureBoxesInSequence.Length - resized.Length).Select(_ => (Bitmap)null))
-                    : resized;
+                var imagesWithEmpty = images.Length < _pictureBoxesInSequence.Length
+                    ? images.Concat(Enumerable.Range(0, _pictureBoxesInSequence.Length - images.Length).Select(_ => (Bitmap)null))
+                    : images;
                 
                 foreach (var (pictureBox, image) in _pictureBoxesInSequence
-                    .Zip(images, (u, v) => (PictureBox: u, Image: v)))
+                    .Zip(imagesWithEmpty, (u, v) => (PictureBox: u, Image: v)))
                 {
                     pictureBox.InvokeIfRequired(() =>
                     {
@@ -179,113 +176,6 @@ namespace Random_File_Opener_Win_Forms
                     });
                 }
             }
-        }
-
-        private Bitmap[] GetSourceImage(ListItem file)
-        {
-            var extension = Utilities.ExtractExtension(file.FileName);
-            
-            if (Consts.ImageExtensions.Contains(extension))
-                return new [] { new Bitmap(file.Path) };
-
-            if (Consts.VideoExtensions.Contains(extension))
-                return GetVideoThumbnails(file, Consts.VideoThumbnailPositions);
-
-            return Array.Empty<Bitmap>();
-        }
-
-        private Bitmap[] GetVideoThumbnails(ListItem file, params TimeSpan[] positions)
-        {
-            var thumbnails = positions.Prepend(TimeSpan.FromSeconds(1))
-                .AsParallel()
-                .AsOrdered()
-                .Select(u => GetThumbnailAtPosition(file, u))
-                .Where(u => u != null)
-                .ToArray();
-
-            if (thumbnails.Length == positions.Length + 1)
-                return thumbnails.Skip(1).ToArray();
-
-            return thumbnails;
-        }
-
-        private Bitmap GetThumbnailAtPosition(ListItem file, TimeSpan position)
-        {
-            var ffmpeg = new FFMpegConverter();
-
-            var thumbnailStream = new MemoryStream();
-            ffmpeg.GetVideoThumbnail(file.Path, thumbnailStream, (float)position.TotalSeconds);
-
-            if (thumbnailStream.Length == 0)
-                return null;
-            
-            return new Bitmap(thumbnailStream);
-        }
-
-        private Bitmap ResizeImageToFitPictureBox(Bitmap sourceImage)
-        {
-            var (height, width) = DimensionsToFitPictureBox(sourceImage);
-
-            var resized = ResizeImage(sourceImage, width, height);
-            return resized;
-        }
-
-        private (int height, int width) DimensionsToFitPictureBox(Bitmap sourceImage)
-        {
-            var height = sourceImage.Height;
-            var width = sourceImage.Width;
-
-            if (height < ImagePictureBox.Size.Height && width < ImagePictureBox.Size.Width)
-            {
-                var hRatio = ImagePictureBox.Size.Height / (double)height;
-                var wRatio = ImagePictureBox.Size.Width / (double)width;
-
-                var minRatio = Math.Min(hRatio, wRatio);
-                height = (int)(height * minRatio);
-                width = (int)(width * minRatio);
-                return (height, width);
-            }
-
-            if (height > ImagePictureBox.Size.Height)
-            {
-                var ratio = (double)height / ImagePictureBox.Size.Height;
-                height = (int)Math.Ceiling(height / ratio);
-                width = (int)Math.Ceiling(width / ratio);
-            }
-
-            if (width > ImagePictureBox.Size.Width)
-            {
-                var ratio = (double)width / ImagePictureBox.Size.Width;
-                height = (int)Math.Ceiling(height / ratio);
-                width = (int)Math.Ceiling(width / ratio);
-            }
-
-            return (height, width);
-        }
-
-        private static Bitmap ResizeImage(Image image, int width, int height)
-        {
-            var destRect = new Rectangle(0, 0, width, height);
-            var destImage = new Bitmap(width, height);
-
-            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
-
-            using (var graphics = Graphics.FromImage(destImage))
-            {
-                graphics.CompositingMode = CompositingMode.SourceCopy;
-                graphics.CompositingQuality = CompositingQuality.HighQuality;
-                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                graphics.SmoothingMode = SmoothingMode.HighQuality;
-                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-                using (var wrapMode = new ImageAttributes())
-                {
-                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
-                    graphics.DrawImage(image, destRect, 0, 0, image.Width,image.Height, GraphicsUnit.Pixel, wrapMode);
-                }
-            }
-
-            return destImage;
         }
 
         private int GetNewIndex()
@@ -306,13 +196,13 @@ namespace Random_File_Opener_Win_Forms
             GetFileFromPointAndOpen(e.Location, OpenVariants.OpenFile);
         }
 
-        private ListItem ListItemFromPoint(Point point)
+        private GeneratedFileListItem ListItemFromPoint(Point point)
         {
             var indexFromPoint = GeneratedFilesListBox.IndexFromPoint(point);
             if (indexFromPoint == -1)
                 return null;
 
-            var listItem = (ListItem)GeneratedFilesListBox.Items[indexFromPoint];
+            var listItem = (GeneratedFileListItem)GeneratedFilesListBox.Items[indexFromPoint];
             return listItem;
         }
 
@@ -322,19 +212,19 @@ namespace Random_File_Opener_Win_Forms
             {
                 Clipboard.SetFileDropList(new StringCollection
                 {
-                    ((ListItem)GeneratedFilesListBox.SelectedItem).Path,
+                    ((GeneratedFileListItem)GeneratedFilesListBox.SelectedItem).Path,
                 });
                 return;
             }
 
             if (e.KeyCode == Keys.Enter)
             {
-                GetFileAndOpen((ListItem)GeneratedFilesListBox.SelectedItem, OpenVariants.OpenInExplorer);
+                GetFileAndOpen((GeneratedFileListItem)GeneratedFilesListBox.SelectedItem, OpenVariants.OpenInExplorer);
                 return;
             }
         }
 
-        private void GetFileAndOpen(ListItem item, OpenVariants openVariants)
+        private void GetFileAndOpen(GeneratedFileListItem item, OpenVariants openVariants)
         {
             var startInfo = new ProcessStartInfo
             {
@@ -500,16 +390,6 @@ namespace Random_File_Opener_Win_Forms
         private void AutoGenerateNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             _autoGenerateCooldown = TimeSpan.FromMilliseconds((int)(AutoGenerateNumericUpDown.Value * 1000));
-        }
-
-        private class ListItem
-        {
-            public string DisplayValue { get; set; }
-            public string Path { get; set; }
-            public string FileName { get; set; }
-
-            public override string ToString()
-                => DisplayValue;
         }
         
         private enum OpenVariants
