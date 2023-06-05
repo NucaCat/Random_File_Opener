@@ -20,25 +20,7 @@ namespace Random_File_Opener_Win_Forms
 {
     public partial class Form1 : Form
     {
-        private static readonly HashSet<string> _imageExtensions = new HashSet<string>
-        {
-            "JPG", "JPEG", "JPE", "BMP", "GIF", "PNG",
-        };
-        private static readonly HashSet<string> _videoExtensions = new HashSet<string>
-        {
-            "MP4", "MKV",
-        };
-
         private PictureBox[] _pictureBoxesInSequence;
-
-        private TimeSpan[] _videoThumbnailPositions = {
-            TimeSpan.FromMinutes(1),
-            TimeSpan.FromMinutes(12),
-            TimeSpan.FromMinutes(20)
-        };
-        
-        private static readonly string _emptyFilter = "*";
-        private static readonly string _settingsFileName = "!appsettings.json";
 
         private SearchOption _searchOption = SearchOption.AllDirectories;
         private ListItem[] _files;
@@ -53,28 +35,9 @@ namespace Random_File_Opener_Win_Forms
         private static bool _shouldAutoGenerate = false;
         private TimeSpan _autoGenerateCooldown = TimeSpan.FromSeconds(2);
 
-        private static readonly Dictionary<GenerateButtonColors, (Color Main, Color On)> _generateButtonColors 
-            = new Dictionary<GenerateButtonColors, (Color Main, Color On)>
-            {
-                { GenerateButtonColors.Green, (Main: Styles.Autogenerate, On: Styles.OnAutogenerate)},
-                { GenerateButtonColors.Red, (Main: Styles.DoNoAutogenerate, On: Styles.OnDoNoAutogenerate)}
-            };
-
         public Form1()
         {
             InitializeComponent();
-            ApplyStyles();
-
-            var settings = GetSettingsFromFile();
-
-            _filter = settings?.Filter ?? _emptyFilter;
-            FilterTextBox.Text = _filter;
-
-            SearchModeButton.Text = SearchOptionFriendlyString(_searchOption);
-
-            ChangeAutogenerateButtonColor();
-
-            var currentDirectory = Directory.GetCurrentDirectory();
 
             _pictureBoxesInSequence = new[]
             {
@@ -83,59 +46,25 @@ namespace Random_File_Opener_Win_Forms
                 VideoThumbnailThirdPictureBox
             };
 
+            Styles.ApplyStyles(this);
+
+            var settings = GetSettingsFromFile();
+
+            _filter = settings?.Filter ?? Consts.EmptyFilter;
+            FilterTextBox.Text = _filter;
+
+            SearchModeButton.Text = SearchOptionFriendlyString(_searchOption);
+
+            ChangeAutogenerateButtonColor();
+
+            var currentDirectory = Directory.GetCurrentDirectory();
+
             Initialize(currentDirectory, _filter);
 
             // ReSharper disable once PossibleLossOfFraction
             AutoGenerateNumericUpDown.Value = (int)_autoGenerateCooldown.TotalMilliseconds / 1000;
 
             Task.Run(StartAutoGenerate);
-        }
-
-        private void ApplyStyles()
-        {
-            BackColor = Styles.Background;
-
-            Console.WriteLine(Styles.LighterSurface.A);
-            
-            foreach(var button in Controls.OfType<Button>())
-            {
-                button.BackColor = Styles.Primary;
-                button.ForeColor = Styles.OnPrimary;
-
-                button.FlatStyle = FlatStyle.Flat;
-                button.FlatAppearance.BorderSize = 0;
-                button.FlatAppearance.MouseDownBackColor = Styles.Primary;
-                button.FlatAppearance.MouseOverBackColor = Styles.Primary;
-            }
-            
-            foreach(var textBox in Controls.OfType<TextBox>())
-            {
-                textBox.BackColor = Styles.LighterSurface;
-                textBox.ForeColor = Styles.OnSurface;
-
-                textBox.BorderStyle = BorderStyle.None;
-            }
-            
-            foreach(var pictureBox in Controls.OfType<PictureBox>())
-            {
-                pictureBox.BackColor = Styles.LighterSurface;
-                pictureBox.ForeColor = Styles.OnSurface;
-
-                pictureBox.BorderStyle = BorderStyle.None;
-            }
-
-            GeneratedFilesListBox.BackColor = Styles.LighterSurface;
-            GeneratedFilesListBox.ForeColor = Styles.OnSurface;
-            GeneratedFilesListBox.BorderStyle = BorderStyle.None;
-
-            AutoGenerateNumericUpDown.BackColor = Styles.LighterSurface;
-            AutoGenerateNumericUpDown.ForeColor = Styles.OnSurface;
-            AutoGenerateNumericUpDown.BorderStyle = BorderStyle.FixedSingle;
-            
-            AutoGenerateNumericUpDown.ButtonHighlightColor = Styles.Primary;
-            AutoGenerateNumericUpDown.BorderColor = Styles.LighterSurface;
-            AutoGenerateNumericUpDown.Controls[0].BackColor = Styles.Primary;
-            AutoGenerateNumericUpDown.Controls[0].ForeColor = Styles.Primary;
         }
 
         private async Task StartAutoGenerate()
@@ -154,11 +83,11 @@ namespace Random_File_Opener_Win_Forms
 
         private static Settings GetSettingsFromFile()
         {
-            var fileExists = File.Exists(_settingsFileName);
+            var fileExists = File.Exists(Consts.SettingsFileName);
             if (!fileExists)
                 return null;
             
-            var settingsJson = new StreamReader(_settingsFileName).ReadToEnd();
+            var settingsJson = new StreamReader(Consts.SettingsFileName).ReadToEnd();
 
             var settings = JsonConvert.DeserializeObject<Settings>(settingsJson);
             return settings;
@@ -296,11 +225,11 @@ namespace Random_File_Opener_Win_Forms
         {
             var extension = ExtractExtension(file.FileName);
             
-            if (_imageExtensions.Contains(extension))
+            if (Consts.ImageExtensions.Contains(extension))
                 return new [] { new Bitmap(file.Path) };
 
-            if (_videoExtensions.Contains(extension))
-                return GetVideoThumbnails(file, _videoThumbnailPositions);
+            if (Consts.VideoExtensions.Contains(extension))
+                return GetVideoThumbnails(file, Consts.VideoThumbnailPositions);
 
             return Array.Empty<Bitmap>();
         }
@@ -506,7 +435,7 @@ namespace Random_File_Opener_Win_Forms
                 return;
             
             if (string.IsNullOrWhiteSpace(FilterTextBox.Text))
-                FilterTextBox.Text = _emptyFilter;
+                FilterTextBox.Text = Consts.EmptyFilter;
 
             _filter = FilterTextBox.Text;
             Initialize(_currentDirectory, _filter);
@@ -628,11 +557,11 @@ namespace Random_File_Opener_Win_Forms
 
         private void ChangeAutogenerateButtonColor()
         {
-            AutoGenerateButton.BackColor = _generateButtonColors[_currentGenerateButtonColor].Main;
-            AutoGenerateButton.ForeColor = _generateButtonColors[_currentGenerateButtonColor].On;
+            AutoGenerateButton.BackColor = Consts.GenerateButtonColors[_currentGenerateButtonColor].Main;
+            AutoGenerateButton.ForeColor = Consts.GenerateButtonColors[_currentGenerateButtonColor].On;
             
-            AutoGenerateButton.FlatAppearance.MouseDownBackColor = _generateButtonColors[_currentGenerateButtonColor].Main;
-            AutoGenerateButton.FlatAppearance.MouseOverBackColor = _generateButtonColors[_currentGenerateButtonColor].Main;
+            AutoGenerateButton.FlatAppearance.MouseDownBackColor = Consts.GenerateButtonColors[_currentGenerateButtonColor].Main;
+            AutoGenerateButton.FlatAppearance.MouseOverBackColor = Consts.GenerateButtonColors[_currentGenerateButtonColor].Main;
         }
 
 
@@ -647,12 +576,6 @@ namespace Random_File_Opener_Win_Forms
         private void AutoGenerateNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             _autoGenerateCooldown = TimeSpan.FromMilliseconds((int)(AutoGenerateNumericUpDown.Value * 1000));
-        }
-
-        private enum GenerateButtonColors
-        {
-            Green = 0,
-            Red = 1
         }
     }
     
