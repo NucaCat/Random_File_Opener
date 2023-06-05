@@ -53,11 +53,12 @@ namespace Random_File_Opener_Win_Forms
         private static bool _shouldAutoGenerate = false;
         private TimeSpan _autoGenerateCooldown = TimeSpan.FromSeconds(2);
 
-        private static readonly Dictionary<GenerateButtonColors, Color> _generateButtonColors = new Dictionary<GenerateButtonColors, Color>
-        {
-            { GenerateButtonColors.Green, Styles.Autogenerate},
-            { GenerateButtonColors.Red, Styles.DoNoAutogenerate}
-        };
+        private static readonly Dictionary<GenerateButtonColors, (Color Main, Color On)> _generateButtonColors 
+            = new Dictionary<GenerateButtonColors, (Color Main, Color On)>
+            {
+                { GenerateButtonColors.Green, (Main: Styles.Autogenerate, On: Styles.OnAutogenerate)},
+                { GenerateButtonColors.Red, (Main: Styles.DoNoAutogenerate, On: Styles.OnDoNoAutogenerate)}
+            };
 
         public Form1()
         {
@@ -99,6 +100,7 @@ namespace Random_File_Opener_Win_Forms
             foreach(var button in Controls.OfType<Button>())
             {
                 button.BackColor = Styles.Primary;
+                button.ForeColor = Styles.OnPrimary;
 
                 button.FlatStyle = FlatStyle.Flat;
                 button.FlatAppearance.BorderSize = 0;
@@ -626,9 +628,11 @@ namespace Random_File_Opener_Win_Forms
 
         private void ChangeAutogenerateButtonColor()
         {
-            AutoGenerateButton.BackColor = _generateButtonColors[_currentGenerateButtonColor];
-            AutoGenerateButton.FlatAppearance.MouseDownBackColor = _generateButtonColors[_currentGenerateButtonColor];
-            AutoGenerateButton.FlatAppearance.MouseOverBackColor = _generateButtonColors[_currentGenerateButtonColor];
+            AutoGenerateButton.BackColor = _generateButtonColors[_currentGenerateButtonColor].Main;
+            AutoGenerateButton.ForeColor = _generateButtonColors[_currentGenerateButtonColor].On;
+            
+            AutoGenerateButton.FlatAppearance.MouseDownBackColor = _generateButtonColors[_currentGenerateButtonColor].Main;
+            AutoGenerateButton.FlatAppearance.MouseOverBackColor = _generateButtonColors[_currentGenerateButtonColor].Main;
         }
 
 

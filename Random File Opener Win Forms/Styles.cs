@@ -11,16 +11,19 @@ namespace Random_File_Opener_Win_Forms
         public static Color Background { get; } = ColorTranslator.FromHtml("#121212");
         public static Color Surface { get; } = ColorTranslator.FromHtml("#1F1B24");
         public static Color LighterSurface { get; } = ColorTranslator.FromHtml("#2A2531"); // 5% lighter
+
         public static Color Error { get; } = ColorTranslator.FromHtml("#CF6679");
+        
+        public static Color Autogenerate { get; } = Secondary;
+        public static Color DoNoAutogenerate { get; } = Error;
 
         public static Color OnPrimary { get; } = ColorTranslator.FromHtml("#000000");
         public static Color OnSecondary { get; } = ColorTranslator.FromHtml("#000000");
         public static Color OnBackground { get; } = ColorTranslator.FromHtml("#FFFFFF");
         public static Color OnSurface { get; } = ColorTranslator.FromHtml("#FFFFFF");
         public static Color OnError { get; } = ColorTranslator.FromHtml("#000000");
-        
-        
-        public static Color Autogenerate { get; } = ColorTranslator.FromHtml("#03DAC6");
-        public static Color DoNoAutogenerate { get; } = ColorTranslator.FromHtml("#CF6679");
+
+        public static Color OnAutogenerate { get; } = OnSecondary;
+        public static Color OnDoNoAutogenerate { get; } = OnError;
     }
 }
