@@ -32,8 +32,6 @@ namespace Random_File_Opener_Win_Forms
         private static bool _shouldAutoGenerate = false;
         private TimeSpan _autoGenerateCooldown = TimeSpan.FromSeconds(2);
 
-        private ImageService _imageService = new ImageService();
-
         public Form1()
         {
             InitializeComponent();
@@ -132,7 +130,7 @@ namespace Random_File_Opener_Win_Forms
 
         private void AddImageToPreview(GeneratedFileListItem file)
         {
-            var images = _imageService.GetFitImages(file, ImagePictureBox, _pictureBoxesInSequence);
+            var images = ImageService.GetFitImages(file, ImagePictureBox, _pictureBoxesInSequence);
 
             if (images.Length == 0)
                 return;

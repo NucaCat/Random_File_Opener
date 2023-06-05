@@ -9,9 +9,9 @@ using NReco.VideoConverter;
 
 namespace Random_File_Opener_Win_Forms
 {
-    internal sealed class ImageService
+    internal static class ImageService
     {
-        public Bitmap[] GetFitImages(GeneratedFileListItem file, PictureBox largePictureBox, PictureBox[] smallPictureBoxes)
+        public static Bitmap[] GetFitImages(GeneratedFileListItem file, PictureBox largePictureBox, PictureBox[] smallPictureBoxes)
         {
             var sourceImage = GetSourceImage(file);
 
@@ -28,7 +28,7 @@ namespace Random_File_Opener_Win_Forms
             return resized;
         }
 
-        private Bitmap[] GetSourceImage(GeneratedFileListItem file)
+        private static Bitmap[] GetSourceImage(GeneratedFileListItem file)
         {
             var extension = Utilities.ExtractExtension(file.FileName);
             
@@ -41,7 +41,7 @@ namespace Random_File_Opener_Win_Forms
             return Array.Empty<Bitmap>();
         }
 
-        private Bitmap[] GetVideoThumbnails(GeneratedFileListItem file, params TimeSpan[] positions)
+        private static Bitmap[] GetVideoThumbnails(GeneratedFileListItem file, params TimeSpan[] positions)
         {
             var thumbnails = positions.Prepend(TimeSpan.FromSeconds(1))
                 .AsParallel()
@@ -56,7 +56,7 @@ namespace Random_File_Opener_Win_Forms
             return thumbnails;
         }
 
-        private Bitmap GetThumbnailAtPosition(GeneratedFileListItem file, TimeSpan position)
+        private static Bitmap GetThumbnailAtPosition(GeneratedFileListItem file, TimeSpan position)
         {
             var ffmpeg = new FFMpegConverter();
 
@@ -69,7 +69,7 @@ namespace Random_File_Opener_Win_Forms
             return new Bitmap(thumbnailStream);
         }
 
-        private Bitmap ResizeImageToFitPictureBox(Bitmap sourceImage, Size sizeToFit)
+        private static Bitmap ResizeImageToFitPictureBox(Bitmap sourceImage, Size sizeToFit)
         {
             var (height, width) = DimensionsToFitPictureBox(sourceImage, sizeToFit);
 
@@ -77,7 +77,7 @@ namespace Random_File_Opener_Win_Forms
             return resized;
         }
 
-        private (int height, int width) DimensionsToFitPictureBox(Bitmap sourceImage, Size sizeToFit)
+        private static (int height, int width) DimensionsToFitPictureBox(Bitmap sourceImage, Size sizeToFit)
         {
             var height = sourceImage.Height;
             var width = sourceImage.Width;
