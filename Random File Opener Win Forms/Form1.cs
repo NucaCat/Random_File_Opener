@@ -28,6 +28,9 @@ namespace Random_File_Opener_Win_Forms
         {
             "MP4", "MKV",
         };
+        private FFMpegConverter _ffmpeg = new FFMpegConverter();
+
+        private PictureBox[] _pictureBoxesInSequence;
         
         private static readonly string _emptyFilter = "*";
         private static readonly string _settingsFileName = "!appsettings.json";
@@ -65,6 +68,13 @@ namespace Random_File_Opener_Win_Forms
             AutoGenerateButton.BackColor = _generateButtonColors[_currentGenerateButtonColor];
 
             var currentDirectory = Directory.GetCurrentDirectory();
+
+            _pictureBoxesInSequence = new[]
+            {
+                videoThumbnailFirstPictureBox,
+                videoThumbnailSecondPictureBox,
+                videoThumbnailThirdPictureBox
+            };
 
             Initialize(currentDirectory, _filter);
 
@@ -182,32 +192,86 @@ namespace Random_File_Opener_Win_Forms
         {
             var sourceImage = GetSourceImage(file);
 
-            if (sourceImage == null)
+            if (sourceImage.Length == 0)
                 return;
 
-            var resized = ResizeImageToFitPictureBox(sourceImage);
-
-            PictureBox.InvokeIfRequired(() => PictureBox.Image = resized);
+            var resized = sourceImage
+                .Select(ResizeImageToFitPictureBox)
+                .ToArray();
+            
+            if (resized.Length == 1)
+            {
+                PictureBox.InvokeIfRequired(() =>
+                {
+                    PictureBox.Image = resized[0];
+                    PictureBox.Visible = true;
+                });
+                foreach (var pictureBox in _pictureBoxesInSequence)
+                {
+                    pictureBox.InvokeIfRequired(() =>
+                    {
+                        pictureBox.Visible = false;
+                    });
+                }
+            }
+            
+            if (resized.Length != 1)
+            {
+                PictureBox.InvokeIfRequired(() =>
+                {
+                    PictureBox.Visible = false;
+                });
+                
+                foreach (var (pictureBox, image) in _pictureBoxesInSequence.Zip(resized, (u, v) => (PictureBox: u, Image: v)))
+                {
+                    pictureBox.InvokeIfRequired(() =>
+                    {
+                        pictureBox.Image = image;
+                        pictureBox.Visible = true;
+                    });
+                }
+            }
         }
 
-        private Bitmap GetSourceImage(ListItem file)
+        private Bitmap[] GetSourceImage(ListItem file)
         {
             var extension = ExtractExtension(file.FileName);
             
             if (_imageExtensions.Contains(extension))
-                return new Bitmap(file.Path);
+                return new [] { new Bitmap(file.Path) };
 
             if (_videoExtensions.Contains(extension))
-            {
-                var thumbnailStream = new MemoryStream();
-                var ffMpeg = new FFMpegConverter();
-                ffMpeg.GetVideoThumbnail(file.Path, thumbnailStream, 60);
+                return GetVideoThumbnails(file, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(12), TimeSpan.FromMinutes(20));
 
-                var bitmap = new Bitmap(thumbnailStream);
-                return bitmap;
+            return Array.Empty<Bitmap>();
+        }
+
+        private Bitmap[] GetVideoThumbnails(ListItem file, params TimeSpan[] positions)
+        {
+            var firstThumbnail = GetThumbnailAtPosition(file, positions[0]);
+
+            if (firstThumbnail == null || positions.Length == 1)
+            {
+                var thumbnailAtStart = GetThumbnailAtPosition(file, TimeSpan.FromSeconds(1));
+                return thumbnailAtStart == null 
+                    ? Array.Empty<Bitmap>() 
+                    : new[] { thumbnailAtStart };
             }
 
-            return null;
+            var remainingThumbnails = positions.Skip(1).Select(u => GetThumbnailAtPosition(file, u)); 
+
+            return new []{ firstThumbnail }.Concat(remainingThumbnails).Where(u => u != null).ToArray();
+        }
+
+        private Bitmap GetThumbnailAtPosition(ListItem file, TimeSpan position)
+        {
+            var thumbnailStream = new MemoryStream();
+            _ffmpeg.GetVideoThumbnail(file.Path, thumbnailStream, (float)position.TotalSeconds);
+
+            if (thumbnailStream.Length == 0)
+                return null;
+            
+            return new Bitmap(thumbnailStream);
         }
 
         private Bitmap ResizeImageToFitPictureBox(Bitmap sourceImage)

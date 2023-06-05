@@ -42,15 +42,21 @@
             this.OpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenInExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.скопироватьАдресВБуферОбменаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FileAddressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FileNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PictureBox = new System.Windows.Forms.PictureBox();
             this.AutoGenerateButton = new System.Windows.Forms.Button();
             this.AutoGenerateNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.videoThumbnailFirstPictureBox = new System.Windows.Forms.PictureBox();
+            this.videoThumbnailSecondPictureBox = new System.Windows.Forms.PictureBox();
+            this.videoThumbnailThirdPictureBox = new System.Windows.Forms.PictureBox();
             this.ListBoxContextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AutoGenerateNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.videoThumbnailFirstPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.videoThumbnailSecondPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.videoThumbnailThirdPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // listBox1
@@ -58,9 +64,9 @@
             this.listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 29;
-            this.listBox1.Location = new System.Drawing.Point(896, 12);
+            this.listBox1.Location = new System.Drawing.Point(1024, 14);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(869, 845);
+            this.listBox1.Size = new System.Drawing.Size(868, 990);
             this.listBox1.TabIndex = 0;
             this.listBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox1_KeyDown);
             this.listBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDoubleClick);
@@ -167,17 +173,24 @@
             this.скопироватьАдресВБуферОбменаToolStripMenuItem.Size = new System.Drawing.Size(286, 24);
             this.скопироватьАдресВБуферОбменаToolStripMenuItem.Text = "Скопировать в буфер обмена";
             // 
+            // FileToolStripMenuItem
+            // 
+            this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
+            this.FileToolStripMenuItem.Size = new System.Drawing.Size(146, 24);
+            this.FileToolStripMenuItem.Text = "Файл";
+            this.FileToolStripMenuItem.Click += new System.EventHandler(this.FileToolStripMenuItem_Click);
+            // 
             // FileAddressToolStripMenuItem
             // 
             this.FileAddressToolStripMenuItem.Name = "FileAddressToolStripMenuItem";
-            this.FileAddressToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.FileAddressToolStripMenuItem.Size = new System.Drawing.Size(146, 24);
             this.FileAddressToolStripMenuItem.Text = "Адрес";
             this.FileAddressToolStripMenuItem.Click += new System.EventHandler(this.FileAddressToolStripMenuItem_Click);
             // 
             // FileNameToolStripMenuItem
             // 
             this.FileNameToolStripMenuItem.Name = "FileNameToolStripMenuItem";
-            this.FileNameToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.FileNameToolStripMenuItem.Size = new System.Drawing.Size(146, 24);
             this.FileNameToolStripMenuItem.Text = "Название";
             this.FileNameToolStripMenuItem.Click += new System.EventHandler(this.FileNameToolStripMenuItem_Click);
             // 
@@ -185,7 +198,7 @@
             // 
             this.PictureBox.Location = new System.Drawing.Point(250, 12);
             this.PictureBox.Name = "PictureBox";
-            this.PictureBox.Size = new System.Drawing.Size(640, 840);
+            this.PictureBox.Size = new System.Drawing.Size(768, 990);
             this.PictureBox.TabIndex = 8;
             this.PictureBox.TabStop = false;
             // 
@@ -216,18 +229,41 @@
             this.AutoGenerateNumericUpDown.Value = new decimal(new int[] { 25, 0, 0, 131072 });
             this.AutoGenerateNumericUpDown.ValueChanged += new System.EventHandler(this.AutoGenerateNumericUpDown_ValueChanged);
             // 
-            // FileToolStripMenuItem
+            // videoThumbnailFirstPictureBox
             // 
-            this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
-            this.FileToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
-            this.FileToolStripMenuItem.Text = "Файл";
-            this.FileToolStripMenuItem.Click += new System.EventHandler(this.FileToolStripMenuItem_Click);
+            this.videoThumbnailFirstPictureBox.Location = new System.Drawing.Point(250, 12);
+            this.videoThumbnailFirstPictureBox.Name = "videoThumbnailFirstPictureBox";
+            this.videoThumbnailFirstPictureBox.Size = new System.Drawing.Size(768, 325);
+            this.videoThumbnailFirstPictureBox.TabIndex = 11;
+            this.videoThumbnailFirstPictureBox.TabStop = false;
+            this.videoThumbnailFirstPictureBox.Visible = false;
+            // 
+            // videoThumbnailSecondPictureBox
+            // 
+            this.videoThumbnailSecondPictureBox.Location = new System.Drawing.Point(250, 343);
+            this.videoThumbnailSecondPictureBox.Name = "videoThumbnailSecondPictureBox";
+            this.videoThumbnailSecondPictureBox.Size = new System.Drawing.Size(768, 325);
+            this.videoThumbnailSecondPictureBox.TabIndex = 12;
+            this.videoThumbnailSecondPictureBox.TabStop = false;
+            this.videoThumbnailSecondPictureBox.Visible = false;
+            // 
+            // videoThumbnailThirdPictureBox
+            // 
+            this.videoThumbnailThirdPictureBox.Location = new System.Drawing.Point(250, 674);
+            this.videoThumbnailThirdPictureBox.Name = "videoThumbnailThirdPictureBox";
+            this.videoThumbnailThirdPictureBox.Size = new System.Drawing.Size(768, 325);
+            this.videoThumbnailThirdPictureBox.TabIndex = 13;
+            this.videoThumbnailThirdPictureBox.TabStop = false;
+            this.videoThumbnailThirdPictureBox.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1777, 862);
+            this.ClientSize = new System.Drawing.Size(1904, 1041);
+            this.Controls.Add(this.videoThumbnailThirdPictureBox);
+            this.Controls.Add(this.videoThumbnailSecondPictureBox);
+            this.Controls.Add(this.videoThumbnailFirstPictureBox);
             this.Controls.Add(this.AutoGenerateNumericUpDown);
             this.Controls.Add(this.AutoGenerateButton);
             this.Controls.Add(this.PictureBox);
@@ -244,9 +280,18 @@
             this.ListBoxContextMenuStrip.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AutoGenerateNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.videoThumbnailFirstPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.videoThumbnailSecondPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.videoThumbnailThirdPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.PictureBox videoThumbnailThirdPictureBox;
+
+        private System.Windows.Forms.PictureBox videoThumbnailFirstPictureBox;
+
+        private System.Windows.Forms.PictureBox videoThumbnailSecondPictureBox;
 
         private System.Windows.Forms.ToolStripMenuItem FileToolStripMenuItem;
 
