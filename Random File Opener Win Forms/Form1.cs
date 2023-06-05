@@ -63,7 +63,7 @@ namespace Random_File_Opener_Win_Forms
             _filter = settings?.Filter ?? Consts.EmptyFilter;
             FilterTextBox.Text = _filter;
 
-            SearchModeButton.Text = SearchOptionFriendlyString(_searchOption);
+            SearchModeButton.Text = _searchOption.ToFriendlyString();
 
             ChangeAutogenerateButtonColor();
 
@@ -108,17 +108,6 @@ namespace Random_File_Opener_Win_Forms
                 })
                 .ToArray();
             _generatedIndexes = new HashSet<int>();
-        }
-
-        private string SearchOptionFriendlyString(SearchOption searchOption)
-        {
-            if (searchOption == SearchOption.AllDirectories)
-                return "С подпапками";
-
-            if (searchOption == SearchOption.TopDirectoryOnly)
-                return "Без подпапок";
-            
-            return string.Empty;
         }
 
         private void NextFileButton_Click(object sender, EventArgs e)
@@ -194,7 +183,7 @@ namespace Random_File_Opener_Win_Forms
 
         private Bitmap[] GetSourceImage(ListItem file)
         {
-            var extension = ExtractExtension(file.FileName);
+            var extension = Utilities.ExtractExtension(file.FileName);
             
             if (Consts.ImageExtensions.Contains(extension))
                 return new [] { new Bitmap(file.Path) };
@@ -299,9 +288,6 @@ namespace Random_File_Opener_Win_Forms
             return destImage;
         }
 
-        private string ExtractExtension(string fileName)
-            => fileName.Substring(fileName.LastIndexOf('.') + 1).ToUpper();
-
         private int GetNewIndex()
         {
             for (;;)
@@ -363,19 +349,11 @@ namespace Random_File_Opener_Win_Forms
 
         private void SearchModeButton_Click(object sender, EventArgs e)
         {
-            _searchOption = ChangeSearchOptions(_searchOption);
+            _searchOption = _searchOption.Next();
 
-            SearchModeButton.Text = SearchOptionFriendlyString(_searchOption);
+            SearchModeButton.Text = _searchOption.ToFriendlyString();
             
             Initialize(_currentDirectory, _filter);
-        }
-
-        private SearchOption ChangeSearchOptions(SearchOption searchOption)
-        {
-            if (searchOption == SearchOption.AllDirectories)
-                return SearchOption.TopDirectoryOnly;
-
-            return SearchOption.AllDirectories;
         }
 
         private void ChangeDirectory_Click(object sender, EventArgs e)
@@ -501,25 +479,9 @@ namespace Random_File_Opener_Win_Forms
             Clipboard.SetData(DataFormats.StringFormat, fileFromLocation.FileName);
         }
 
-        private class ListItem
-        {
-            public string DisplayValue { get; set; }
-            public string Path { get; set; }
-            public string FileName { get; set; }
-
-            public override string ToString()
-                => DisplayValue;
-        }
-        
-        private enum OpenVariants
-        {
-            OpenFile = 0,
-            OpenInExplorer = 1
-        }
-
         private void AutoGenerate_Click(object sender, EventArgs e)
         {
-            _currentGenerateButtonColor = ChangeGenerateButtonColors(_currentGenerateButtonColor);
+            _currentGenerateButtonColor = _currentGenerateButtonColor.Next();
 
             ChangeAutogenerateButtonColor();
 
@@ -535,33 +497,25 @@ namespace Random_File_Opener_Win_Forms
             AutoGenerateButton.FlatAppearance.MouseOverBackColor = Consts.GenerateButtonColors[_currentGenerateButtonColor].Main;
         }
 
-
-        private GenerateButtonColors ChangeGenerateButtonColors(GenerateButtonColors searchOption)
-        {
-            if (searchOption == GenerateButtonColors.Green)
-                return GenerateButtonColors.Red;
-
-            return GenerateButtonColors.Green;
-        }
-
         private void AutoGenerateNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             _autoGenerateCooldown = TimeSpan.FromMilliseconds((int)(AutoGenerateNumericUpDown.Value * 1000));
         }
-    }
-    
 
-    internal static class ControlExtensions
-    {
-        public static void InvokeIfRequired(this Control control, Action action)
+        private class ListItem
         {
-            if (control.InvokeRequired)
-            {
-                control.Invoke(action);
-                return;
-            }
+            public string DisplayValue { get; set; }
+            public string Path { get; set; }
+            public string FileName { get; set; }
 
-            action();
+            public override string ToString()
+                => DisplayValue;
+        }
+        
+        private enum OpenVariants
+        {
+            OpenFile = 0,
+            OpenInExplorer = 1
         }
     }
 }
