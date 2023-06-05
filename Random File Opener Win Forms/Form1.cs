@@ -96,40 +96,18 @@ namespace Random_File_Opener_Win_Forms
             _files = Directory.GetFiles(directory, filter, _searchOption)
                 .Select(u => {
                     var lastIndex = u.LastIndexOf("\\", StringComparison.InvariantCulture);
-                    var fileName = ExtractFileName(u, lastIndex);
+                    var fileName = Utilities.ExtractFileName(u, lastIndex);
                     return new ListItem
                     {
                         Path = u,
                         DisplayValue = fileName 
                                        + " "
-                                       + ExtractDirectory(directory, u, lastIndex),
+                                       + Utilities.ExtractDirectory(directory, u, lastIndex),
                         FileName = fileName,
                     };
                 })
                 .ToArray();
             _generatedIndexes = new HashSet<int>();
-        }
-
-        private string ExtractDirectory(string directory, string u, int lastIndex)
-        {
-            var str = RemoveTrailingSlash(u.Substring(directory.Length + 1, lastIndex - directory.Length));
-            if (string.IsNullOrWhiteSpace(str))
-                return string.Empty;
-
-            return $"({str})";
-        }
-
-        private static string ExtractFileName(string u, int lastIndex)
-        {
-            return u.Substring(lastIndex + 1);
-        }
-
-        private string RemoveTrailingSlash(string substring)
-        {
-            if (!string.IsNullOrWhiteSpace(substring) && substring.Last() == '\\')
-                return substring.Substring(0, substring.Length - 1);
-
-            return substring;
         }
 
         private string SearchOptionFriendlyString(SearchOption searchOption)
