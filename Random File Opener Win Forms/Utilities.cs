@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -29,6 +31,16 @@ namespace Random_File_Opener_Win_Forms
 
         public static string ExtractExtension(string fileName)
             => fileName.Substring(fileName.LastIndexOf('.') + 1).ToUpper();
+
+        public static GeneratedFileListItem ListItemFromPoint(ListBox listBox, Point point)
+        {
+            var indexFromPoint = listBox.IndexFromPoint(point);
+            if (indexFromPoint == -1)
+                return null;
+
+            var listItem = (GeneratedFileListItem)listBox.Items[indexFromPoint];
+            return listItem;
+        }
 
         public static bool IsNullOrWhiteSpace(this string str)
             => string.IsNullOrWhiteSpace(str);
@@ -73,5 +85,16 @@ namespace Random_File_Opener_Win_Forms
 
         public static bool IsNotNullOrWhiteSpace(this string str)
             => !string.IsNullOrWhiteSpace(str);
+
+        public static IEnumerable<T> PadRightWithNulls<T>(this ICollection<T> source, int desiredSize) where T : class
+        {
+            if (source.Count >= desiredSize)
+                return source;
+
+            var countOfElementsToAdd = desiredSize - source.Count;
+
+            var padded = source.Concat(Enumerable.Range(0, countOfElementsToAdd).Select(_ => (T)null));
+            return padded;
+        }
     }
 }

@@ -25,13 +25,6 @@ namespace Random_File_Opener_Win_Forms
             TimeSpan.FromMinutes(12),
             TimeSpan.FromMinutes(20)
         };
-
-        public static Dictionary<GenerateButtonColors, (Color Main, Color On)> GenerateButtonColors { get; } 
-            = new Dictionary<GenerateButtonColors, (Color Main, Color On)>
-            {
-                { Random_File_Opener_Win_Forms.GenerateButtonColors.Green, (Main: Styles.Autogenerate, On: Styles.OnAutogenerate)},
-                { Random_File_Opener_Win_Forms.GenerateButtonColors.Red, (Main: Styles.DoNoAutogenerate, On: Styles.OnDoNoAutogenerate)}
-            };
     }
 
     internal enum GenerateButtonColors

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -66,7 +64,7 @@ namespace Random_File_Opener_Win_Forms
 
             SearchModeButton.Text = _searchOption.ToFriendlyString();
 
-            ChangeAutogenerateButtonColor();
+            Styler.ChangeAutogenerateButtonColor(AutoGenerateButton, _currentGenerateButtonColor);
 
             var currentDirectory = Directory.GetCurrentDirectory();
 
@@ -141,40 +139,38 @@ namespace Random_File_Opener_Win_Forms
             
             if (images.Length == 1)
             {
-                ImagePictureBox.InvokeIfRequired(() =>
-                {
-                    ImagePictureBox.Image = images[0];
-                    ImagePictureBox.Visible = true;
-                });
-                foreach (var pictureBox in _pictureBoxesInSequence)
-                {
-                    pictureBox.InvokeIfRequired(() =>
-                    {
-                        pictureBox.Visible = false;
-                    });
-                }
+                PlaceImageInBigPictureBox(images);
+                return;
             }
             
-            if (images.Length != 1)
-            {
-                ImagePictureBox.InvokeIfRequired(() =>
-                {
-                    ImagePictureBox.Visible = false;
-                });
+            PlaceImageInSmallPictureBoxes(images);
+        }
 
-                var imagesWithEmpty = images.Length < _pictureBoxesInSequence.Length
-                    ? images.Concat(Enumerable.Range(0, _pictureBoxesInSequence.Length - images.Length).Select(_ => (Bitmap)null))
-                    : images;
-                
-                foreach (var (pictureBox, image) in _pictureBoxesInSequence
-                    .Zip(imagesWithEmpty, (u, v) => (PictureBox: u, Image: v)))
+        private void PlaceImageInSmallPictureBoxes(Bitmap[] images)
+        {
+            ImagePictureBox.InvokeIfRequired(() => { ImagePictureBox.Visible = false; });
+
+            foreach (var (pictureBox, image) in _pictureBoxesInSequence
+                         .Zip(images.PadRightWithNulls(_pictureBoxesInSequence.Length), (u, v) => (PictureBox: u, Image: v)))
+            {
+                pictureBox.InvokeIfRequired(() =>
                 {
-                    pictureBox.InvokeIfRequired(() =>
-                    {
-                        pictureBox.Image = image;
-                        pictureBox.Visible = true;
-                    });
-                }
+                    pictureBox.Image = image;
+                    pictureBox.Visible = true;
+                });
+            }
+        }
+
+        private void PlaceImageInBigPictureBox(Bitmap[] images)
+        {
+            ImagePictureBox.InvokeIfRequired(() =>
+            {
+                ImagePictureBox.Image = images[0];
+                ImagePictureBox.Visible = true;
+            });
+            foreach (var pictureBox in _pictureBoxesInSequence)
+            {
+                pictureBox.InvokeIfRequired(() => { pictureBox.Visible = false; });
             }
         }
 
@@ -194,16 +190,6 @@ namespace Random_File_Opener_Win_Forms
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             GetFileFromPointAndOpen(e.Location, OpenVariants.OpenFile);
-        }
-
-        private GeneratedFileListItem ListItemFromPoint(Point point)
-        {
-            var indexFromPoint = GeneratedFilesListBox.IndexFromPoint(point);
-            if (indexFromPoint == -1)
-                return null;
-
-            var listItem = (GeneratedFileListItem)GeneratedFilesListBox.Items[indexFromPoint];
-            return listItem;
         }
 
         private void listBox1_KeyDown(object sender, KeyEventArgs e)
@@ -256,7 +242,7 @@ namespace Random_File_Opener_Win_Forms
             {
                 var result = openFolderDialog.ShowDialog();
 
-                if (result == CommonFileDialogResult.Ok && !string.IsNullOrWhiteSpace(openFolderDialog.FileName))
+                if (result == CommonFileDialogResult.Ok && openFolderDialog.FileName.IsNotNullOrWhiteSpace())
                 {
                     Initialize(openFolderDialog.FileName, _filter);
                 }
@@ -273,7 +259,7 @@ namespace Random_File_Opener_Win_Forms
             if (FilterTextBox.Text == _filter)
                 return;
             
-            if (string.IsNullOrWhiteSpace(FilterTextBox.Text))
+            if (FilterTextBox.Text.IsNullOrWhiteSpace())
                 FilterTextBox.Text = Consts.EmptyFilter;
 
             _filter = FilterTextBox.Text;
@@ -302,7 +288,7 @@ namespace Random_File_Opener_Win_Forms
 
         private void GetFileFromPointAndOpen(Point location, OpenVariants openVariant)
         {
-            var listItem = ListItemFromPoint(location);
+            var listItem = Utilities.ListItemFromPoint(GeneratedFilesListBox, location);
             if (listItem == null)
                 return;
 
@@ -313,7 +299,7 @@ namespace Random_File_Opener_Win_Forms
         {
             _itemLocation = null;
             
-            var item = ListItemFromPoint(e.Location);
+            var item = Utilities.ListItemFromPoint(GeneratedFilesListBox, e.Location);
             if (item == null)
                 return;
 
@@ -338,7 +324,7 @@ namespace Random_File_Opener_Win_Forms
                 return;
             }
             
-            var fileFromLocation = ListItemFromPoint(_itemLocation.Value);
+            var fileFromLocation = Utilities.ListItemFromPoint(GeneratedFilesListBox, _itemLocation.Value);
             Clipboard.SetData(DataFormats.StringFormat, fileFromLocation.Path);
         }
 
@@ -350,7 +336,7 @@ namespace Random_File_Opener_Win_Forms
                 return;
             }
             
-            var fileFromLocation = ListItemFromPoint(_itemLocation.Value);
+            var fileFromLocation = Utilities.ListItemFromPoint(GeneratedFilesListBox, _itemLocation.Value);
             Clipboard.SetFileDropList(new StringCollection
             {
                 fileFromLocation.Path,
@@ -365,7 +351,7 @@ namespace Random_File_Opener_Win_Forms
                 return;
             }
             
-            var fileFromLocation = ListItemFromPoint(_itemLocation.Value);
+            var fileFromLocation = Utilities.ListItemFromPoint(GeneratedFilesListBox, _itemLocation.Value);
             Clipboard.SetData(DataFormats.StringFormat, fileFromLocation.FileName);
         }
 
@@ -373,18 +359,9 @@ namespace Random_File_Opener_Win_Forms
         {
             _currentGenerateButtonColor = _currentGenerateButtonColor.Next();
 
-            ChangeAutogenerateButtonColor();
+            Styler.ChangeAutogenerateButtonColor(AutoGenerateButton, _currentGenerateButtonColor);
 
             _shouldAutoGenerate = !_shouldAutoGenerate;
-        }
-
-        private void ChangeAutogenerateButtonColor()
-        {
-            AutoGenerateButton.BackColor = Consts.GenerateButtonColors[_currentGenerateButtonColor].Main;
-            AutoGenerateButton.ForeColor = Consts.GenerateButtonColors[_currentGenerateButtonColor].On;
-            
-            AutoGenerateButton.FlatAppearance.MouseDownBackColor = Consts.GenerateButtonColors[_currentGenerateButtonColor].Main;
-            AutoGenerateButton.FlatAppearance.MouseOverBackColor = Consts.GenerateButtonColors[_currentGenerateButtonColor].Main;
         }
 
         private void AutoGenerateNumericUpDown_ValueChanged(object sender, EventArgs e)
