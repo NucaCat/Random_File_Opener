@@ -28,9 +28,14 @@ namespace Random_File_Opener_Win_Forms
         {
             "MP4", "MKV",
         };
-        private FFMpegConverter _ffmpeg = new FFMpegConverter();
 
         private PictureBox[] _pictureBoxesInSequence;
+
+        private TimeSpan[] _videoThumbnailPositions = {
+            TimeSpan.FromMinutes(1),
+            TimeSpan.FromMinutes(12),
+            TimeSpan.FromMinutes(20)
+        };
         
         private static readonly string _emptyFilter = "*";
         private static readonly string _settingsFileName = "!appsettings.json";
@@ -221,8 +226,13 @@ namespace Random_File_Opener_Win_Forms
                 {
                     PictureBox.Visible = false;
                 });
+
+                var images = resized.Length < _pictureBoxesInSequence.Length
+                    ? resized.Concat(Enumerable.Range(0, _pictureBoxesInSequence.Length - resized.Length).Select(_ => (Bitmap)null))
+                    : resized;
                 
-                foreach (var (pictureBox, image) in _pictureBoxesInSequence.Zip(resized, (u, v) => (PictureBox: u, Image: v)))
+                foreach (var (pictureBox, image) in _pictureBoxesInSequence
+                    .Zip(images, (u, v) => (PictureBox: u, Image: v)))
                 {
                     pictureBox.InvokeIfRequired(() =>
                     {
@@ -241,32 +251,32 @@ namespace Random_File_Opener_Win_Forms
                 return new [] { new Bitmap(file.Path) };
 
             if (_videoExtensions.Contains(extension))
-                return GetVideoThumbnails(file, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(12), TimeSpan.FromMinutes(20));
+                return GetVideoThumbnails(file, _videoThumbnailPositions);
 
             return Array.Empty<Bitmap>();
         }
 
         private Bitmap[] GetVideoThumbnails(ListItem file, params TimeSpan[] positions)
         {
-            var firstThumbnail = GetThumbnailAtPosition(file, positions[0]);
+            var thumbnails = positions.Prepend(TimeSpan.FromSeconds(1))
+                .AsParallel()
+                .AsOrdered()
+                .Select(u => GetThumbnailAtPosition(file, u))
+                .Where(u => u != null)
+                .ToArray();
 
-            if (firstThumbnail == null || positions.Length == 1)
-            {
-                var thumbnailAtStart = GetThumbnailAtPosition(file, TimeSpan.FromSeconds(1));
-                return thumbnailAtStart == null 
-                    ? Array.Empty<Bitmap>() 
-                    : new[] { thumbnailAtStart };
-            }
+            if (thumbnails.Length == positions.Length + 1)
+                return thumbnails.Skip(1).ToArray();
 
-            var remainingThumbnails = positions.Skip(1).Select(u => GetThumbnailAtPosition(file, u)); 
-
-            return new []{ firstThumbnail }.Concat(remainingThumbnails).Where(u => u != null).ToArray();
+            return thumbnails;
         }
 
         private Bitmap GetThumbnailAtPosition(ListItem file, TimeSpan position)
         {
+            var ffmpeg = new FFMpegConverter();
+
             var thumbnailStream = new MemoryStream();
-            _ffmpeg.GetVideoThumbnail(file.Path, thumbnailStream, (float)position.TotalSeconds);
+            ffmpeg.GetVideoThumbnail(file.Path, thumbnailStream, (float)position.TotalSeconds);
 
             if (thumbnailStream.Length == 0)
                 return null;
