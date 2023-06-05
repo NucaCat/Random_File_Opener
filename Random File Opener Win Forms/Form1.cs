@@ -169,7 +169,7 @@ namespace Random_File_Opener_Win_Forms
 
         private void NextFileButton_Click(object sender, EventArgs e)
         {
-            if (_files.Length == 0 || _files.Length == 1)
+            if (_files.Length == 0 || (_files.Length == 1 && _generatedIndexes.Count == 1))
                 return;
             
             if (_generatedIndexes.Count != 0 && _generatedIndexes.Count == _files.Length)
