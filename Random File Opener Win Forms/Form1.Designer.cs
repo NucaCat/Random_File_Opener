@@ -47,7 +47,7 @@
             this.FileNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ImagePictureBox = new System.Windows.Forms.PictureBox();
             this.AutoGenerateButton = new System.Windows.Forms.Button();
-            this.AutoGenerateNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.AutoGenerateNumericUpDown = new FlatNumericUpDown();
             this.VideoThumbnailFirstPictureBox = new System.Windows.Forms.PictureBox();
             this.VideoThumbnailSecondPictureBox = new System.Windows.Forms.PictureBox();
             this.VideoThumbnailThirdPictureBox = new System.Windows.Forms.PictureBox();
@@ -295,7 +295,7 @@
 
         private System.Windows.Forms.ToolStripMenuItem FileToolStripMenuItem;
 
-        private System.Windows.Forms.NumericUpDown AutoGenerateNumericUpDown;
+        private FlatNumericUpDown AutoGenerateNumericUpDown;
 
         private System.Windows.Forms.Button AutoGenerateButton;
 

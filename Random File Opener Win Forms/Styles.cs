@@ -10,6 +10,7 @@ namespace Random_File_Opener_Win_Forms
 
         public static Color Background { get; } = ColorTranslator.FromHtml("#121212");
         public static Color Surface { get; } = ColorTranslator.FromHtml("#1F1B24");
+        public static Color LighterSurface { get; } = ColorTranslator.FromHtml("#2A2531"); // 5% lighter
         public static Color Error { get; } = ColorTranslator.FromHtml("#CF6679");
 
         public static Color OnPrimary { get; } = ColorTranslator.FromHtml("#000000");

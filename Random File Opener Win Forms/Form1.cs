@@ -93,6 +93,8 @@ namespace Random_File_Opener_Win_Forms
         private void ApplyStyles()
         {
             BackColor = Styles.Background;
+
+            Console.WriteLine(Styles.LighterSurface.A);
             
             foreach(var button in Controls.OfType<Button>())
             {
@@ -106,7 +108,7 @@ namespace Random_File_Opener_Win_Forms
             
             foreach(var textBox in Controls.OfType<TextBox>())
             {
-                textBox.BackColor = Styles.Surface;
+                textBox.BackColor = Styles.LighterSurface;
                 textBox.ForeColor = Styles.OnSurface;
 
                 textBox.BorderStyle = BorderStyle.None;
@@ -114,19 +116,24 @@ namespace Random_File_Opener_Win_Forms
             
             foreach(var pictureBox in Controls.OfType<PictureBox>())
             {
-                pictureBox.BackColor = Styles.Surface;
+                pictureBox.BackColor = Styles.LighterSurface;
                 pictureBox.ForeColor = Styles.OnSurface;
 
                 pictureBox.BorderStyle = BorderStyle.None;
             }
 
-            GeneratedFilesListBox.BackColor = Styles.Surface;
+            GeneratedFilesListBox.BackColor = Styles.LighterSurface;
             GeneratedFilesListBox.ForeColor = Styles.OnSurface;
             GeneratedFilesListBox.BorderStyle = BorderStyle.None;
 
-            AutoGenerateNumericUpDown.BackColor = Styles.Surface;
+            AutoGenerateNumericUpDown.BackColor = Styles.LighterSurface;
             AutoGenerateNumericUpDown.ForeColor = Styles.OnSurface;
-            AutoGenerateNumericUpDown.BorderStyle = BorderStyle.None;
+            AutoGenerateNumericUpDown.BorderStyle = BorderStyle.FixedSingle;
+            
+            AutoGenerateNumericUpDown.ButtonHighlightColor = Styles.Primary;
+            AutoGenerateNumericUpDown.BorderColor = Styles.LighterSurface;
+            AutoGenerateNumericUpDown.Controls[0].BackColor = Styles.Primary;
+            AutoGenerateNumericUpDown.Controls[0].ForeColor = Styles.Primary;
         }
 
         private async Task StartAutoGenerate()
