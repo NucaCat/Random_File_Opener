@@ -55,13 +55,14 @@ namespace Random_File_Opener_Win_Forms
 
         private static readonly Dictionary<GenerateButtonColors, Color> _generateButtonColors = new Dictionary<GenerateButtonColors, Color>
         {
-            { GenerateButtonColors.Green, Color.FromArgb(240, 255, 185)},
-            { GenerateButtonColors.Red, Color.FromArgb(255, 198, 185)}
+            { GenerateButtonColors.Green, Styles.Autogenerate},
+            { GenerateButtonColors.Red, Styles.DoNoAutogenerate}
         };
 
         public Form1()
         {
             InitializeComponent();
+            ApplyStyles();
 
             var settings = GetSettingsFromFile();
 
@@ -70,15 +71,15 @@ namespace Random_File_Opener_Win_Forms
 
             SearchModeButton.Text = SearchOptionFriendlyString(_searchOption);
 
-            AutoGenerateButton.BackColor = _generateButtonColors[_currentGenerateButtonColor];
+            ChangeAutogenerateButtonColor();
 
             var currentDirectory = Directory.GetCurrentDirectory();
 
             _pictureBoxesInSequence = new[]
             {
-                videoThumbnailFirstPictureBox,
-                videoThumbnailSecondPictureBox,
-                videoThumbnailThirdPictureBox
+                VideoThumbnailFirstPictureBox,
+                VideoThumbnailSecondPictureBox,
+                VideoThumbnailThirdPictureBox
             };
 
             Initialize(currentDirectory, _filter);
@@ -87,6 +88,45 @@ namespace Random_File_Opener_Win_Forms
             AutoGenerateNumericUpDown.Value = (int)_autoGenerateCooldown.TotalMilliseconds / 1000;
 
             Task.Run(StartAutoGenerate);
+        }
+
+        private void ApplyStyles()
+        {
+            BackColor = Styles.Background;
+            
+            foreach(var button in Controls.OfType<Button>())
+            {
+                button.BackColor = Styles.Primary;
+
+                button.FlatStyle = FlatStyle.Flat;
+                button.FlatAppearance.BorderSize = 0;
+                button.FlatAppearance.MouseDownBackColor = Styles.Primary;
+                button.FlatAppearance.MouseOverBackColor = Styles.Primary;
+            }
+            
+            foreach(var textBox in Controls.OfType<TextBox>())
+            {
+                textBox.BackColor = Styles.Surface;
+                textBox.ForeColor = Styles.OnSurface;
+
+                textBox.BorderStyle = BorderStyle.None;
+            }
+            
+            foreach(var pictureBox in Controls.OfType<PictureBox>())
+            {
+                pictureBox.BackColor = Styles.Surface;
+                pictureBox.ForeColor = Styles.OnSurface;
+
+                pictureBox.BorderStyle = BorderStyle.None;
+            }
+
+            GeneratedFilesListBox.BackColor = Styles.Surface;
+            GeneratedFilesListBox.ForeColor = Styles.OnSurface;
+            GeneratedFilesListBox.BorderStyle = BorderStyle.None;
+
+            AutoGenerateNumericUpDown.BackColor = Styles.Surface;
+            AutoGenerateNumericUpDown.ForeColor = Styles.OnSurface;
+            AutoGenerateNumericUpDown.BorderStyle = BorderStyle.None;
         }
 
         private async Task StartAutoGenerate()
@@ -121,7 +161,7 @@ namespace Random_File_Opener_Win_Forms
             _filter = filter;
             DirectoryTextBox.Text = directory.Substring(directory.LastIndexOf('\\') + 1);
 
-            listBox1.Items.Clear();
+            GeneratedFilesListBox.Items.Clear();
             _files = Directory.GetFiles(directory, filter, _searchOption)
                 .Select(u => {
                     var lastIndex = u.LastIndexOf("\\", StringComparison.InvariantCulture);
@@ -188,7 +228,7 @@ namespace Random_File_Opener_Win_Forms
 
             var file = _files[index];
 
-            listBox1.InvokeIfRequired(() => listBox1.Items.Add(file));
+            GeneratedFilesListBox.InvokeIfRequired(() => GeneratedFilesListBox.Items.Add(file));
 
             AddImageToPreview(file);
         }
@@ -206,10 +246,10 @@ namespace Random_File_Opener_Win_Forms
             
             if (resized.Length == 1)
             {
-                PictureBox.InvokeIfRequired(() =>
+                ImagePictureBox.InvokeIfRequired(() =>
                 {
-                    PictureBox.Image = resized[0];
-                    PictureBox.Visible = true;
+                    ImagePictureBox.Image = resized[0];
+                    ImagePictureBox.Visible = true;
                 });
                 foreach (var pictureBox in _pictureBoxesInSequence)
                 {
@@ -222,9 +262,9 @@ namespace Random_File_Opener_Win_Forms
             
             if (resized.Length != 1)
             {
-                PictureBox.InvokeIfRequired(() =>
+                ImagePictureBox.InvokeIfRequired(() =>
                 {
-                    PictureBox.Visible = false;
+                    ImagePictureBox.Visible = false;
                 });
 
                 var images = resized.Length < _pictureBoxesInSequence.Length
@@ -297,10 +337,10 @@ namespace Random_File_Opener_Win_Forms
             var height = sourceImage.Height;
             var width = sourceImage.Width;
 
-            if (height < PictureBox.Size.Height && width < PictureBox.Size.Width)
+            if (height < ImagePictureBox.Size.Height && width < ImagePictureBox.Size.Width)
             {
-                var hRatio = PictureBox.Size.Height / (double)height;
-                var wRatio = PictureBox.Size.Width / (double)width;
+                var hRatio = ImagePictureBox.Size.Height / (double)height;
+                var wRatio = ImagePictureBox.Size.Width / (double)width;
 
                 var minRatio = Math.Min(hRatio, wRatio);
                 height = (int)(height * minRatio);
@@ -308,16 +348,16 @@ namespace Random_File_Opener_Win_Forms
                 return (height, width);
             }
 
-            if (height > PictureBox.Size.Height)
+            if (height > ImagePictureBox.Size.Height)
             {
-                var ratio = (double)height / PictureBox.Size.Height;
+                var ratio = (double)height / ImagePictureBox.Size.Height;
                 height = (int)Math.Ceiling(height / ratio);
                 width = (int)Math.Ceiling(width / ratio);
             }
 
-            if (width > PictureBox.Size.Width)
+            if (width > ImagePictureBox.Size.Width)
             {
-                var ratio = (double)width / PictureBox.Size.Width;
+                var ratio = (double)width / ImagePictureBox.Size.Width;
                 height = (int)Math.Ceiling(height / ratio);
                 width = (int)Math.Ceiling(width / ratio);
             }
@@ -373,11 +413,11 @@ namespace Random_File_Opener_Win_Forms
 
         private ListItem ListItemFromPoint(Point point)
         {
-            var indexFromPoint = listBox1.IndexFromPoint(point);
+            var indexFromPoint = GeneratedFilesListBox.IndexFromPoint(point);
             if (indexFromPoint == -1)
                 return null;
 
-            var listItem = (ListItem)listBox1.Items[indexFromPoint];
+            var listItem = (ListItem)GeneratedFilesListBox.Items[indexFromPoint];
             return listItem;
         }
 
@@ -387,14 +427,14 @@ namespace Random_File_Opener_Win_Forms
             {
                 Clipboard.SetFileDropList(new StringCollection
                 {
-                    ((ListItem)listBox1.SelectedItem).Path,
+                    ((ListItem)GeneratedFilesListBox.SelectedItem).Path,
                 });
                 return;
             }
 
             if (e.KeyCode == Keys.Enter)
             {
-                GetFileAndOpen((ListItem)listBox1.SelectedItem, OpenVariants.OpenInExplorer);
+                GetFileAndOpen((ListItem)GeneratedFilesListBox.SelectedItem, OpenVariants.OpenInExplorer);
                 return;
             }
         }
@@ -448,7 +488,7 @@ namespace Random_File_Opener_Win_Forms
 
         private void ClearButton_Click(object sender, EventArgs e)
         {
-            listBox1.Items.Clear();
+            GeneratedFilesListBox.Items.Clear();
         }
 
         private void ApplyFilter_Click(object sender, EventArgs e)
@@ -572,11 +612,18 @@ namespace Random_File_Opener_Win_Forms
         {
             _currentGenerateButtonColor = ChangeGenerateButtonColors(_currentGenerateButtonColor);
 
-            AutoGenerateButton.BackColor = _generateButtonColors[_currentGenerateButtonColor];
+            ChangeAutogenerateButtonColor();
 
             _shouldAutoGenerate = !_shouldAutoGenerate;
         }
-        
+
+        private void ChangeAutogenerateButtonColor()
+        {
+            AutoGenerateButton.BackColor = _generateButtonColors[_currentGenerateButtonColor];
+            AutoGenerateButton.FlatAppearance.MouseDownBackColor = _generateButtonColors[_currentGenerateButtonColor];
+            AutoGenerateButton.FlatAppearance.MouseOverBackColor = _generateButtonColors[_currentGenerateButtonColor];
+        }
+
 
         private GenerateButtonColors ChangeGenerateButtonColors(GenerateButtonColors searchOption)
         {

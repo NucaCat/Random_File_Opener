@@ -30,47 +30,47 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.GeneratedFilesListBox = new System.Windows.Forms.ListBox();
             this.NextFileButton = new System.Windows.Forms.Button();
             this.SearchModeButton = new System.Windows.Forms.Button();
-            this.ChangeDirectory = new System.Windows.Forms.Button();
+            this.ChangeDirectoryButton = new System.Windows.Forms.Button();
             this.DirectoryTextBox = new System.Windows.Forms.TextBox();
             this.ClearButton = new System.Windows.Forms.Button();
             this.FilterTextBox = new System.Windows.Forms.TextBox();
-            this.ApplyFilter = new System.Windows.Forms.Button();
+            this.ApplyFilterButton = new System.Windows.Forms.Button();
             this.ListBoxContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.OpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenInExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.скопироватьАдресВБуферОбменаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CopyToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FileAddressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FileNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.PictureBox = new System.Windows.Forms.PictureBox();
+            this.ImagePictureBox = new System.Windows.Forms.PictureBox();
             this.AutoGenerateButton = new System.Windows.Forms.Button();
             this.AutoGenerateNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.videoThumbnailFirstPictureBox = new System.Windows.Forms.PictureBox();
-            this.videoThumbnailSecondPictureBox = new System.Windows.Forms.PictureBox();
-            this.videoThumbnailThirdPictureBox = new System.Windows.Forms.PictureBox();
+            this.VideoThumbnailFirstPictureBox = new System.Windows.Forms.PictureBox();
+            this.VideoThumbnailSecondPictureBox = new System.Windows.Forms.PictureBox();
+            this.VideoThumbnailThirdPictureBox = new System.Windows.Forms.PictureBox();
             this.ListBoxContextMenuStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AutoGenerateNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.videoThumbnailFirstPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.videoThumbnailSecondPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.videoThumbnailThirdPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VideoThumbnailFirstPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VideoThumbnailSecondPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VideoThumbnailThirdPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // listBox1
+            // GeneratedFilesListBox
             // 
-            this.listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 29;
-            this.listBox1.Location = new System.Drawing.Point(1024, 14);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(868, 990);
-            this.listBox1.TabIndex = 0;
-            this.listBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox1_KeyDown);
-            this.listBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDoubleClick);
-            this.listBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseUp);
+            this.GeneratedFilesListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.GeneratedFilesListBox.FormattingEnabled = true;
+            this.GeneratedFilesListBox.ItemHeight = 29;
+            this.GeneratedFilesListBox.Location = new System.Drawing.Point(1024, 14);
+            this.GeneratedFilesListBox.Name = "GeneratedFilesListBox";
+            this.GeneratedFilesListBox.Size = new System.Drawing.Size(868, 990);
+            this.GeneratedFilesListBox.TabIndex = 0;
+            this.GeneratedFilesListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox1_KeyDown);
+            this.GeneratedFilesListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDoubleClick);
+            this.GeneratedFilesListBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseUp);
             // 
             // NextFileButton
             // 
@@ -94,16 +94,16 @@
             this.SearchModeButton.UseVisualStyleBackColor = true;
             this.SearchModeButton.Click += new System.EventHandler(this.SearchModeButton_Click);
             // 
-            // ChangeDirectory
+            // ChangeDirectoryButton
             // 
-            this.ChangeDirectory.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ChangeDirectory.Location = new System.Drawing.Point(12, 96);
-            this.ChangeDirectory.Name = "ChangeDirectory";
-            this.ChangeDirectory.Size = new System.Drawing.Size(232, 159);
-            this.ChangeDirectory.TabIndex = 3;
-            this.ChangeDirectory.Text = "Изменить папку";
-            this.ChangeDirectory.UseVisualStyleBackColor = true;
-            this.ChangeDirectory.Click += new System.EventHandler(this.ChangeDirectory_Click);
+            this.ChangeDirectoryButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ChangeDirectoryButton.Location = new System.Drawing.Point(12, 96);
+            this.ChangeDirectoryButton.Name = "ChangeDirectoryButton";
+            this.ChangeDirectoryButton.Size = new System.Drawing.Size(232, 159);
+            this.ChangeDirectoryButton.TabIndex = 3;
+            this.ChangeDirectoryButton.Text = "Изменить папку";
+            this.ChangeDirectoryButton.UseVisualStyleBackColor = true;
+            this.ChangeDirectoryButton.Click += new System.EventHandler(this.ChangeDirectory_Click);
             // 
             // DirectoryTextBox
             // 
@@ -135,20 +135,20 @@
             this.FilterTextBox.Size = new System.Drawing.Size(232, 52);
             this.FilterTextBox.TabIndex = 6;
             // 
-            // ApplyFilter
+            // ApplyFilterButton
             // 
-            this.ApplyFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ApplyFilter.Location = new System.Drawing.Point(12, 377);
-            this.ApplyFilter.Name = "ApplyFilter";
-            this.ApplyFilter.Size = new System.Drawing.Size(232, 78);
-            this.ApplyFilter.TabIndex = 7;
-            this.ApplyFilter.Text = "Применить фильтр";
-            this.ApplyFilter.UseVisualStyleBackColor = true;
-            this.ApplyFilter.Click += new System.EventHandler(this.ApplyFilter_Click);
+            this.ApplyFilterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ApplyFilterButton.Location = new System.Drawing.Point(12, 377);
+            this.ApplyFilterButton.Name = "ApplyFilterButton";
+            this.ApplyFilterButton.Size = new System.Drawing.Size(232, 78);
+            this.ApplyFilterButton.TabIndex = 7;
+            this.ApplyFilterButton.Text = "Применить фильтр";
+            this.ApplyFilterButton.UseVisualStyleBackColor = true;
+            this.ApplyFilterButton.Click += new System.EventHandler(this.ApplyFilter_Click);
             // 
             // ListBoxContextMenuStrip
             // 
-            this.ListBoxContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.OpenToolStripMenuItem, this.OpenInExplorerToolStripMenuItem, this.скопироватьАдресВБуферОбменаToolStripMenuItem });
+            this.ListBoxContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.OpenToolStripMenuItem, this.OpenInExplorerToolStripMenuItem, this.CopyToClipboardToolStripMenuItem });
             this.ListBoxContextMenuStrip.Name = "ListBoxContextMenuStrip";
             this.ListBoxContextMenuStrip.Size = new System.Drawing.Size(287, 76);
             // 
@@ -166,12 +166,12 @@
             this.OpenInExplorerToolStripMenuItem.Text = "Открыть в проводнике";
             this.OpenInExplorerToolStripMenuItem.Click += new System.EventHandler(this.OpenInExplorerToolStripMenuItem_Click);
             // 
-            // скопироватьАдресВБуферОбменаToolStripMenuItem
+            // CopyToClipboardToolStripMenuItem
             // 
-            this.скопироватьАдресВБуферОбменаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.FileToolStripMenuItem, this.FileAddressToolStripMenuItem, this.FileNameToolStripMenuItem });
-            this.скопироватьАдресВБуферОбменаToolStripMenuItem.Name = "скопироватьАдресВБуферОбменаToolStripMenuItem";
-            this.скопироватьАдресВБуферОбменаToolStripMenuItem.Size = new System.Drawing.Size(286, 24);
-            this.скопироватьАдресВБуферОбменаToolStripMenuItem.Text = "Скопировать в буфер обмена";
+            this.CopyToClipboardToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.FileToolStripMenuItem, this.FileAddressToolStripMenuItem, this.FileNameToolStripMenuItem });
+            this.CopyToClipboardToolStripMenuItem.Name = "CopyToClipboardToolStripMenuItem";
+            this.CopyToClipboardToolStripMenuItem.Size = new System.Drawing.Size(286, 24);
+            this.CopyToClipboardToolStripMenuItem.Text = "Скопировать в буфер обмена";
             // 
             // FileToolStripMenuItem
             // 
@@ -194,13 +194,13 @@
             this.FileNameToolStripMenuItem.Text = "Название";
             this.FileNameToolStripMenuItem.Click += new System.EventHandler(this.FileNameToolStripMenuItem_Click);
             // 
-            // PictureBox
+            // ImagePictureBox
             // 
-            this.PictureBox.Location = new System.Drawing.Point(250, 12);
-            this.PictureBox.Name = "PictureBox";
-            this.PictureBox.Size = new System.Drawing.Size(768, 990);
-            this.PictureBox.TabIndex = 8;
-            this.PictureBox.TabStop = false;
+            this.ImagePictureBox.Location = new System.Drawing.Point(250, 12);
+            this.ImagePictureBox.Name = "ImagePictureBox";
+            this.ImagePictureBox.Size = new System.Drawing.Size(768, 990);
+            this.ImagePictureBox.TabIndex = 8;
+            this.ImagePictureBox.TabStop = false;
             // 
             // AutoGenerateButton
             // 
@@ -229,69 +229,69 @@
             this.AutoGenerateNumericUpDown.Value = new decimal(new int[] { 25, 0, 0, 131072 });
             this.AutoGenerateNumericUpDown.ValueChanged += new System.EventHandler(this.AutoGenerateNumericUpDown_ValueChanged);
             // 
-            // videoThumbnailFirstPictureBox
+            // VideoThumbnailFirstPictureBox
             // 
-            this.videoThumbnailFirstPictureBox.Location = new System.Drawing.Point(250, 12);
-            this.videoThumbnailFirstPictureBox.Name = "videoThumbnailFirstPictureBox";
-            this.videoThumbnailFirstPictureBox.Size = new System.Drawing.Size(768, 325);
-            this.videoThumbnailFirstPictureBox.TabIndex = 11;
-            this.videoThumbnailFirstPictureBox.TabStop = false;
-            this.videoThumbnailFirstPictureBox.Visible = false;
+            this.VideoThumbnailFirstPictureBox.Location = new System.Drawing.Point(250, 12);
+            this.VideoThumbnailFirstPictureBox.Name = "VideoThumbnailFirstPictureBox";
+            this.VideoThumbnailFirstPictureBox.Size = new System.Drawing.Size(768, 325);
+            this.VideoThumbnailFirstPictureBox.TabIndex = 11;
+            this.VideoThumbnailFirstPictureBox.TabStop = false;
+            this.VideoThumbnailFirstPictureBox.Visible = false;
             // 
-            // videoThumbnailSecondPictureBox
+            // VideoThumbnailSecondPictureBox
             // 
-            this.videoThumbnailSecondPictureBox.Location = new System.Drawing.Point(250, 343);
-            this.videoThumbnailSecondPictureBox.Name = "videoThumbnailSecondPictureBox";
-            this.videoThumbnailSecondPictureBox.Size = new System.Drawing.Size(768, 325);
-            this.videoThumbnailSecondPictureBox.TabIndex = 12;
-            this.videoThumbnailSecondPictureBox.TabStop = false;
-            this.videoThumbnailSecondPictureBox.Visible = false;
+            this.VideoThumbnailSecondPictureBox.Location = new System.Drawing.Point(250, 343);
+            this.VideoThumbnailSecondPictureBox.Name = "VideoThumbnailSecondPictureBox";
+            this.VideoThumbnailSecondPictureBox.Size = new System.Drawing.Size(768, 325);
+            this.VideoThumbnailSecondPictureBox.TabIndex = 12;
+            this.VideoThumbnailSecondPictureBox.TabStop = false;
+            this.VideoThumbnailSecondPictureBox.Visible = false;
             // 
-            // videoThumbnailThirdPictureBox
+            // VideoThumbnailThirdPictureBox
             // 
-            this.videoThumbnailThirdPictureBox.Location = new System.Drawing.Point(250, 674);
-            this.videoThumbnailThirdPictureBox.Name = "videoThumbnailThirdPictureBox";
-            this.videoThumbnailThirdPictureBox.Size = new System.Drawing.Size(768, 325);
-            this.videoThumbnailThirdPictureBox.TabIndex = 13;
-            this.videoThumbnailThirdPictureBox.TabStop = false;
-            this.videoThumbnailThirdPictureBox.Visible = false;
+            this.VideoThumbnailThirdPictureBox.Location = new System.Drawing.Point(250, 674);
+            this.VideoThumbnailThirdPictureBox.Name = "VideoThumbnailThirdPictureBox";
+            this.VideoThumbnailThirdPictureBox.Size = new System.Drawing.Size(768, 325);
+            this.VideoThumbnailThirdPictureBox.TabIndex = 13;
+            this.VideoThumbnailThirdPictureBox.TabStop = false;
+            this.VideoThumbnailThirdPictureBox.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1904, 1041);
-            this.Controls.Add(this.videoThumbnailThirdPictureBox);
-            this.Controls.Add(this.videoThumbnailSecondPictureBox);
-            this.Controls.Add(this.videoThumbnailFirstPictureBox);
+            this.Controls.Add(this.VideoThumbnailThirdPictureBox);
+            this.Controls.Add(this.VideoThumbnailSecondPictureBox);
+            this.Controls.Add(this.VideoThumbnailFirstPictureBox);
             this.Controls.Add(this.AutoGenerateNumericUpDown);
             this.Controls.Add(this.AutoGenerateButton);
-            this.Controls.Add(this.PictureBox);
-            this.Controls.Add(this.ApplyFilter);
+            this.Controls.Add(this.ImagePictureBox);
+            this.Controls.Add(this.ApplyFilterButton);
             this.Controls.Add(this.FilterTextBox);
             this.Controls.Add(this.ClearButton);
             this.Controls.Add(this.DirectoryTextBox);
-            this.Controls.Add(this.ChangeDirectory);
+            this.Controls.Add(this.ChangeDirectoryButton);
             this.Controls.Add(this.SearchModeButton);
             this.Controls.Add(this.NextFileButton);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.GeneratedFilesListBox);
             this.Name = "Form1";
             this.Text = "Генератор случайных файлов";
             this.ListBoxContextMenuStrip.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AutoGenerateNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.videoThumbnailFirstPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.videoThumbnailSecondPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.videoThumbnailThirdPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VideoThumbnailFirstPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VideoThumbnailSecondPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VideoThumbnailThirdPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
 
-        private System.Windows.Forms.PictureBox videoThumbnailThirdPictureBox;
+        private System.Windows.Forms.PictureBox VideoThumbnailThirdPictureBox;
 
-        private System.Windows.Forms.PictureBox videoThumbnailFirstPictureBox;
+        private System.Windows.Forms.PictureBox VideoThumbnailFirstPictureBox;
 
-        private System.Windows.Forms.PictureBox videoThumbnailSecondPictureBox;
+        private System.Windows.Forms.PictureBox VideoThumbnailSecondPictureBox;
 
         private System.Windows.Forms.ToolStripMenuItem FileToolStripMenuItem;
 
@@ -299,29 +299,29 @@
 
         private System.Windows.Forms.Button AutoGenerateButton;
 
-        private System.Windows.Forms.PictureBox PictureBox;
+        private System.Windows.Forms.PictureBox ImagePictureBox;
 
         private System.Windows.Forms.ToolStripMenuItem FileAddressToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem FileNameToolStripMenuItem;
 
-        private System.Windows.Forms.ToolStripMenuItem скопироватьАдресВБуферОбменаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CopyToClipboardToolStripMenuItem;
 
         private System.Windows.Forms.ContextMenuStrip ListBoxContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem OpenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem OpenInExplorerToolStripMenuItem;
 
         private System.Windows.Forms.TextBox FilterTextBox;
-        private System.Windows.Forms.Button ApplyFilter;
+        private System.Windows.Forms.Button ApplyFilterButton;
 
         private System.Windows.Forms.Button ClearButton;
 
         private System.Windows.Forms.TextBox DirectoryTextBox;
 
-        private System.Windows.Forms.Button ChangeDirectory;
+        private System.Windows.Forms.Button ChangeDirectoryButton;
 
         private System.Windows.Forms.Button SearchModeButton;
 
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox GeneratedFilesListBox;
         private System.Windows.Forms.Button NextFileButton;
 
         #endregion
