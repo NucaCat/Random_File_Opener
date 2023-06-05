@@ -12,6 +12,8 @@ using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Shell;
 using Newtonsoft.Json;
+using NReco.VideoConverter;
+
 // ReSharper disable LocalizableElement
 
 namespace Random_File_Opener_Win_Forms
@@ -24,7 +26,7 @@ namespace Random_File_Opener_Win_Forms
         };
         private static readonly HashSet<string> _videoExtensions = new HashSet<string>
         {
-            "MP4",
+            "MP4", "MKV",
         };
         
         private static readonly string _emptyFilter = "*";
@@ -180,6 +182,9 @@ namespace Random_File_Opener_Win_Forms
         {
             var sourceImage = GetSourceImage(file);
 
+            if (sourceImage == null)
+                return;
+
             var resized = ResizeImageToFitPictureBox(sourceImage);
 
             PictureBox.InvokeIfRequired(() => PictureBox.Image = resized);
@@ -193,7 +198,14 @@ namespace Random_File_Opener_Win_Forms
                 return new Bitmap(file.Path);
 
             if (_videoExtensions.Contains(extension))
-                return ShellFile.FromFilePath(file.Path).Thumbnail.Bitmap;
+            {
+                var thumbnailStream = new MemoryStream();
+                var ffMpeg = new FFMpegConverter();
+                ffMpeg.GetVideoThumbnail(file.Path, thumbnailStream, 60);
+
+                var bitmap = new Bitmap(thumbnailStream);
+                return bitmap;
+            }
 
             return null;
         }
