@@ -10,9 +10,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using Microsoft.WindowsAPICodePack.Shell;
-using Newtonsoft.Json;
 using NReco.VideoConverter;
+using Random_File_Opener_Win_Forms.Settings;
+using Random_File_Opener_Win_Forms.Style;
 
 // ReSharper disable LocalizableElement
 
@@ -39,6 +39,15 @@ namespace Random_File_Opener_Win_Forms
         {
             InitializeComponent();
 
+            Styler.ApplyStyles(this);
+
+            InitialInitialize();
+
+            Task.Run(StartAutoGenerate);
+        }
+
+        private void InitialInitialize()
+        {
             _pictureBoxesInSequence = new[]
             {
                 VideoThumbnailFirstPictureBox,
@@ -46,9 +55,10 @@ namespace Random_File_Opener_Win_Forms
                 VideoThumbnailThirdPictureBox
             };
 
-            Styles.ApplyStyles(this);
+            // ReSharper disable once PossibleLossOfFraction
+            AutoGenerateNumericUpDown.Value = (int)_autoGenerateCooldown.TotalMilliseconds / 1000;
 
-            var settings = GetSettingsFromFile();
+            var settings = SettingsPuller.Pull<AppSettings>(Consts.SettingsFileName);
 
             _filter = settings?.Filter ?? Consts.EmptyFilter;
             FilterTextBox.Text = _filter;
@@ -60,11 +70,6 @@ namespace Random_File_Opener_Win_Forms
             var currentDirectory = Directory.GetCurrentDirectory();
 
             Initialize(currentDirectory, _filter);
-
-            // ReSharper disable once PossibleLossOfFraction
-            AutoGenerateNumericUpDown.Value = (int)_autoGenerateCooldown.TotalMilliseconds / 1000;
-
-            Task.Run(StartAutoGenerate);
         }
 
         private async Task StartAutoGenerate()
@@ -79,18 +84,6 @@ namespace Random_File_Opener_Win_Forms
                 await Task.Delay(_autoGenerateCooldown);
             }
             // ReSharper disable once FunctionNeverReturns
-        }
-
-        private static Settings GetSettingsFromFile()
-        {
-            var fileExists = File.Exists(Consts.SettingsFileName);
-            if (!fileExists)
-                return null;
-            
-            var settingsJson = new StreamReader(Consts.SettingsFileName).ReadToEnd();
-
-            var settings = JsonConvert.DeserializeObject<Settings>(settingsJson);
-            return settings;
         }
 
         private void Initialize(string directory, string filter)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Random_File_Opener_Win_Forms.Style;
 
 namespace Random_File_Opener_Win_Forms
 {
