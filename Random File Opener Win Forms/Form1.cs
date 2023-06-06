@@ -36,8 +36,6 @@ namespace Random_File_Opener_Win_Forms
         {
             InitializeComponent();
 
-            Styler.ApplyStyles(this);
-
             InitialInitialize();
 
             Task.Run(StartAutoGenerate);
@@ -56,6 +54,9 @@ namespace Random_File_Opener_Win_Forms
             AutoGenerateNumericUpDown.Value = (int)_autoGenerateCooldown.TotalMilliseconds / 1000;
 
             var settings = SettingsPuller.Pull<AppSettings>(Consts.SettingsFileName);
+
+            Styles.FillFromSettings(settings?.Styles);
+            Styler.ApplyStyles(this);
 
             _filter = settings?.Filter ?? Consts.EmptyFilter;
             FilterTextBox.Text = _filter;
