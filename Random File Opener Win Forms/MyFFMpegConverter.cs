@@ -10,6 +10,7 @@ namespace Random_File_Opener_Win_Forms
     {
         private Process _ffMpegProcess;
         private bool _ffMpegProcessWaitForAsyncReadersCompleted;
+        // ReSharper disable once ReplaceAutoPropertyWithComputedProperty
         private static string FFMpegExeName { get; } = "ffmpeg.exe";
         private static string FFMpegToolPath { get; } = AppDomain.CurrentDomain.BaseDirectory;
         private static string WorkingDirectory { get; } = Path.GetDirectoryName(FFMpegToolPath);
