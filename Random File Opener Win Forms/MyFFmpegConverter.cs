@@ -177,25 +177,25 @@ namespace Random_File_Opener_Win_Forms
             public static StreamBuffer[] Get(int count)
                 => Enumerable.Range(0, count).Select(_ => new StreamBuffer()).ToArray();
         }
-    }
 
-    internal class ProcessStartInfoCache
-    {
-        public ProcessStartInfo ProcessStartInfo { get; } = new ProcessStartInfo
+        private class ProcessStartInfoCache
         {
-            FileName = MyFFmpegConverter.FFMpegExePath,
-            WindowStyle = ProcessWindowStyle.Hidden,
-            CreateNoWindow = true,
-            UseShellExecute = false,
-            WorkingDirectory = MyFFmpegConverter.WorkingDirectory,
-            RedirectStandardInput = true,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-        };
+            public ProcessStartInfo ProcessStartInfo { get; } = new ProcessStartInfo
+            {
+                FileName = FFMpegExePath,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                WorkingDirectory = WorkingDirectory,
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+            };
 
-        public bool IsLocked { get; set; }
+            public bool IsLocked { get; set; }
 
-        public static ProcessStartInfoCache[] Get(int count)
-            => Enumerable.Range(0, count).Select(_ => new ProcessStartInfoCache()).ToArray();
+            public static ProcessStartInfoCache[] Get(int count)
+                => Enumerable.Range(0, count).Select(_ => new ProcessStartInfoCache()).ToArray();
+        }
     }
 }
