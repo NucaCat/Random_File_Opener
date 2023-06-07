@@ -37,6 +37,9 @@ namespace Random_File_Opener_Win_Forms
 
         private void ConvertMedia(Media input, Media output, double frameTime)
         {
+            if (!File.Exists(FFMpegExePath))
+                return;
+
             try
             {
                 var arguments = ComposeFFMpegCommandLineArgs(input.Filename, output.Filename, output.Format, frameTime);
