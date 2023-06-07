@@ -132,18 +132,20 @@ namespace Random_File_Opener_Win_Forms
 
         private void AddImageToPreview(GeneratedFileListItem file)
         {
-            var images = ImageService.GetFitImages(file, ImagePictureBox, _pictureBoxesInSequence);
+            file.Images = file.Images.Length != 0
+            ? file.Images
+            : ImageService.GetFitImages(file, ImagePictureBox, _pictureBoxesInSequence);
 
-            if (images.Length == 0)
+            if (file.Images.Length == 0)
                 return;
             
-            if (images.Length == 1)
+            if (file.Images.Length == 1)
             {
-                PlaceImageInBigPictureBox(images);
+                PlaceImageInBigPictureBox(file.Images);
                 return;
             }
             
-            PlaceImageInSmallPictureBoxes(images);
+            PlaceImageInSmallPictureBoxes(file.Images);
         }
 
         private void PlaceImageInSmallPictureBoxes(Bitmap[] images)
