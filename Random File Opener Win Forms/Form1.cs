@@ -375,7 +375,7 @@ namespace Random_File_Opener_Win_Forms
             OpenInExplorer = 1
         }
 
-        // v.chumachenko Makes title bar dark 
+        #region dark title bar 
         [DllImport("DwmApi")] //System.Runtime.InteropServices
         private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, int[] attrValue, int attrSize);
 
@@ -384,5 +384,6 @@ namespace Random_File_Opener_Win_Forms
             if (DwmSetWindowAttribute(Handle, 19, new[] { 1 }, 4) != 0)
                 DwmSetWindowAttribute(Handle, 20, new[] { 1 }, 4);
         }
+        #endregion dark title bar
     }
 }

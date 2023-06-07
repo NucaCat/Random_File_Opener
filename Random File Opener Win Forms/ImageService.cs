@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -58,11 +59,10 @@ namespace Random_File_Opener_Win_Forms
 
         private static Bitmap GetThumbnailAtPosition(GeneratedFileListItem file, TimeSpan position)
         {
-            var ffmpeg = new FFMpegConverter();
-
-            var thumbnailStream = new MemoryStream();
-            ffmpeg.GetVideoThumbnail(file.Path, thumbnailStream, (float)position.TotalSeconds);
-
+            var ffmpeg = new MyFFmpegConverter();
+            
+            var thumbnailStream = ffmpeg.GetVideoThumbnail(file.Path, position.TotalSeconds);
+            
             if (thumbnailStream.Length == 0)
                 return null;
             

@@ -156,6 +156,7 @@
         </Compile>
         <Compile Include="ImageService.cs" />
         <Compile Include="GeneratedFileListItem.cs" />
+        <Compile Include="MyFFmpegConverter.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Settings\AppSettings.cs" />
