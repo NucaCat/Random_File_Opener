@@ -10,10 +10,10 @@ namespace Random_File_Opener_Win_Forms
     {
         private Process FFMpegProcess;
         private bool FFMpegProcessWaitForAsyncReadersCompleted;
-        private static string FFMpegExeName { get; } = "ffmpeg.exe";
-        private static string FFMpegToolPath { get; } = AppDomain.CurrentDomain.BaseDirectory;
-        private static string WorkingDirectory { get; } = Path.GetDirectoryName(FFMpegToolPath);
-        private static string FFMpegExePath { get; } = Path.Combine(FFMpegToolPath, FFMpegExeName);
+        public static string FFMpegExeName { get; } = "ffmpeg.exe";
+        public static string FFMpegToolPath { get; } = AppDomain.CurrentDomain.BaseDirectory;
+        public static string WorkingDirectory { get; } = Path.GetDirectoryName(FFMpegToolPath);
+        public static string FFMpegExePath { get; } = Path.Combine(FFMpegToolPath, FFMpegExeName);
 
 
         public Stream GetVideoThumbnail(string inputFile, double frameTime)
@@ -57,6 +57,7 @@ namespace Random_File_Opener_Win_Forms
                 FFMpegProcessWaitForAsyncReadersCompleted = false;
                 FFMpegProcess = Process.Start(startInfo);
                 
+                FFMpegProcess.OutputDataReceived += (o, args) => { };
                 FFMpegProcess.BeginOutputReadLine();
                 FFMpegProcess.BeginErrorReadLine();
                 WaitFFMpegProcessForExit();

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Random_File_Opener_Win_Forms.Settings;
@@ -192,12 +193,12 @@ namespace Random_File_Opener_Win_Forms
             }
         }
 
-        private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void GeneratedFilesListBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             GetFileFromPointAndOpen(e.Location, OpenVariants.OpenFile);
         }
 
-        private void listBox1_KeyDown(object sender, KeyEventArgs e)
+        private void GeneratedFilesListBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.C)
             {
@@ -205,6 +206,20 @@ namespace Random_File_Opener_Win_Forms
                 {
                     ((GeneratedFileListItem)GeneratedFilesListBox.SelectedItem).Path,
                 });
+                return;
+            }
+            if (e.KeyCode == Keys.Down || e.KeyCode == Keys.Up)
+            {
+                var highlightedItem = GeneratedFilesListBox.SelectedItem;
+                if (highlightedItem == null)
+                    return;
+                
+                if (e.KeyCode == Keys.Up && GeneratedFilesListBox.SelectedIndex != 0)
+                    AddImageToPreview((GeneratedFileListItem)GeneratedFilesListBox.Items[GeneratedFilesListBox.SelectedIndex - 1]);
+                
+                if (e.KeyCode == Keys.Down && GeneratedFilesListBox.SelectedIndex != GeneratedFilesListBox.Items.Count - 1)
+                    AddImageToPreview((GeneratedFileListItem)GeneratedFilesListBox.Items[GeneratedFilesListBox.SelectedIndex + 1]);
+                
                 return;
             }
 
@@ -300,7 +315,7 @@ namespace Random_File_Opener_Win_Forms
             GetFileAndOpen(listItem, openVariant);
         }
 
-        private void listBox1_MouseUp(object sender, MouseEventArgs e)
+        private void GeneratedFilesListBox_MouseUp(object sender, MouseEventArgs e)
         {
             _itemLocation = null;
             

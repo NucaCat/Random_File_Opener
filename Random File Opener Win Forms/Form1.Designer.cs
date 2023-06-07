@@ -68,9 +68,9 @@
             this.GeneratedFilesListBox.Name = "GeneratedFilesListBox";
             this.GeneratedFilesListBox.Size = new System.Drawing.Size(868, 990);
             this.GeneratedFilesListBox.TabIndex = 0;
-            this.GeneratedFilesListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox1_KeyDown);
-            this.GeneratedFilesListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDoubleClick);
-            this.GeneratedFilesListBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseUp);
+            this.GeneratedFilesListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GeneratedFilesListBox_KeyDown);
+            this.GeneratedFilesListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.GeneratedFilesListBox_MouseDoubleClick);
+            this.GeneratedFilesListBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GeneratedFilesListBox_MouseUp);
             // 
             // NextFileButton
             // 
