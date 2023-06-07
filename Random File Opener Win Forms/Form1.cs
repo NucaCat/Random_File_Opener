@@ -60,6 +60,9 @@ namespace Random_File_Opener_Win_Forms
             Styler.ApplyStyles(this);
 
             _filter = settings?.Filter ?? Consts.EmptyFilter;
+            Consts.VideoThumbnailPositions = settings?.VideoThumbnailPositions.IsEmpty() == true
+                ? Consts.VideoThumbnailPositions
+                : settings.VideoThumbnailPositions;
             FilterTextBox.Text = _filter;
 
             SearchModeButton.Text = _searchOption.ToFriendlyString();

@@ -1,5 +1,6 @@
 ﻿{
   "Filter": "*",
+  "VideoThumbnailPositions": ["00:01:00", "00:12:00", "00:20:00"],
   "Styles": {
     "Primary": "#BB86FC",
     "Secondary": "#03DAC6",

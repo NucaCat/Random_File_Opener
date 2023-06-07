@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
 using NReco.VideoConverter;
 
 namespace Random_File_Opener_Win_Forms
@@ -59,7 +57,6 @@ namespace Random_File_Opener_Win_Forms
                 FFMpegProcessWaitForAsyncReadersCompleted = false;
                 FFMpegProcess = Process.Start(startInfo);
                 
-                // FFMpegProcess.OutputDataReceived += (o, args) => { };
                 FFMpegProcess.BeginOutputReadLine();
                 FFMpegProcess.BeginErrorReadLine();
                 WaitFFMpegProcessForExit();
