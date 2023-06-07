@@ -2,12 +2,15 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using NReco.VideoConverter;
 
 namespace Random_File_Opener_Win_Forms
 {
     internal sealed class MyFFmpegConverter
     {
+        private static StreamBuffer[] _buffers = StreamBuffer.Get(8);
+
         private Process FFMpegProcess;
         private bool FFMpegProcessWaitForAsyncReadersCompleted;
         public static string FFMpegExeName { get; } = "ffmpeg.exe";
@@ -70,7 +73,7 @@ namespace Random_File_Opener_Win_Forms
                 FFMpegProcess = null;
 
                 using (var inputStream = new FileStream(output.Filename, FileMode.Open, FileAccess.Read, FileShare.None))
-                    CopyStream(inputStream, output.DataStream, 262144);
+                    CopyStream(inputStream, output.DataStream);
             }
             catch (Exception)
             {
@@ -83,12 +86,24 @@ namespace Random_File_Opener_Win_Forms
             }
         }
 
-        private void CopyStream(Stream inputStream, Stream outputStream, int bufSize)
+        private void CopyStream(Stream inputStream, Stream outputStream)
         {
-            var buffer = new byte[bufSize];
+            StreamBuffer buffer;
+            lock (_buffers)
+            {
+                buffer = _buffers.FirstOrDefault(u => !u.IsLocked);
+                if (buffer != null)
+                    buffer.IsLocked = true;
+            }
+
+            if (buffer == null)
+                buffer = new StreamBuffer();
+
             int count;
-            while ((count = inputStream.Read(buffer, 0, buffer.Length)) > 0)
-                outputStream.Write(buffer, 0, count);
+            while ((count = inputStream.Read(buffer.Buffer, 0, buffer.Buffer.Length)) > 0)
+                outputStream.Write(buffer.Buffer, 0, count);
+
+            buffer.IsLocked = false;
         }
 
         private string ComposeFFMpegCommandLineArgs(
@@ -151,6 +166,15 @@ namespace Random_File_Opener_Win_Forms
             public string Format { get; set; }
 
             public Stream DataStream { get; set; }
+        }
+
+        private class StreamBuffer
+        {
+            public byte[] Buffer { get; } = new byte[262144];
+            public bool IsLocked { get; set; }
+
+            public static StreamBuffer[] Get(int count)
+                => Enumerable.Range(0, count).Select(_ => new StreamBuffer()).ToArray();
         }
     }
 }
