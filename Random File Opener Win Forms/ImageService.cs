@@ -56,7 +56,7 @@ namespace Random_File_Opener_Win_Forms
 
         private static Bitmap GetThumbnailAtPosition(GeneratedFileListItem file, TimeSpan position)
         {
-            var ffmpeg = new MyFFmpegConverter();
+            var ffmpeg = new MyFFMpegConverter();
             
             var thumbnailStream = ffmpeg.GetVideoThumbnail(file.Path, position.TotalSeconds);
             

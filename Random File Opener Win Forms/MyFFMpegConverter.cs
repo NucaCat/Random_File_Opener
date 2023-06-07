@@ -6,14 +6,14 @@ using System.Linq;
 
 namespace Random_File_Opener_Win_Forms
 {
-    internal sealed class MyFFmpegConverter
+    internal sealed class MyFFMpegConverter
     {
-        private Process FFMpegProcess;
-        private bool FFMpegProcessWaitForAsyncReadersCompleted;
-        public static string FFMpegExeName { get; } = "ffmpeg.exe";
-        public static string FFMpegToolPath { get; } = AppDomain.CurrentDomain.BaseDirectory;
-        public static string WorkingDirectory { get; } = Path.GetDirectoryName(FFMpegToolPath);
-        public static string FFMpegExePath { get; } = Path.Combine(FFMpegToolPath, FFMpegExeName);
+        private Process _ffMpegProcess;
+        private bool _ffMpegProcessWaitForAsyncReadersCompleted;
+        private static string FFMpegExeName { get; } = "ffmpeg.exe";
+        private static string FFMpegToolPath { get; } = AppDomain.CurrentDomain.BaseDirectory;
+        private static string WorkingDirectory { get; } = Path.GetDirectoryName(FFMpegToolPath);
+        private static string FFMpegExePath { get; } = Path.Combine(FFMpegToolPath, FFMpegExeName);
         
         private static readonly StreamBuffer[] _buffers = StreamBuffer.Get(8);
         private static readonly ProcessStartInfoCache[] _processCaches = ProcessStartInfoCache.Get(8);
@@ -58,20 +58,21 @@ namespace Random_File_Opener_Win_Forms
                     startInfo = new ProcessStartInfoCache { IsLocked = true };
 
                 startInfo.ProcessStartInfo.Arguments = arguments;
-                if (FFMpegProcess != null)
+                if (_ffMpegProcess != null)
                     throw new InvalidOperationException("FFMpeg process is already started");
 
-                FFMpegProcessWaitForAsyncReadersCompleted = false;
-                FFMpegProcess = Process.Start(startInfo.ProcessStartInfo);
-                startInfo.IsLocked = false;
+                _ffMpegProcessWaitForAsyncReadersCompleted = false;
+                _ffMpegProcess = Process.Start(startInfo.ProcessStartInfo);
 
-                FFMpegProcess.BeginOutputReadLine();
-                FFMpegProcess.BeginErrorReadLine();
+                // ReSharper disable once PossibleNullReferenceException
+                _ffMpegProcess.BeginOutputReadLine();
+                _ffMpegProcess.BeginErrorReadLine();
                 WaitFFMpegProcessForExit();
-                if (FFMpegProcess.ExitCode != 0)
-                    throw new Exception(FFMpegProcess.ExitCode.ToString());
-                FFMpegProcess.Close();
-                FFMpegProcess = null;
+                startInfo.IsLocked = false;
+                if (_ffMpegProcess.ExitCode != 0)
+                    throw new Exception(_ffMpegProcess.ExitCode.ToString());
+                _ffMpegProcess.Close();
+                _ffMpegProcess = null;
 
                 using (var inputStream = new FileStream(output.Filename, FileMode.Open, FileAccess.Read, FileShare.None))
                     CopyStream(inputStream, output.DataStream);
@@ -122,42 +123,43 @@ namespace Random_File_Opener_Win_Forms
 
         private void WaitFFMpegProcessForExit()
         {
-            if (FFMpegProcess == null)
+            if (_ffMpegProcess == null)
                 throw new Exception("FFMpeg process was aborted");
-            if (FFMpegProcess.HasExited)
+            if (_ffMpegProcess.HasExited)
                 return;
-            if (!FFMpegProcess.WaitForExit(int.MaxValue))
+            if (!_ffMpegProcess.WaitForExit(int.MaxValue))
             {
                 EnsureFFMpegProcessStopped();
                 throw new Exception("FFMpeg process was aborted");
             }
-            var ffMpegProcess = FFMpegProcess;
+            var ffMpegProcess = _ffMpegProcess;
             if (ffMpegProcess == null)
                 return;
             lock (ffMpegProcess)
             {
-                if (ffMpegProcess != FFMpegProcess || FFMpegProcessWaitForAsyncReadersCompleted)
+                if (ffMpegProcess != _ffMpegProcess || _ffMpegProcessWaitForAsyncReadersCompleted)
                     return;
                 ffMpegProcess.WaitForExit();
-                FFMpegProcessWaitForAsyncReadersCompleted = true;
+                _ffMpegProcessWaitForAsyncReadersCompleted = true;
             }
         }
 
         private void EnsureFFMpegProcessStopped()
         {
-            if (FFMpegProcess == null)
+            if (_ffMpegProcess == null)
                 return;
-            if (!FFMpegProcess.HasExited)
+            if (!_ffMpegProcess.HasExited)
             {
                 try
                 {
-                    FFMpegProcess.Kill();
+                    _ffMpegProcess.Kill();
                 }
                 catch (Exception)
                 {
+                    // ignored
                 }
             }
-            FFMpegProcess = null;
+            _ffMpegProcess = null;
         }
 
         private class Media
