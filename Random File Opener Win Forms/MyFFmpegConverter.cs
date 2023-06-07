@@ -8,15 +8,15 @@ namespace Random_File_Opener_Win_Forms
 {
     internal sealed class MyFFmpegConverter
     {
-        private static readonly StreamBuffer[] _buffers = StreamBuffer.Get(8);
-
         private Process FFMpegProcess;
         private bool FFMpegProcessWaitForAsyncReadersCompleted;
         public static string FFMpegExeName { get; } = "ffmpeg.exe";
         public static string FFMpegToolPath { get; } = AppDomain.CurrentDomain.BaseDirectory;
         public static string WorkingDirectory { get; } = Path.GetDirectoryName(FFMpegToolPath);
         public static string FFMpegExePath { get; } = Path.Combine(FFMpegToolPath, FFMpegExeName);
-
+        
+        private static readonly StreamBuffer[] _buffers = StreamBuffer.Get(8);
+        private static readonly ProcessStartInfoCache[] _processCaches = ProcessStartInfoCache.Get(8);
 
         public Stream GetVideoThumbnail(string inputFile, double frameTime)
         {
@@ -46,23 +46,25 @@ namespace Random_File_Opener_Win_Forms
             {
                 var arguments = ComposeFFMpegCommandLineArgs(input.Filename, output.Filename, output.Format, frameTime);
 
-                var startInfo = new ProcessStartInfo(FFMpegExePath, arguments)
+                ProcessStartInfoCache startInfo;
+                lock (_processCaches)
                 {
-                    WindowStyle = ProcessWindowStyle.Hidden,
-                    CreateNoWindow = true,
-                    UseShellExecute = false,
-                    WorkingDirectory = WorkingDirectory,
-                    RedirectStandardInput = true,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                };
+                    startInfo = _processCaches.FirstOrDefault(u => !u.IsLocked);
+                    if (startInfo != null)
+                        startInfo.IsLocked = true;
+                }
+
+                if (startInfo == null)
+                    startInfo = new ProcessStartInfoCache { IsLocked = true };
+
+                startInfo.ProcessStartInfo.Arguments = arguments;
                 if (FFMpegProcess != null)
                     throw new InvalidOperationException("FFMpeg process is already started");
 
                 FFMpegProcessWaitForAsyncReadersCompleted = false;
-                FFMpegProcess = Process.Start(startInfo);
-                
-                FFMpegProcess.OutputDataReceived += (o, args) => { };
+                FFMpegProcess = Process.Start(startInfo.ProcessStartInfo);
+                startInfo.IsLocked = false;
+
                 FFMpegProcess.BeginOutputReadLine();
                 FFMpegProcess.BeginErrorReadLine();
                 WaitFFMpegProcessForExit();
@@ -96,7 +98,7 @@ namespace Random_File_Opener_Win_Forms
             }
 
             if (buffer == null)
-                buffer = new StreamBuffer();
+                buffer = new StreamBuffer{ IsLocked = true };
 
             int count;
             while ((count = inputStream.Read(buffer.Buffer, 0, buffer.Buffer.Length)) > 0)
@@ -175,5 +177,25 @@ namespace Random_File_Opener_Win_Forms
             public static StreamBuffer[] Get(int count)
                 => Enumerable.Range(0, count).Select(_ => new StreamBuffer()).ToArray();
         }
+    }
+
+    internal class ProcessStartInfoCache
+    {
+        public ProcessStartInfo ProcessStartInfo { get; } = new ProcessStartInfo
+        {
+            FileName = MyFFmpegConverter.FFMpegExePath,
+            WindowStyle = ProcessWindowStyle.Hidden,
+            CreateNoWindow = true,
+            UseShellExecute = false,
+            WorkingDirectory = MyFFmpegConverter.WorkingDirectory,
+            RedirectStandardInput = true,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+        };
+
+        public bool IsLocked { get; set; }
+
+        public static ProcessStartInfoCache[] Get(int count)
+            => Enumerable.Range(0, count).Select(_ => new ProcessStartInfoCache()).ToArray();
     }
 }
