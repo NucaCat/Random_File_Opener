@@ -8,7 +8,7 @@ namespace Random_File_Opener_Win_Forms
 {
     internal sealed class MyFFmpegConverter
     {
-        private static StreamBuffer[] _buffers = StreamBuffer.Get(8);
+        private static readonly StreamBuffer[] _buffers = StreamBuffer.Get(8);
 
         private Process FFMpegProcess;
         private bool FFMpegProcessWaitForAsyncReadersCompleted;
