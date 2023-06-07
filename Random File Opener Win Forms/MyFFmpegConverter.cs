@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using NReco.VideoConverter;
 
 namespace Random_File_Opener_Win_Forms
 {
@@ -122,13 +121,13 @@ namespace Random_File_Opener_Win_Forms
         private void WaitFFMpegProcessForExit()
         {
             if (FFMpegProcess == null)
-                throw new FFMpegException(-1, "FFMpeg process was aborted");
+                throw new Exception("FFMpeg process was aborted");
             if (FFMpegProcess.HasExited)
                 return;
             if (!FFMpegProcess.WaitForExit(int.MaxValue))
             {
                 EnsureFFMpegProcessStopped();
-                throw new FFMpegException(-2, "FFMpeg process was aborted");
+                throw new Exception("FFMpeg process was aborted");
             }
             var ffMpegProcess = FFMpegProcess;
             if (ffMpegProcess == null)
