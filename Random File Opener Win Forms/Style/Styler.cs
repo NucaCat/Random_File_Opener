@@ -32,7 +32,7 @@ namespace Random_File_Opener_Win_Forms.Style
             
             foreach(var textBox in form.Controls.OfType<TextBox>())
             {
-                textBox.BackColor = Styles.LighterSurface;
+                textBox.BackColor = Styles.Surface;
                 textBox.ForeColor = Styles.OnSurface;
 
                 textBox.BorderStyle = BorderStyle.None;
@@ -40,7 +40,7 @@ namespace Random_File_Opener_Win_Forms.Style
             
             foreach(var pictureBox in form.Controls.OfType<PictureBox>())
             {
-                pictureBox.BackColor = Styles.LighterSurface;
+                pictureBox.BackColor = Styles.Surface;
                 pictureBox.ForeColor = Styles.OnSurface;
 
                 pictureBox.BorderStyle = BorderStyle.None;
@@ -48,19 +48,19 @@ namespace Random_File_Opener_Win_Forms.Style
 
             foreach (var listBox in form.Controls.OfType<ListBox>())
             {
-                listBox.BackColor = Styles.LighterSurface;
+                listBox.BackColor = Styles.Surface;
                 listBox.ForeColor = Styles.OnSurface;
                 listBox.BorderStyle = BorderStyle.None;
             }
 
             foreach (var flatNumericUpDown in form.Controls.OfType<FlatNumericUpDown>())
             {
-                flatNumericUpDown.BackColor = Styles.LighterSurface;
+                flatNumericUpDown.BackColor = Styles.Surface;
                 flatNumericUpDown.ForeColor = Styles.OnSurface;
                 flatNumericUpDown.BorderStyle = BorderStyle.FixedSingle;
             
                 flatNumericUpDown.ButtonHighlightColor = Styles.Primary;
-                flatNumericUpDown.BorderColor = Styles.LighterSurface;
+                flatNumericUpDown.BorderColor = Styles.Surface;
                 flatNumericUpDown.Controls[0].BackColor = Styles.Primary;
                 flatNumericUpDown.Controls[0].ForeColor = Styles.Primary;
             }

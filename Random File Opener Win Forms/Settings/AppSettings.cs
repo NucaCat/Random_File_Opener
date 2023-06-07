@@ -14,7 +14,6 @@
 
         public string Background { get; set; }
         public string Surface { get; set; }
-        public string LighterSurface { get; set; }
 
         public string Error { get; set; }
         

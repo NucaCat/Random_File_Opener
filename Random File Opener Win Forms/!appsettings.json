@@ -6,8 +6,7 @@
     "PrimaryVariant": "#3700B3",
     
     "Background": "#121212",
-    "Surface": "#1F1B24",
-    "LighterSurface": "#2A2531",
+    "Surface": "#2A2531",
     
     "Error": "#CF6679",
     "Autogenerate": "#03DAC6",

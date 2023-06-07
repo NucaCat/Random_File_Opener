@@ -10,8 +10,8 @@ namespace Random_File_Opener_Win_Forms.Style
         public static Color PrimaryVariant { get; set; } = ColorTranslator.FromHtml("#3700B3");
 
         public static Color Background { get; set; } = ColorTranslator.FromHtml("#121212");
-        public static Color Surface { get; set; } = ColorTranslator.FromHtml("#1F1B24");
-        public static Color LighterSurface { get; set; } = ColorTranslator.FromHtml("#2A2531"); // 5% lighter
+        // public static Color Surface { get; set; } = ColorTranslator.FromHtml("#1F1B24");
+        public static Color Surface { get; set; } = ColorTranslator.FromHtml("#2A2531"); // 5% lighter
 
         public static Color Error { get; set; } = ColorTranslator.FromHtml("#CF6679");
         
@@ -37,7 +37,6 @@ namespace Random_File_Opener_Win_Forms.Style
             PrimaryVariant = settings.PrimaryVariant.IsNullOrWhiteSpace() ? PrimaryVariant : ColorTranslator.FromHtml(settings.PrimaryVariant);
             Background = settings.Background.IsNullOrWhiteSpace() ? Background : ColorTranslator.FromHtml(settings.Background);
             Surface = settings.Surface.IsNullOrWhiteSpace() ? Surface : ColorTranslator.FromHtml(settings.Surface);
-            LighterSurface = settings.LighterSurface.IsNullOrWhiteSpace() ? LighterSurface : ColorTranslator.FromHtml(settings.LighterSurface);
             Error = settings.Error.IsNullOrWhiteSpace() ? Error : ColorTranslator.FromHtml(settings.Error);
             Autogenerate = settings.Autogenerate.IsNullOrWhiteSpace() ? Autogenerate : ColorTranslator.FromHtml(settings.Autogenerate);
             DoNoAutogenerate = settings.DoNoAutogenerate.IsNullOrWhiteSpace() ? DoNoAutogenerate : ColorTranslator.FromHtml(settings.DoNoAutogenerate);
