@@ -86,6 +86,12 @@ namespace Random_File_Opener_Win_Forms
         public static bool IsNotNullOrWhiteSpace(this string str)
             => !string.IsNullOrWhiteSpace(str);
 
+        public static bool IsEmpty<T>(this IEnumerable<T> source)
+            => source == null || !source.Any();
+
+        public static bool IsNotEmpty<T>(this IEnumerable<T> source)
+            => !source.IsEmpty();
+
         public static IEnumerable<T> PadRightWithNulls<T>(this ICollection<T> source, int desiredSize) where T : class
         {
             if (source.Count >= desiredSize)
