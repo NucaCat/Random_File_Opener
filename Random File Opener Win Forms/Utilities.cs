@@ -102,5 +102,17 @@ namespace Random_File_Opener_Win_Forms
             var padded = source.Concat(Enumerable.Range(0, countOfElementsToAdd).Select(_ => (T)null));
             return padded;
         }
+        
+        public static T[] Shuffle<T> (this T[] array, Random rng)
+        {
+            var n = array.Length;
+            while (n > 1) 
+            {
+                var k = rng.Next(n--);
+                (array[n], array[k]) = (array[k], array[n]);
+            }
+
+            return array;
+        }
     }
 }

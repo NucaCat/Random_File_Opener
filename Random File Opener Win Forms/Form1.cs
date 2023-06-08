@@ -22,8 +22,7 @@ namespace Random_File_Opener_Win_Forms
         private PictureBox[] _pictureBoxesInSequence;
 
         private SearchOption _searchOption = SearchOption.AllDirectories;
-        private GeneratedFileListItem[] _files;
-        private HashSet<int> _generatedIndexes = new HashSet<int>();
+        private ArrayWithPointer<GeneratedFileListItem> _files = new ArrayWithPointer<GeneratedFileListItem>();
         private Random _random = new Random();
         private string _currentDirectory = string.Empty;
         private string _filter;
@@ -63,6 +62,7 @@ namespace Random_File_Opener_Win_Forms
             _filter = settings?.Filter ?? Consts.EmptyFilter;
             Consts.VideoThumbnailPositions = settings?.VideoThumbnailPositions.IsEmpty() == true
                 ? Consts.VideoThumbnailPositions
+                // ReSharper disable once PossibleNullReferenceException
                 : settings.VideoThumbnailPositions;
             FilterTextBox.Text = _filter;
 
@@ -96,38 +96,32 @@ namespace Random_File_Opener_Win_Forms
             DirectoryTextBox.Text = directory.Substring(directory.LastIndexOf('\\') + 1);
 
             GeneratedFilesListBox.Items.Clear();
-            _files = Directory.GetFiles(directory, filter, _searchOption)
-                .Select(u => {
-                    var lastIndex = u.LastIndexOf("\\", StringComparison.InvariantCulture);
-                    var fileName = Utilities.ExtractFileName(u, lastIndex);
-                    return new GeneratedFileListItem
+            _files = new ArrayWithPointer<GeneratedFileListItem>
+            {
+                Entities = Directory.GetFiles(directory, filter, _searchOption)
+                    .Shuffle(_random)
+                    .Select(u =>
                     {
-                        Path = u,
-                        DisplayValue = fileName 
-                                       + " "
-                                       + Utilities.ExtractDirectory(directory, u, lastIndex),
-                        FileName = fileName,
-                    };
-                })
-                .ToArray();
-            _generatedIndexes = new HashSet<int>();
+                        var lastIndex = u.LastIndexOf("\\", StringComparison.InvariantCulture);
+                        var fileName = Utilities.ExtractFileName(u, lastIndex);
+                        return new GeneratedFileListItem
+                        {
+                            Path = u,
+                            DisplayValue = fileName
+                                           + " "
+                                           + Utilities.ExtractDirectory(directory, u, lastIndex),
+                            FileName = fileName,
+                        };
+                    })
+                    .ToArray(),
+            };
         }
 
         private void NextFileButton_Click(object sender, EventArgs e)
         {
-            if (_files.Length == 0 || (_files.Length == 1 && _generatedIndexes.Count == 1))
+            var file = _files.GetCurrentAndMoveNext();
+            if (file == null)
                 return;
-            
-            if (_generatedIndexes.Count != 0 && _generatedIndexes.Count == _files.Length)
-            {
-                var lastGeneratedIndex = _generatedIndexes.Last(); 
-                _generatedIndexes.Clear();
-                _generatedIndexes.Add(lastGeneratedIndex);
-            }
-            
-            var index = GetNewIndex();
-
-            var file = _files[index];
 
             GeneratedFilesListBox.InvokeIfRequired(() => GeneratedFilesListBox.Items.Add(file));
 
@@ -177,19 +171,6 @@ namespace Random_File_Opener_Win_Forms
             foreach (var pictureBox in _pictureBoxesInSequence)
             {
                 pictureBox.InvokeIfRequired(() => { pictureBox.Visible = false; });
-            }
-        }
-
-        private int GetNewIndex()
-        {
-            for (;;)
-            {
-                var index = _random.Next(0, _files.Length);
-                if (!_generatedIndexes.Contains(index))
-                {
-                    _generatedIndexes.Add(index);
-                    return index;
-                }
             }
         }
 
@@ -337,42 +318,36 @@ namespace Random_File_Opener_Win_Forms
         }
 
         private void FileAddressToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (!_itemLocation.HasValue)
-            {
-                MessageBox.Show($"{nameof(_itemLocation)} is null");
-                return;
-            }
-            
-            var fileFromLocation = Utilities.ListItemFromPoint(GeneratedFilesListBox, _itemLocation.Value);
-            Clipboard.SetData(DataFormats.StringFormat, fileFromLocation.Path);
-        }
+            => CopyItemToClipboard(CopyOptions.Path);
 
         private void FileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (!_itemLocation.HasValue)
-            {
-                MessageBox.Show($"{nameof(_itemLocation)} is null");
-                return;
-            }
-            
-            var fileFromLocation = Utilities.ListItemFromPoint(GeneratedFilesListBox, _itemLocation.Value);
-            Clipboard.SetFileDropList(new StringCollection
-            {
-                fileFromLocation.Path,
-            });
-        }
+            => CopyItemToClipboard(CopyOptions.File);
 
         private void FileNameToolStripMenuItem_Click(object sender, EventArgs e)
+            => CopyItemToClipboard(CopyOptions.FileName);
+
+        private void CopyItemToClipboard(CopyOptions option)
         {
             if (!_itemLocation.HasValue)
-            {
-                MessageBox.Show($"{nameof(_itemLocation)} is null");
                 return;
-            }
             
             var fileFromLocation = Utilities.ListItemFromPoint(GeneratedFilesListBox, _itemLocation.Value);
-            Clipboard.SetData(DataFormats.StringFormat, fileFromLocation.FileName);
+            
+            if (option == CopyOptions.FileName)
+                Clipboard.SetData(DataFormats.StringFormat, fileFromLocation.FileName);
+            
+            if (option == CopyOptions.Path)
+                Clipboard.SetData(DataFormats.StringFormat, fileFromLocation.Path);
+            
+            if (option == CopyOptions.File)
+                Clipboard.SetFileDropList(new StringCollection { fileFromLocation.Path });
+        }
+
+        private enum CopyOptions
+        {
+            FileName,
+            Path,
+            File
         }
 
         private void AutoGenerate_Click(object sender, EventArgs e)
