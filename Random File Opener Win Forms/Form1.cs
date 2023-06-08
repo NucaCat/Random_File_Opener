@@ -23,7 +23,7 @@ namespace Random_File_Opener_Win_Forms
         private ArrayWithPointer<GeneratedFileListItem> _files = new ArrayWithPointer<GeneratedFileListItem>();
         private readonly Random _random = new Random();
         private string _currentDirectory = string.Empty;
-        private string _filter;
+        private string _filter = Consts.EmptyFilter;
         private GenerateButtonColors _currentGenerateButtonColor = GenerateButtonColors.Red;
 
         private GeneratedFileListItem _item;
@@ -57,12 +57,13 @@ namespace Random_File_Opener_Win_Forms
             Styles.FillFromSettings(settings?.Styles);
             Styler.ApplyStyles(this);
 
-            _filter = settings?.Filter ?? Consts.EmptyFilter;
+            _filter = settings?.Filter ?? _filter;
+            FilterTextBox.Text = _filter;
+
             Consts.VideoThumbnailPositions = settings?.VideoThumbnailPositions.IsEmpty() == true
                 ? Consts.VideoThumbnailPositions
                 // ReSharper disable once PossibleNullReferenceException
                 : settings.VideoThumbnailPositions;
-            FilterTextBox.Text = _filter;
 
             SearchModeButton.Text = _searchOption.ToFriendlyString();
 
@@ -98,19 +99,7 @@ namespace Random_File_Opener_Win_Forms
             {
                 Entities = Directory.GetFiles(directory, filter, _searchOption)
                     .Shuffle(_random)
-                    .Select(u =>
-                    {
-                        var lastIndex = u.LastIndexOf("\\", StringComparison.InvariantCulture);
-                        var fileName = Utilities.ExtractFileName(u, lastIndex);
-                        return new GeneratedFileListItem
-                        {
-                            Path = u,
-                            DisplayValue = fileName
-                                           + " "
-                                           + Utilities.ExtractDirectory(directory, u, lastIndex),
-                            FileName = fileName,
-                        };
-                    })
+                    .Select(u => GeneratedFileListItem.FromString(u, directory))
                     .ToArray(),
             };
         }
@@ -137,7 +126,7 @@ namespace Random_File_Opener_Win_Forms
             
             if (file.Images.Length == 1)
             {
-                PlaceImageInBigPictureBox(file.Images);
+                PlaceImageInBigPictureBox(file.Images[0]);
                 return;
             }
             
@@ -149,7 +138,7 @@ namespace Random_File_Opener_Win_Forms
             ImagePictureBox.InvokeIfRequired(() => { ImagePictureBox.Visible = false; });
 
             foreach (var (pictureBox, image) in _pictureBoxesInSequence
-                         .Zip(images.PadRightWithNulls(_pictureBoxesInSequence.Length), (u, v) => (PictureBox: u, Image: v)))
+                .Zip(images.PadRightWithNulls(_pictureBoxesInSequence.Length), (u, v) => (PictureBox: u, Image: v)))
             {
                 pictureBox.InvokeIfRequired(() =>
                 {
@@ -159,11 +148,11 @@ namespace Random_File_Opener_Win_Forms
             }
         }
 
-        private void PlaceImageInBigPictureBox(Bitmap[] images)
+        private void PlaceImageInBigPictureBox(Bitmap image)
         {
             ImagePictureBox.InvokeIfRequired(() =>
             {
-                ImagePictureBox.Image = images[0];
+                ImagePictureBox.Image = image;
                 ImagePictureBox.Visible = true;
             });
             foreach (var pictureBox in _pictureBoxesInSequence)
