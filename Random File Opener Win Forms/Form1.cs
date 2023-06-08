@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Drawing;
@@ -7,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Random_File_Opener_Win_Forms.Settings;
@@ -23,14 +21,14 @@ namespace Random_File_Opener_Win_Forms
 
         private SearchOption _searchOption = SearchOption.AllDirectories;
         private ArrayWithPointer<GeneratedFileListItem> _files = new ArrayWithPointer<GeneratedFileListItem>();
-        private Random _random = new Random();
+        private readonly Random _random = new Random();
         private string _currentDirectory = string.Empty;
         private string _filter;
         private GenerateButtonColors _currentGenerateButtonColor = GenerateButtonColors.Red;
 
-        private Point? _itemLocation = null;
+        private GeneratedFileListItem _item;
 
-        private static bool _shouldAutoGenerate = false;
+        private static bool _shouldAutoGenerate;
         private TimeSpan _autoGenerateCooldown = TimeSpan.FromSeconds(2);
 
         public Form1()
@@ -179,6 +177,15 @@ namespace Random_File_Opener_Win_Forms
             GetFileFromPointAndOpen(e.Location, OpenVariants.OpenFile);
         }
 
+        private void GetFileFromPointAndOpen(Point location, OpenVariants openVariant)
+        {
+            var listItem = Utilities.ListItemFromPoint(GeneratedFilesListBox, location);
+            if (listItem == null)
+                return;
+
+            GetFileAndOpen(listItem, openVariant);
+        }
+
         private void GeneratedFilesListBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.C)
@@ -207,6 +214,7 @@ namespace Random_File_Opener_Win_Forms
             if (e.KeyCode == Keys.Enter)
             {
                 GetFileAndOpen((GeneratedFileListItem)GeneratedFilesListBox.SelectedItem, OpenVariants.OpenInExplorer);
+                // ReSharper disable once RedundantJumpStatement
                 return;
             }
         }
@@ -268,37 +276,14 @@ namespace Random_File_Opener_Win_Forms
         }
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (!_itemLocation.HasValue)
-            {
-                MessageBox.Show($"{nameof(_itemLocation)} is null");
-                return;
-            }
-            GetFileFromPointAndOpen(_itemLocation.Value, OpenVariants.OpenFile);
-        }
+            => GetFileAndOpen(_item, OpenVariants.OpenFile);
 
         private void OpenInExplorerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (!_itemLocation.HasValue)
-            {
-                MessageBox.Show($"{nameof(_itemLocation)} is null");
-                return;
-            }
-            GetFileFromPointAndOpen(_itemLocation.Value, OpenVariants.OpenInExplorer);
-        }
-
-        private void GetFileFromPointAndOpen(Point location, OpenVariants openVariant)
-        {
-            var listItem = Utilities.ListItemFromPoint(GeneratedFilesListBox, location);
-            if (listItem == null)
-                return;
-
-            GetFileAndOpen(listItem, openVariant);
-        }
+            => GetFileAndOpen(_item, OpenVariants.OpenInExplorer);
 
         private void GeneratedFilesListBox_MouseUp(object sender, MouseEventArgs e)
         {
-            _itemLocation = null;
+            _item = null;
             
             var item = Utilities.ListItemFromPoint(GeneratedFilesListBox, e.Location);
             if (item == null)
@@ -306,7 +291,7 @@ namespace Random_File_Opener_Win_Forms
 
             if (e.Button == MouseButtons.Right)
             {
-                _itemLocation = e.Location;
+                _item = item;
                 ListBoxContextMenuStrip.Show(Cursor.Position);
                 return;
             }
@@ -314,6 +299,8 @@ namespace Random_File_Opener_Win_Forms
             if (e.Button == MouseButtons.Left)
             {
                 AddImageToPreview(item);
+                // ReSharper disable once RedundantJumpStatement
+                return;
             }
         }
 
@@ -328,26 +315,16 @@ namespace Random_File_Opener_Win_Forms
 
         private void CopyItemToClipboard(CopyOptions option)
         {
-            if (!_itemLocation.HasValue)
-                return;
-            
-            var fileFromLocation = Utilities.ListItemFromPoint(GeneratedFilesListBox, _itemLocation.Value);
-            
             if (option == CopyOptions.FileName)
-                Clipboard.SetData(DataFormats.StringFormat, fileFromLocation.FileName);
+                Clipboard.SetData(DataFormats.StringFormat, _item.FileName);
             
             if (option == CopyOptions.Path)
-                Clipboard.SetData(DataFormats.StringFormat, fileFromLocation.Path);
+                Clipboard.SetData(DataFormats.StringFormat, _item.Path);
             
             if (option == CopyOptions.File)
-                Clipboard.SetFileDropList(new StringCollection { fileFromLocation.Path });
-        }
+                Clipboard.SetFileDropList(new StringCollection { _item.Path });
 
-        private enum CopyOptions
-        {
-            FileName,
-            Path,
-            File
+            _item = null;
         }
 
         private void AutoGenerate_Click(object sender, EventArgs e)
@@ -368,6 +345,13 @@ namespace Random_File_Opener_Win_Forms
         {
             OpenFile = 0,
             OpenInExplorer = 1
+        }
+
+        private enum CopyOptions
+        {
+            FileName = 0,
+            Path = 1,
+            File = 2,
         }
 
         #region dark title bar 
