@@ -20,7 +20,8 @@ namespace Random_File_Opener_Win_Forms
                 return new[] { ResizeImageToFitPictureBox(sourceImage[0], largePictureBox.Size) };
 
             var resized = sourceImage
-                .Select((u, index) => ResizeImageToFitPictureBox(u, smallPictureBoxes[index].Size))
+                .Zip(smallPictureBoxes, (u, v) => (Image: u, PictureBox: v))
+                .Select(u => ResizeImageToFitPictureBox(u.Image, u.PictureBox.Size))
                 .ToArray();
 
             return resized;
