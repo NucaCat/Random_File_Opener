@@ -69,13 +69,13 @@ namespace Random_File_Opener_Win_Forms
 
         private static Bitmap ResizeImageToFitPictureBox(Bitmap sourceImage, Size sizeToFit)
         {
-            var (height, width) = DimensionsToFitPictureBox(sourceImage, sizeToFit);
+            var resizedSize = SizeToFitPictureBox(sourceImage, sizeToFit);
 
-            var resized = ResizeImage(sourceImage, width, height);
+            var resized = ResizeImage(sourceImage, resizedSize);
             return resized;
         }
 
-        private static (int height, int width) DimensionsToFitPictureBox(Bitmap sourceImage, Size sizeToFit)
+        private static Size SizeToFitPictureBox(Bitmap sourceImage, Size sizeToFit)
         {
             var height = sourceImage.Height;
             var width = sourceImage.Width;
@@ -88,7 +88,7 @@ namespace Random_File_Opener_Win_Forms
                 var minRatio = Math.Min(hRatio, wRatio);
                 height = (int)(height * minRatio);
                 width = (int)(width * minRatio);
-                return (height, width);
+                return new Size(width: width, height: height);
             }
 
             if (height > sizeToFit.Height)
@@ -105,13 +105,13 @@ namespace Random_File_Opener_Win_Forms
                 width = (int)Math.Ceiling(width / ratio);
             }
 
-            return (height, width);
+            return new Size(width: width, height: height);
         }
 
-        private static Bitmap ResizeImage(Image image, int width, int height)
+        private static Bitmap ResizeImage(Image image, Size size)
         {
-            var destRect = new Rectangle(0, 0, width, height);
-            var destImage = new Bitmap(width, height);
+            var destRect = new Rectangle(0, 0, size.Width, size.Height);
+            var destImage = new Bitmap(width: size.Width, height: size.Height);
 
             destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
 
