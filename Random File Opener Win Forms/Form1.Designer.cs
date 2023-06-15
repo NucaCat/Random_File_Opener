@@ -276,7 +276,7 @@
             this.Controls.Add(this.NextFileButton);
             this.Controls.Add(this.GeneratedFilesListBox);
             this.Name = "Form1";
-            this.Text = "Генератор случайных файлов";
+            this.ShowIcon = false;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ListBoxContextMenuStrip.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();
