@@ -138,7 +138,8 @@ namespace Random_File_Opener_Win_Forms
             ImagePictureBox.InvokeIfRequired(() => { ImagePictureBox.Visible = false; });
 
             foreach (var (pictureBox, image) in _pictureBoxesInSequence
-                .Zip(images.PadRightWithNulls(_pictureBoxesInSequence.Length), (u, v) => (PictureBox: u, Image: v)))
+                .Zip(images.PadRightWithNulls(_pictureBoxesInSequence.Length),
+                    (u, v) => (PictureBox: u, Image: v)))
             {
                 pictureBox.InvokeIfRequired(() =>
                 {
@@ -190,11 +191,13 @@ namespace Random_File_Opener_Win_Forms
                 var highlightedItem = GeneratedFilesListBox.SelectedItem;
                 if (highlightedItem == null)
                     return;
-                
-                if (e.KeyCode == Keys.Up && GeneratedFilesListBox.SelectedIndex != 0)
+
+                var isNotFirst = GeneratedFilesListBox.SelectedIndex != 0;
+                if (e.KeyCode == Keys.Up && isNotFirst)
                     AddImageToPreview((GeneratedFileListItem)GeneratedFilesListBox.Items[GeneratedFilesListBox.SelectedIndex - 1]);
-                
-                if (e.KeyCode == Keys.Down && GeneratedFilesListBox.SelectedIndex != GeneratedFilesListBox.Items.Count - 1)
+
+                var isNotLast = GeneratedFilesListBox.SelectedIndex != GeneratedFilesListBox.Items.Count - 1;
+                if (e.KeyCode == Keys.Down && isNotLast)
                     AddImageToPreview((GeneratedFileListItem)GeneratedFilesListBox.Items[GeneratedFilesListBox.SelectedIndex + 1]);
                 
                 return;
