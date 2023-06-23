@@ -30,6 +30,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.GeneratedFilesListBox = new System.Windows.Forms.ListBox();
             this.NextFileButton = new System.Windows.Forms.Button();
             this.SearchModeButton = new System.Windows.Forms.Button();
@@ -275,8 +276,8 @@
             this.Controls.Add(this.SearchModeButton);
             this.Controls.Add(this.NextFileButton);
             this.Controls.Add(this.GeneratedFilesListBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.ShowIcon = false;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ListBoxContextMenuStrip.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();
