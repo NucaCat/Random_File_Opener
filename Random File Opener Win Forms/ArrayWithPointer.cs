@@ -14,7 +14,7 @@ namespace Random_File_Opener_Win_Forms
 
             var current = Entities[_currentIndex];
 
-            _currentIndex += 1;
+            _currentIndex++;
 
             if (_currentIndex == Entities.Length)
                 _currentIndex = 0;

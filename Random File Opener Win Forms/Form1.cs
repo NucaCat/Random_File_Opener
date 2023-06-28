@@ -109,12 +109,16 @@ namespace Random_File_Opener_Win_Forms
         private void NextFileButton_Click(object sender, EventArgs e)
         {
             var file = _files.GetCurrentAndMoveNext();
-            if (file == null)
+            if (file == null || file.IsDeleted)
                 return;
 
-            GeneratedFilesListBox.InvokeIfRequired(() => GeneratedFilesListBox.Items.Add(file));
-
             AddImageToPreview(file);
+
+            if (!file.AddedToListBox)
+            {
+                file.AddedToListBox = true;
+                GeneratedFilesListBox.InvokeIfRequired(() => GeneratedFilesListBox.Items.Add(file));
+            }
         }
 
         private void AddImageToPreview(GeneratedFileListItem file)
@@ -211,9 +215,51 @@ namespace Random_File_Opener_Win_Forms
             if (e.KeyCode == Keys.Enter)
             {
                 GetFileAndOpen((GeneratedFileListItem)GeneratedFilesListBox.SelectedItem, OpenVariants.OpenInExplorer);
+                return;
+            }
+
+            if (e.KeyCode == Keys.Delete)
+            {
+                DeleteSelectedFile();
                 // ReSharper disable once RedundantJumpStatement
                 return;
             }
+        }
+
+        private void DeleteSelectedFile()
+        {
+            var selectedItem = (GeneratedFileListItem)GeneratedFilesListBox.SelectedItem;
+            if (selectedItem == null)
+                return;
+
+            var result = MessageBox.Show(text: $"Вы действительно хотите удалить файл: {selectedItem.FileName}?", caption: string.Empty, MessageBoxButtons.YesNo);
+            if (result != DialogResult.Yes)
+                return;
+
+            selectedItem.Delete();
+            
+            GeneratedFilesListBox.Items.RemoveAt(GeneratedFilesListBox.SelectedIndex);
+
+            foreach (var image in selectedItem.Images)
+            {
+                image.Dispose();
+            }
+
+            if (Consts.ImageExtensions.Contains(selectedItem.Extension))
+            {
+                ImagePictureBox.Image?.Dispose();
+                ImagePictureBox.Image = null;
+
+                foreach (var smallPictureBox in _pictureBoxesInSequence)
+                {
+                    smallPictureBox.Image?.Dispose();
+                    smallPictureBox.Image = null;
+                }
+            }
+
+            selectedItem.Images = Array.Empty<Bitmap>();
+            
+            File.Delete(selectedItem.Path);
         }
 
         private void GetFileAndOpen(GeneratedFileListItem item, OpenVariants openVariants)
@@ -277,6 +323,9 @@ namespace Random_File_Opener_Win_Forms
 
         private void OpenInExplorerToolStripMenuItem_Click(object sender, EventArgs e)
             => GetFileAndOpen(_item, OpenVariants.OpenInExplorer);
+
+        private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
+            => DeleteSelectedFile();
 
         private void GeneratedFilesListBox_MouseUp(object sender, MouseEventArgs e)
         {

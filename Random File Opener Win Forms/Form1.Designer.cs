@@ -52,6 +52,7 @@
             this.VideoThumbnailFirstPictureBox = new System.Windows.Forms.PictureBox();
             this.VideoThumbnailSecondPictureBox = new System.Windows.Forms.PictureBox();
             this.VideoThumbnailThirdPictureBox = new System.Windows.Forms.PictureBox();
+            this.DeleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ListBoxContextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AutoGenerateNumericUpDown)).BeginInit();
@@ -149,9 +150,9 @@
             // 
             // ListBoxContextMenuStrip
             // 
-            this.ListBoxContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.OpenToolStripMenuItem, this.OpenInExplorerToolStripMenuItem, this.CopyToClipboardToolStripMenuItem });
+            this.ListBoxContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.OpenToolStripMenuItem, this.OpenInExplorerToolStripMenuItem, this.CopyToClipboardToolStripMenuItem, this.DeleteToolStripMenuItem });
             this.ListBoxContextMenuStrip.Name = "ListBoxContextMenuStrip";
-            this.ListBoxContextMenuStrip.Size = new System.Drawing.Size(287, 76);
+            this.ListBoxContextMenuStrip.Size = new System.Drawing.Size(287, 122);
             // 
             // OpenToolStripMenuItem
             // 
@@ -177,21 +178,21 @@
             // FileToolStripMenuItem
             // 
             this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
-            this.FileToolStripMenuItem.Size = new System.Drawing.Size(146, 24);
+            this.FileToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.FileToolStripMenuItem.Text = "Файл";
             this.FileToolStripMenuItem.Click += new System.EventHandler(this.FileToolStripMenuItem_Click);
             // 
             // FileAddressToolStripMenuItem
             // 
             this.FileAddressToolStripMenuItem.Name = "FileAddressToolStripMenuItem";
-            this.FileAddressToolStripMenuItem.Size = new System.Drawing.Size(146, 24);
+            this.FileAddressToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.FileAddressToolStripMenuItem.Text = "Адрес";
             this.FileAddressToolStripMenuItem.Click += new System.EventHandler(this.FileAddressToolStripMenuItem_Click);
             // 
             // FileNameToolStripMenuItem
             // 
             this.FileNameToolStripMenuItem.Name = "FileNameToolStripMenuItem";
-            this.FileNameToolStripMenuItem.Size = new System.Drawing.Size(146, 24);
+            this.FileNameToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.FileNameToolStripMenuItem.Text = "Название";
             this.FileNameToolStripMenuItem.Click += new System.EventHandler(this.FileNameToolStripMenuItem_Click);
             // 
@@ -257,6 +258,13 @@
             this.VideoThumbnailThirdPictureBox.TabStop = false;
             this.VideoThumbnailThirdPictureBox.Visible = false;
             // 
+            // DeleteToolStripMenuItem
+            // 
+            this.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem";
+            this.DeleteToolStripMenuItem.Size = new System.Drawing.Size(286, 24);
+            this.DeleteToolStripMenuItem.Text = "Удалить";
+            this.DeleteToolStripMenuItem.Click += new System.EventHandler(this.DeleteToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -288,6 +296,8 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.ToolStripMenuItem DeleteToolStripMenuItem;
 
         private System.Windows.Forms.PictureBox VideoThumbnailThirdPictureBox;
 

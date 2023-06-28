@@ -11,18 +11,27 @@ namespace Random_File_Opener_Win_Forms
     {
         public static Bitmap[] GetFitImages(GeneratedFileListItem file, PictureBox largePictureBox, PictureBox[] smallPictureBoxes)
         {
-            var sourceImage = GetSourceImage(file);
+            var sourceImages = GetSourceImage(file);
 
-            if (sourceImage.Length == 0)
+            if (sourceImages.Length == 0)
                 return Array.Empty<Bitmap>();
 
-            if (sourceImage.Length == 1)
-                return new[] { ResizeImageToFitPictureBox(sourceImage[0], largePictureBox.Size) };
+            if (sourceImages.Length == 1)
+            {
+                var resizedImage = ResizeImageToFitPictureBox(sourceImages[0], largePictureBox.Size);
+                sourceImages[0].Dispose();
+                return new[] { resizedImage };
+            }
 
-            var resized = sourceImage
+            var resized = sourceImages
                 .Zip(smallPictureBoxes, (u, v) => (Image: u, PictureBox: v))
                 .Select(u => ResizeImageToFitPictureBox(u.Image, u.PictureBox.Size))
                 .ToArray();
+
+            foreach (var sourceImage in sourceImages)
+            {
+                sourceImage.Dispose();
+            }
 
             return resized;
         }

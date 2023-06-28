@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Random_File_Opener_Win_Forms
 {
-    public sealed class GeneratedFileListItem
+    public sealed class GeneratedFileListItem : IDeletable
     {
         public string DisplayValue { get; private set; }
         public string Path { get; private set; }
@@ -14,6 +14,9 @@ namespace Random_File_Opener_Win_Forms
         public string FileName { get; private set; }
 
         public Bitmap[] Images { get; set; } = Array.Empty<Bitmap>();
+
+        public bool IsDeleted { get; set; } = false;
+        public bool AddedToListBox { get; set; } = false;
 
         public static GeneratedFileListItem FromString(string s, string directory)
         {
