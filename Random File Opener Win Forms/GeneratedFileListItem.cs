@@ -7,7 +7,9 @@ namespace Random_File_Opener_Win_Forms
     {
         public string DisplayValue { get; private set; }
         public string Path { get; private set; }
-        public string Directories { get; private set; }
+
+        // TODO v.chumachenko Now its not needed
+        // public string Directories { get; private set; }
         public string Extension { get; private set; }
         public string FileName { get; private set; }
 
@@ -25,7 +27,7 @@ namespace Random_File_Opener_Win_Forms
             {
                 Path = s,
                 DisplayValue = fileName + " (" + directories + ")",
-                Directories = directories,
+                // Directories = directories,
                 Extension = extension,
                 FileName = fileName,
             };
