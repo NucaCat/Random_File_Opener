@@ -60,6 +60,8 @@ namespace Random_File_Opener_Win_Forms
             _filter = settings?.Filter ?? _filter;
             FilterTextBox.Text = _filter;
 
+            Consts.CacheImages = settings?.CacheImages ?? Consts.CacheImages;
+
             Consts.VideoThumbnailPositions = settings?.VideoThumbnailPositions.IsEmpty() == true
                 ? Consts.VideoThumbnailPositions
                 // ReSharper disable once PossibleNullReferenceException
@@ -117,20 +119,23 @@ namespace Random_File_Opener_Win_Forms
 
         private void AddImageToPreview(GeneratedFileListItem file)
         {
-            file.Images = file.Images.Length != 0
+            var images = file.Images.Length != 0
             ? file.Images
             : ImageService.GetFitImages(file, ImagePictureBox, _pictureBoxesInSequence);
 
-            if (file.Images.Length == 0)
+            if (images.Length == 0)
                 return;
+
+            if (Consts.CacheImages)
+                file.Images = images;
             
-            if (file.Images.Length == 1)
+            if (images.Length == 1)
             {
-                PlaceImageInBigPictureBox(file.Images[0]);
+                PlaceImageInBigPictureBox(images[0]);
                 return;
             }
             
-            PlaceImageInSmallPictureBoxes(file.Images);
+            PlaceImageInSmallPictureBoxes(images);
         }
 
         private void PlaceImageInSmallPictureBoxes(Bitmap[] images)

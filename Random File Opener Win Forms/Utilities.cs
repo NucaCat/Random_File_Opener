@@ -15,7 +15,7 @@ namespace Random_File_Opener_Win_Forms
             if (str.IsNullOrWhiteSpace())
                 return string.Empty;
 
-            return $"({str})";
+            return str;
         }
 
         public static string ExtractFileName(string u, int lastIndex)
@@ -30,7 +30,13 @@ namespace Random_File_Opener_Win_Forms
         }
 
         public static string ExtractExtension(string fileName)
-            => fileName.Substring(fileName.LastIndexOf('.') + 1).ToUpper();
+        {
+            var lastIndexOfDot = fileName.LastIndexOf('.');
+            if (lastIndexOfDot == -1)
+                return string.Empty;
+            
+            return fileName.Substring(lastIndexOfDot + 1).ToUpper();
+        }
 
         public static GeneratedFileListItem ListItemFromPoint(ListBox listBox, Point point)
         {

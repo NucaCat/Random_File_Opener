@@ -29,12 +29,13 @@ namespace Random_File_Opener_Win_Forms
 
         private static Bitmap[] GetSourceImage(GeneratedFileListItem file)
         {
-            var extension = Utilities.ExtractExtension(file.FileName);
+            if (file.Extension.IsNullOrWhiteSpace())
+                return Array.Empty<Bitmap>();
             
-            if (Consts.ImageExtensions.Contains(extension))
+            if (Consts.ImageExtensions.Contains(file.Extension))
                 return new [] { new Bitmap(file.Path) };
 
-            if (Consts.VideoExtensions.Contains(extension))
+            if (Consts.VideoExtensions.Contains(file.Extension))
                 return GetVideoThumbnails(file, Consts.VideoThumbnailPositions);
 
             return Array.Empty<Bitmap>();

@@ -23,6 +23,8 @@ namespace Random_File_Opener_Win_Forms
             TimeSpan.FromMinutes(12),
             TimeSpan.FromMinutes(20)
         };
+
+        public static bool CacheImages { get; set; } = true;
     }
 
     internal enum GenerateButtonColors
