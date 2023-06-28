@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Random_File_Opener_Win_Forms.CustomComponents.MessageBox;
 
 namespace Random_File_Opener_Win_Forms.Style
 {
@@ -15,7 +16,7 @@ namespace Random_File_Opener_Win_Forms.Style
             };
         
         // TODO v.chumachenko unbind from Styles and use some interface
-        public static void ApplyStyles(Form1 form)
+        public static void ApplyStyles(Form form)
         {
             form.BackColor = Styles.Background;
 
@@ -36,6 +37,20 @@ namespace Random_File_Opener_Win_Forms.Style
                 textBox.ForeColor = Styles.OnSurface;
 
                 textBox.BorderStyle = BorderStyle.None;
+            }
+            
+            foreach(var textBox in form.Controls.OfType<Label>())
+            {
+                textBox.BackColor = Styles.Surface;
+                textBox.ForeColor = Styles.OnSurface;
+
+                textBox.BorderStyle = BorderStyle.None;
+            }
+            
+            foreach(var groupBox in form.Controls.OfType<GroupBox>())
+            {
+                groupBox.BackColor = Styles.Surface;
+                groupBox.ForeColor = Styles.OnSurface;
             }
             
             foreach(var pictureBox in form.Controls.OfType<PictureBox>())
@@ -66,6 +81,22 @@ namespace Random_File_Opener_Win_Forms.Style
             }
         }
 
+        public static void ApplyStylesToMessageBox(CustomMessageBox messageBox)
+        {
+            messageBox.YesButtonProvider.BackColor = Styles.Secondary;
+            messageBox.YesButtonProvider.ForeColor = Styles.OnSecondary;
+
+            messageBox.YesButtonProvider.FlatAppearance.MouseDownBackColor = Styles.Secondary;
+            messageBox.YesButtonProvider.FlatAppearance.MouseOverBackColor = Styles.Secondary;
+            
+
+            messageBox.NoButtonProvider.BackColor = Styles.Error;
+            messageBox.NoButtonProvider.ForeColor = Styles.OnError;
+
+            messageBox.NoButtonProvider.FlatAppearance.MouseDownBackColor = Styles.Error;
+            messageBox.NoButtonProvider.FlatAppearance.MouseOverBackColor = Styles.Error;
+        }
+        
         public static void ChangeAutogenerateButtonColor(Button button, GenerateButtonColors color)
         {
             button.BackColor = GenerateButtonColorsMap[color].Main;

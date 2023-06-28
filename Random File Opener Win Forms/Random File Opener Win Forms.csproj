@@ -147,6 +147,12 @@
     <ItemGroup>
         <Compile Include="ArrayWithPointer.cs" />
         <Compile Include="CustomComponents\FlatNumericUpDown.cs" />
+        <Compile Include="CustomComponents\MessageBox\CustomMessageBox.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="CustomComponents\MessageBox\CustomMessageBox.Designer.cs">
+          <DependentUpon>CustomMessageBox.cs</DependentUpon>
+        </Compile>
         <Compile Include="Form1.cs">
             <SubType>Form</SubType>
         </Compile>
@@ -165,6 +171,9 @@
         <Compile Include="Style\Styler.cs" />
         <Compile Include="Style\Styles.cs" />
         <Compile Include="Utilities.cs" />
+        <EmbeddedResource Include="CustomComponents\MessageBox\CustomMessageBox.resx">
+          <DependentUpon>CustomMessageBox.cs</DependentUpon>
+        </EmbeddedResource>
         <EmbeddedResource Include="Form1.resx">
           <DependentUpon>Form1.cs</DependentUpon>
         </EmbeddedResource>

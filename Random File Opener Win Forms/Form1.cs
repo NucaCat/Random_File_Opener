@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using Random_File_Opener_Win_Forms.CustomComponents.MessageBox;
 using Random_File_Opener_Win_Forms.Settings;
 using Random_File_Opener_Win_Forms.Style;
 
@@ -30,6 +31,8 @@ namespace Random_File_Opener_Win_Forms
 
         private static bool _shouldAutoGenerate;
         private TimeSpan _autoGenerateCooldown = TimeSpan.FromSeconds(2);
+
+        private readonly CustomMessageBox _messageBox = new CustomMessageBox();
 
         public Form1()
         {
@@ -56,6 +59,8 @@ namespace Random_File_Opener_Win_Forms
 
             Styles.FillFromSettings(settings?.Styles);
             Styler.ApplyStyles(this);
+            Styler.ApplyStyles(_messageBox);
+            Styler.ApplyStylesToMessageBox(_messageBox);
 
             _filter = settings?.Filter ?? _filter;
             FilterTextBox.Text = _filter;
@@ -232,7 +237,7 @@ namespace Random_File_Opener_Win_Forms
             if (selectedItem == null)
                 return;
 
-            var result = MessageBox.Show(text: $"Вы действительно хотите удалить файл: {selectedItem.FileName}?", caption: string.Empty, MessageBoxButtons.YesNo);
+            var result = _messageBox.ShowMessageBox(text: $"Вы действительно хотите удалить файл: {selectedItem.FileName}?");
             if (result != DialogResult.Yes)
                 return;
 
