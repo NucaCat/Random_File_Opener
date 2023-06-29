@@ -199,20 +199,17 @@ namespace Random_File_Opener_Win_Forms
                 });
                 return;
             }
-            if (e.KeyCode == Keys.Down)
+
+            if (e.KeyCode == Keys.Down || e.KeyCode == Keys.Up)
             {
-                var isNotLast = GeneratedFilesListBox.SelectedIndex != GeneratedFilesListBox.Items.Count - 1;
-                if (isNotLast)
-                    AddImageToPreview((GeneratedFileListItem)GeneratedFilesListBox.Items[GeneratedFilesListBox.SelectedIndex + 1]);
-                
-                return;
-            }
-            if (e.KeyCode == Keys.Up)
-            {
-                var isNotFirst = GeneratedFilesListBox.SelectedIndex != 0;
-                if (isNotFirst)
-                    AddImageToPreview((GeneratedFileListItem)GeneratedFilesListBox.Items[GeneratedFilesListBox.SelectedIndex - 1]);
-                
+                var itemToSet = e.KeyCode == Keys.Down
+                ? DownItemToSet()
+                : UpItemToSet();
+
+                GeneratedFilesListBox.SelectedItem = itemToSet;
+                AddImageToPreview((GeneratedFileListItem)itemToSet);
+
+                e.Handled = true;
                 return;
             }
 
@@ -228,6 +225,24 @@ namespace Random_File_Opener_Win_Forms
                 // ReSharper disable once RedundantJumpStatement
                 return;
             }
+        }
+
+        private object UpItemToSet()
+        {
+            var isFirst = GeneratedFilesListBox.SelectedIndex == 0;
+            var itemToSet = isFirst
+                ? GeneratedFilesListBox.Items[GeneratedFilesListBox.Items.Count - 1]
+                : GeneratedFilesListBox.Items[GeneratedFilesListBox.SelectedIndex - 1];
+            return itemToSet;
+        }
+
+        private object DownItemToSet()
+        {
+            var isLast = GeneratedFilesListBox.SelectedIndex == GeneratedFilesListBox.Items.Count - 1;
+            var itemToSet = isLast
+                ? GeneratedFilesListBox.Items[0]
+                : GeneratedFilesListBox.Items[GeneratedFilesListBox.SelectedIndex + 1];
+            return itemToSet;
         }
 
         private void DeleteSelectedFile()
