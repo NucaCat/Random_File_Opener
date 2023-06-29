@@ -66,7 +66,7 @@
             this.GeneratedFilesListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.GeneratedFilesListBox.FormattingEnabled = true;
             this.GeneratedFilesListBox.ItemHeight = 29;
-            this.GeneratedFilesListBox.Location = new System.Drawing.Point(1024, 14);
+            this.GeneratedFilesListBox.Location = new System.Drawing.Point(1024, 12);
             this.GeneratedFilesListBox.Name = "GeneratedFilesListBox";
             this.GeneratedFilesListBox.Size = new System.Drawing.Size(868, 990);
             this.GeneratedFilesListBox.TabIndex = 0;
