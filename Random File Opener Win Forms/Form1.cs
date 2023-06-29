@@ -178,48 +178,47 @@ namespace Random_File_Opener_Win_Forms
 
         private void GeneratedFilesListBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            GetFileFromPointAndOpen(e.Location, OpenVariants.OpenFile);
-        }
-
-        private void GetFileFromPointAndOpen(Point location, OpenVariants openVariant)
-        {
-            var listItem = Utilities.ListItemFromPoint(GeneratedFilesListBox, location);
+            var listItem = GeneratedFilesListBox.SelectedFile();
             if (listItem == null)
                 return;
-
-            GetFileAndOpen(listItem, openVariant);
+            
+            GetFileAndOpen(listItem, OpenVariants.OpenFile);
         }
 
         private void GeneratedFilesListBox_KeyDown(object sender, KeyEventArgs e)
         {
+            var listItem = GeneratedFilesListBox.SelectedFile();
+            if (listItem == null)
+                return;
+
             if (e.Control && e.KeyCode == Keys.C)
             {
                 Clipboard.SetFileDropList(new StringCollection
                 {
-                    ((GeneratedFileListItem)GeneratedFilesListBox.SelectedItem).Path,
+                    listItem.Path,
                 });
                 return;
             }
-            if (e.KeyCode == Keys.Down || e.KeyCode == Keys.Up)
+            if (e.KeyCode == Keys.Down)
             {
-                var highlightedItem = GeneratedFilesListBox.SelectedItem;
-                if (highlightedItem == null)
-                    return;
-
-                var isNotFirst = GeneratedFilesListBox.SelectedIndex != 0;
-                if (e.KeyCode == Keys.Up && isNotFirst)
-                    AddImageToPreview((GeneratedFileListItem)GeneratedFilesListBox.Items[GeneratedFilesListBox.SelectedIndex - 1]);
-
                 var isNotLast = GeneratedFilesListBox.SelectedIndex != GeneratedFilesListBox.Items.Count - 1;
-                if (e.KeyCode == Keys.Down && isNotLast)
+                if (isNotLast)
                     AddImageToPreview((GeneratedFileListItem)GeneratedFilesListBox.Items[GeneratedFilesListBox.SelectedIndex + 1]);
+                
+                return;
+            }
+            if (e.KeyCode == Keys.Up)
+            {
+                var isNotFirst = GeneratedFilesListBox.SelectedIndex != 0;
+                if (isNotFirst)
+                    AddImageToPreview((GeneratedFileListItem)GeneratedFilesListBox.Items[GeneratedFilesListBox.SelectedIndex - 1]);
                 
                 return;
             }
 
             if (e.KeyCode == Keys.Enter)
             {
-                GetFileAndOpen((GeneratedFileListItem)GeneratedFilesListBox.SelectedItem, OpenVariants.OpenInExplorer);
+                GetFileAndOpen(listItem, OpenVariants.OpenInExplorer);
                 return;
             }
 
@@ -233,7 +232,7 @@ namespace Random_File_Opener_Win_Forms
 
         private void DeleteSelectedFile()
         {
-            var selectedItem = (GeneratedFileListItem)GeneratedFilesListBox.SelectedItem;
+            var selectedItem = GeneratedFilesListBox.SelectedFile();
             if (selectedItem == null)
                 return;
 

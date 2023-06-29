@@ -120,5 +120,8 @@ namespace Random_File_Opener_Win_Forms
 
             return array;
         }
+
+        public static GeneratedFileListItem SelectedFile(this ListBox lb)
+            => (GeneratedFileListItem)lb.SelectedItem;
     }
 }
