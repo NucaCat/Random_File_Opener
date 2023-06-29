@@ -29,7 +29,7 @@ namespace Random_File_Opener_Win_Forms
             return new GeneratedFileListItem
             {
                 Path = s,
-                DisplayValue = fileName + " (" + directories + ")",
+                DisplayValue = fileName + (directories.IsNotNullOrWhiteSpace() ? " (" + directories + ")" : string.Empty),
                 // Directories = directories,
                 Extension = extension,
                 FileName = fileName,
