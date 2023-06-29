@@ -187,7 +187,6 @@
             <DependentUpon>Resources.resx</DependentUpon>
         </Compile>
         <None Include="icon.ico" />
-        <None Include="icon_1.ico" />
         <None Include="packages.config" />
         <None Include="Properties\Settings.settings">
             <Generator>SettingsSingleFileGenerator</Generator>
