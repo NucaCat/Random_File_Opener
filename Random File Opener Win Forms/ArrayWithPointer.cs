@@ -6,7 +6,7 @@ namespace Random_File_Opener_Win_Forms
 {
     internal sealed class ArrayWithPointer<T> where T : class, IDeletable
     {
-        private List<T> _entities { get; set; } = new List<T>(capacity: 0);
+        private List<T> _entities = new List<T>(capacity: 0);
         private int _currentIndex = 0;
 
         public void Initialize(IEnumerable<T> sequence)
