@@ -181,6 +181,8 @@ namespace Random_File_Opener_Win_Forms
 
         private void GeneratedFilesListBox_KeyDown(object sender, KeyEventArgs e)
         {
+            e.Handled = true;
+
             var listItem = GeneratedFilesListBox.SelectedFile();
             if (listItem == null)
                 return;
@@ -194,16 +196,12 @@ namespace Random_File_Opener_Win_Forms
                 return;
             }
 
-            if (e.KeyCode == Keys.Down || e.KeyCode == Keys.Up)
+            if (e.KeyCode == Keys.Down 
+                || e.KeyCode == Keys.Up 
+                || e.KeyCode == Keys.Left 
+                || e.KeyCode == Keys.Right)
             {
-                var itemToSet = e.KeyCode == Keys.Down
-                ? DownItemToSet()
-                : UpItemToSet();
-
-                GeneratedFilesListBox.SelectedItem = itemToSet;
-                AddImageToPreview((GeneratedFileListItem)itemToSet);
-
-                e.Handled = true;
+                MoveInListBox(e.KeyCode);
                 return;
             }
 
@@ -219,6 +217,16 @@ namespace Random_File_Opener_Win_Forms
                 // ReSharper disable once RedundantJumpStatement
                 return;
             }
+        }
+
+        private void MoveInListBox(Keys keyCode)
+        {
+            var itemToSet = keyCode == Keys.Down || keyCode == Keys.Right
+                ? DownItemToSet()
+                : UpItemToSet();
+
+            GeneratedFilesListBox.SelectedItem = itemToSet;
+            AddImageToPreview((GeneratedFileListItem)itemToSet);
         }
 
         private object UpItemToSet()
