@@ -28,10 +28,7 @@ namespace Random_File_Opener_Win_Forms
                 .Select(u => ResizeImageToFitPictureBox(u.Image, u.PictureBox.Size))
                 .ToArray();
 
-            foreach (var sourceImage in sourceImages)
-            {
-                sourceImage.Dispose();
-            }
+            sourceImages.ForAll(u => u.Dispose());
 
             return resized;
         }

@@ -170,10 +170,8 @@ namespace Random_File_Opener_Win_Forms
                 ImagePictureBox.Image = image;
                 ImagePictureBox.Visible = true;
             });
-            foreach (var pictureBox in _pictureBoxesInSequence)
-            {
-                pictureBox.InvokeIfRequired(() => { pictureBox.Visible = false; });
-            }
+            
+            _pictureBoxesInSequence.ForAll(u => u.InvokeIfRequired(() => { u.Visible = false; }));
         }
 
         private void GeneratedFilesListBox_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -259,21 +257,18 @@ namespace Random_File_Opener_Win_Forms
             
             GeneratedFilesListBox.Items.RemoveAt(GeneratedFilesListBox.SelectedIndex);
 
-            foreach (var image in selectedItem.Images)
-            {
-                image.Dispose();
-            }
+            selectedItem.Images.ForAll(u => u.Dispose());
 
             if (Consts.ImageExtensions.Contains(selectedItem.Extension))
             {
                 ImagePictureBox.Image?.Dispose();
                 ImagePictureBox.Image = null;
 
-                foreach (var smallPictureBox in _pictureBoxesInSequence)
+                _pictureBoxesInSequence.ForAll(u =>
                 {
-                    smallPictureBox.Image?.Dispose();
-                    smallPictureBox.Image = null;
-                }
+                    u.Image?.Dispose();
+                    u.Image = null;
+                });
             }
 
             selectedItem.Images = Array.Empty<Bitmap>();

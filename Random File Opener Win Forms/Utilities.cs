@@ -34,7 +34,7 @@ namespace Random_File_Opener_Win_Forms
             var lastIndexOfDot = fileName.LastIndexOf('.');
             if (lastIndexOfDot == -1)
                 return string.Empty;
-            
+
             return fileName.Substring(lastIndexOfDot + 1).ToUpper();
         }
 
@@ -58,7 +58,7 @@ namespace Random_File_Opener_Win_Forms
 
             if (searchOption == SearchOption.TopDirectoryOnly)
                 return "Без подпапок";
-            
+
             return string.Empty;
         }
 
@@ -108,11 +108,11 @@ namespace Random_File_Opener_Win_Forms
             var padded = source.Concat(Enumerable.Range(0, countOfElementsToAdd).Select(_ => (T)null));
             return padded;
         }
-        
-        public static T[] Shuffle<T> (this T[] array, Random rng)
+
+        public static T[] Shuffle<T>(this T[] array, Random rng)
         {
             var n = array.Length;
-            while (n > 1) 
+            while (n > 1)
             {
                 var k = rng.Next(n--);
                 (array[n], array[k]) = (array[k], array[n]);
@@ -123,5 +123,13 @@ namespace Random_File_Opener_Win_Forms
 
         public static GeneratedFileListItem SelectedFile(this ListBox lb)
             => (GeneratedFileListItem)lb.SelectedItem;
+
+        public static void ForAll<T>(this IEnumerable<T> sequence, Action<T> action)
+        {
+            foreach (var x in sequence)
+            {
+                action(x);
+            }
+        }
     }
 }
