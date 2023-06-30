@@ -102,13 +102,9 @@ namespace Random_File_Opener_Win_Forms
             DirectoryTextBox.Text = directory.Substring(directory.LastIndexOf('\\') + 1);
 
             GeneratedFilesListBox.Items.Clear();
-            _files = new ArrayWithPointer<GeneratedFileListItem>
-            {
-                Entities = Directory.GetFiles(directory, filter, _searchOption)
-                    .Shuffle(_random)
-                    .Select(u => GeneratedFileListItem.FromString(u, directory))
-                    .ToArray(),
-            };
+            _files.Initialize(Directory.GetFiles(directory, filter, _searchOption)
+                .Shuffle(_random)
+                .Select(u => GeneratedFileListItem.FromString(u, directory)));
         }
 
         private void NextFileButton_Click(object sender, EventArgs e)
@@ -317,6 +313,9 @@ namespace Random_File_Opener_Win_Forms
 
         private void ClearButton_Click(object sender, EventArgs e)
         {
+            _files.ForAll(u => u.AddedToListBox = false);
+            _files.FlushDeleted();
+
             GeneratedFilesListBox.Items.Clear();
         }
 
