@@ -87,7 +87,7 @@ namespace Random_File_Opener_Win_Forms
             {
                 if (_shouldAutoGenerate)
                 {
-                    NextFileButton_Click(null, null);
+                    NextFileButton_Click();
                 }
 
                 await Task.Delay(_autoGenerateCooldown);
@@ -107,7 +107,7 @@ namespace Random_File_Opener_Win_Forms
                 .Select(u => GeneratedFileListItem.FromString(u, directory)));
         }
 
-        private void NextFileButton_Click(object sender, EventArgs e)
+        private void NextFileButton_Click(object sender = null, EventArgs e = null)
         {
             var file = _files.GetCurrentAndMoveNext();
             if (file == null || file.IsDeleted)
@@ -212,6 +212,12 @@ namespace Random_File_Opener_Win_Forms
             if (e.KeyCode == Keys.Enter)
             {
                 GetFileAndOpen(listItem, OpenVariants.OpenInExplorer);
+                return;
+            }
+
+            if (e.KeyCode == Keys.Space)
+            {
+                NextFileButton_Click();
                 return;
             }
 
