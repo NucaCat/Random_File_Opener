@@ -17,7 +17,7 @@ namespace Random_File_Opener_Win_Forms
 
         public T GetCurrentAndMoveNext()
         {
-            if (_entities.Count == 0)
+            if (_entities.IsEmpty())
                 return null;
 
             var current = _entities[_currentIndex];
@@ -32,7 +32,7 @@ namespace Random_File_Opener_Win_Forms
 
         public void FlushDeleted()
         {
-            if (_entities.Count == 0) 
+            if (_entities.IsEmpty()) 
                 return;
 
             var deletedCount = _entities.RemoveAll(u => u.IsDeleted);

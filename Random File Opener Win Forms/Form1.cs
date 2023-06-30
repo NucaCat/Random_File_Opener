@@ -124,11 +124,11 @@ namespace Random_File_Opener_Win_Forms
 
         private void AddImageToPreview(GeneratedFileListItem file)
         {
-            var images = file.Images.Length != 0
+            var images = file.Images.IsNotEmpty()
             ? file.Images
             : ImageService.GetFitImages(file, ImagePictureBox, _pictureBoxesInSequence);
 
-            if (images.Length == 0)
+            if (images.IsEmpty())
                 return;
 
             if (Consts.CacheImages)

@@ -13,7 +13,7 @@ namespace Random_File_Opener_Win_Forms
         {
             var sourceImages = GetSourceImage(file);
 
-            if (sourceImages.Length == 0)
+            if (sourceImages.IsEmpty())
                 return Array.Empty<Bitmap>();
 
             if (sourceImages.Length == 1)
