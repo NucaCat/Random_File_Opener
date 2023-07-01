@@ -118,12 +118,10 @@ namespace Random_File_Opener_Win_Forms
             if (!file.AddedToListBox)
             {
                 file.AddedToListBox = true;
-                GeneratedFilesListBox.InvokeIfRequired(() =>
-                {
-                    GeneratedFilesListBox.Items.Add(file);
-                    GeneratedFilesListBox.SelectedItem = file;
-                });
+                GeneratedFilesListBox.InvokeIfRequired(() => GeneratedFilesListBox.Items.Add(file));
             }
+
+            GeneratedFilesListBox.InvokeIfRequired(() => GeneratedFilesListBox.SelectedItem = file);
         }
 
         private void AddImageToPreview(GeneratedFileListItem file)
