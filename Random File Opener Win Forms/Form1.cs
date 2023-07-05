@@ -122,6 +122,8 @@ namespace Random_File_Opener_Win_Forms
             }
 
             GeneratedFilesListBox.InvokeIfRequired(() => GeneratedFilesListBox.SelectedItem = file);
+
+            GeneratedFilesListBox.Focus();
         }
 
         private void AddImageToPreview(GeneratedFileListItem file)
