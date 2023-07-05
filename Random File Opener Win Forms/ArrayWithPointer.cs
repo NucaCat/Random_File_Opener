@@ -17,15 +17,12 @@ namespace Random_File_Opener_Win_Forms
 
         public T GetCurrentAndMoveNext()
         {
-            if (_entities.IsEmpty())
+            if (_entities.IsEmpty() || _currentIndex == _entities.Count)
                 return null;
 
             var current = _entities[_currentIndex];
 
             _currentIndex++;
-
-            if (_currentIndex == _entities.Count)
-                _currentIndex = 0;
 
             return current;
         }
