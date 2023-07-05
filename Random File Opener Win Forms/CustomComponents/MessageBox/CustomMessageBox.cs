@@ -19,6 +19,8 @@ namespace Random_File_Opener_Win_Forms.CustomComponents.MessageBox
         {
             TextLabel.Text = text;
 
+            YesButton.Select();
+
             ShowDialog();
 
             return Result;
