@@ -110,7 +110,7 @@ namespace Random_File_Opener_Win_Forms
         private void NextFileButton_Click(object sender = null, EventArgs e = null)
         {
             var file = _files.GetCurrentAndMoveNext();
-            if (file == null || file.IsDeleted)
+            if (file == null)
                 return;
 
             AddImageToPreview(file);
@@ -118,12 +118,18 @@ namespace Random_File_Opener_Win_Forms
             if (!file.AddedToListBox)
             {
                 file.AddedToListBox = true;
-                GeneratedFilesListBox.InvokeIfRequired(() => GeneratedFilesListBox.Items.Add(file));
+                GeneratedFilesListBox.InvokeIfRequired(() =>
+                {
+                    GeneratedFilesListBox.Items.Add(file);
+                    GeneratedFilesListBox.Focus();
+                });
             }
 
-            GeneratedFilesListBox.InvokeIfRequired(() => GeneratedFilesListBox.SelectedItem = file);
-
-            GeneratedFilesListBox.Focus();
+            GeneratedFilesListBox.InvokeIfRequired(() =>
+            {
+                GeneratedFilesListBox.SelectedItem = file;
+                GeneratedFilesListBox.Focus();
+            });
         }
 
         private void AddImageToPreview(GeneratedFileListItem file)
@@ -267,7 +273,7 @@ namespace Random_File_Opener_Win_Forms
             if (result != DialogResult.Yes)
                 return;
 
-            selectedItem.Delete();
+            _files.Delete(selectedItem);
             
             GeneratedFilesListBox.Items.RemoveAt(GeneratedFilesListBox.SelectedIndex);
 
@@ -332,7 +338,6 @@ namespace Random_File_Opener_Win_Forms
         private void ClearButton_Click(object sender, EventArgs e)
         {
             _files.ForAll(u => u.AddedToListBox = false);
-            _files.FlushDeleted();
 
             GeneratedFilesListBox.Items.Clear();
         }

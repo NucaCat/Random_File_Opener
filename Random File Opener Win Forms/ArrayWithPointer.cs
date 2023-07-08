@@ -4,10 +4,11 @@ using System.Linq;
 
 namespace Random_File_Opener_Win_Forms
 {
-    internal sealed class ArrayWithPointer<T> where T : class, IDeletable
+    internal sealed class ArrayWithPointer<T> where T : class
     {
         private List<T> _entities = new List<T>(capacity: 0);
         private int _currentIndex = 0;
+        public bool IsAllGenerated { get; private set; } = false;
 
         public void Initialize(IEnumerable<T> sequence)
         {
@@ -26,26 +27,23 @@ namespace Random_File_Opener_Win_Forms
 
             if (_currentIndex == _entities.Count)
             {
-                FlushDeleted();
                 _currentIndex = 0;
+                IsAllGenerated = true;
             }
 
             return current;
         }
 
-        public void FlushDeleted()
-        {
-            if (_entities.IsEmpty()) 
-                return;
-
-            var deletedCount = _entities.RemoveAll(u => u.IsDeleted);
-
-            _currentIndex -= deletedCount;
-        }
-
         public void ForAll(Action<T> action)
         {
             _entities.ForAll(action);
+        }
+
+        public void Delete(T item)
+        {
+            _entities.Remove(item);
+            if (_currentIndex != 0)
+                _currentIndex--;
         }
     }
 }
