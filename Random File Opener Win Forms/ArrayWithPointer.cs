@@ -41,8 +41,10 @@ namespace Random_File_Opener_Win_Forms
 
         public void Delete(T item)
         {
+            var indexOfDeletedFile = _entities.IndexOf(item); 
+            
             _entities.Remove(item);
-            if (_currentIndex != 0)
+            if (_currentIndex != 0 && indexOfDeletedFile <= _currentIndex)
                 _currentIndex--;
         }
     }
