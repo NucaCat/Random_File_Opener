@@ -143,11 +143,14 @@ namespace Random_File_Opener_Win_Forms
             ? file.Images
             : ImageService.GetFitImages(file, ImagePictureBox, _pictureBoxesInSequence);
 
-            if (images.IsEmpty())
-                return;
-
             if (Consts.CacheImages)
                 file.Images = images;
+            
+            if (images.Length == 0)
+            {
+                PlaceImageInBigPictureBox(null);
+                return;
+            }
             
             if (images.Length == 1)
             {
@@ -381,6 +384,9 @@ namespace Random_File_Opener_Win_Forms
 
         private void PictureBox_MouseUp(object sender, MouseEventArgs e)
         {
+            if (((PictureBox)sender).Image == null)
+                return;
+
             var item = GeneratedFilesListBox.SelectedFile();
             if (item == null)
                 return;
