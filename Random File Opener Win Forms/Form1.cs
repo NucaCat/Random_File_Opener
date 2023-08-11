@@ -78,6 +78,11 @@ namespace Random_File_Opener_Win_Forms
 
             var currentDirectory = Directory.GetCurrentDirectory();
 
+            foreach (var pictureBox in Controls.OfType<PictureBox>())
+            {
+                pictureBox.MouseUp += PictureBox_MouseUp;
+            }
+
             Initialize(currentDirectory, _filter);
         }
 
@@ -365,15 +370,32 @@ namespace Random_File_Opener_Win_Forms
 
         private void GeneratedFilesListBox_MouseUp(object sender, MouseEventArgs e)
         {
-            _item = null;
-            
             var item = Utilities.ListItemFromPoint(GeneratedFilesListBox, e.Location);
             if (item == null)
                 return;
 
+            GeneratedFilesListBox.SelectedItem = item;
+
+            HandleMouseUpOnMouseUp(e, item);
+        }
+
+        private void PictureBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            var item = GeneratedFilesListBox.SelectedFile();
+            if (item == null)
+                return;
+
+            HandleMouseUpOnMouseUp(e, item);
+        }
+
+        private void HandleMouseUpOnMouseUp(MouseEventArgs e, GeneratedFileListItem item)
+        {
+            _item = null;
+
             if (e.Button == MouseButtons.Right)
             {
                 _item = item;
+                AddImageToPreview(item);
                 ListBoxContextMenuStrip.Show(Cursor.Position);
                 return;
             }
