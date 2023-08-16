@@ -53,6 +53,7 @@
             this.VideoThumbnailFirstPictureBox = new System.Windows.Forms.PictureBox();
             this.VideoThumbnailSecondPictureBox = new System.Windows.Forms.PictureBox();
             this.VideoThumbnailThirdPictureBox = new System.Windows.Forms.PictureBox();
+            this.HideControlsButton = new System.Windows.Forms.Button();
             this.ListBoxContextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AutoGenerateNumericUpDown)).BeginInit();
@@ -66,9 +67,9 @@
             this.GeneratedFilesListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.GeneratedFilesListBox.FormattingEnabled = true;
             this.GeneratedFilesListBox.ItemHeight = 29;
-            this.GeneratedFilesListBox.Location = new System.Drawing.Point(1024, 12);
+            this.GeneratedFilesListBox.Location = new System.Drawing.Point(1350, 12);
             this.GeneratedFilesListBox.Name = "GeneratedFilesListBox";
-            this.GeneratedFilesListBox.Size = new System.Drawing.Size(868, 990);
+            this.GeneratedFilesListBox.Size = new System.Drawing.Size(542, 990);
             this.GeneratedFilesListBox.TabIndex = 0;
             this.GeneratedFilesListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GeneratedFilesListBox_KeyDown);
             this.GeneratedFilesListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.GeneratedFilesListBox_MouseDoubleClick);
@@ -77,7 +78,7 @@
             // NextFileButton
             // 
             this.NextFileButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.NextFileButton.Location = new System.Drawing.Point(12, 711);
+            this.NextFileButton.Location = new System.Drawing.Point(12, 853);
             this.NextFileButton.Name = "NextFileButton";
             this.NextFileButton.Size = new System.Drawing.Size(232, 146);
             this.NextFileButton.TabIndex = 1;
@@ -207,7 +208,7 @@
             // 
             this.ImagePictureBox.Location = new System.Drawing.Point(250, 12);
             this.ImagePictureBox.Name = "ImagePictureBox";
-            this.ImagePictureBox.Size = new System.Drawing.Size(768, 990);
+            this.ImagePictureBox.Size = new System.Drawing.Size(1094, 990);
             this.ImagePictureBox.TabIndex = 8;
             this.ImagePictureBox.TabStop = false;
             // 
@@ -216,7 +217,7 @@
             this.AutoGenerateButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.AutoGenerateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.AutoGenerateButton.ForeColor = System.Drawing.Color.Black;
-            this.AutoGenerateButton.Location = new System.Drawing.Point(12, 626);
+            this.AutoGenerateButton.Location = new System.Drawing.Point(12, 617);
             this.AutoGenerateButton.Name = "AutoGenerateButton";
             this.AutoGenerateButton.Size = new System.Drawing.Size(232, 78);
             this.AutoGenerateButton.TabIndex = 9;
@@ -229,7 +230,7 @@
             this.AutoGenerateNumericUpDown.DecimalPlaces = 2;
             this.AutoGenerateNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.AutoGenerateNumericUpDown.Increment = new decimal(new int[] { 25, 0, 0, 131072 });
-            this.AutoGenerateNumericUpDown.Location = new System.Drawing.Point(12, 581);
+            this.AutoGenerateNumericUpDown.Location = new System.Drawing.Point(12, 571);
             this.AutoGenerateNumericUpDown.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             this.AutoGenerateNumericUpDown.Minimum = new decimal(new int[] { 25, 0, 0, 131072 });
             this.AutoGenerateNumericUpDown.Name = "AutoGenerateNumericUpDown";
@@ -242,7 +243,7 @@
             // 
             this.VideoThumbnailFirstPictureBox.Location = new System.Drawing.Point(250, 12);
             this.VideoThumbnailFirstPictureBox.Name = "VideoThumbnailFirstPictureBox";
-            this.VideoThumbnailFirstPictureBox.Size = new System.Drawing.Size(768, 325);
+            this.VideoThumbnailFirstPictureBox.Size = new System.Drawing.Size(1094, 325);
             this.VideoThumbnailFirstPictureBox.TabIndex = 11;
             this.VideoThumbnailFirstPictureBox.TabStop = false;
             this.VideoThumbnailFirstPictureBox.Visible = false;
@@ -251,7 +252,7 @@
             // 
             this.VideoThumbnailSecondPictureBox.Location = new System.Drawing.Point(250, 343);
             this.VideoThumbnailSecondPictureBox.Name = "VideoThumbnailSecondPictureBox";
-            this.VideoThumbnailSecondPictureBox.Size = new System.Drawing.Size(768, 325);
+            this.VideoThumbnailSecondPictureBox.Size = new System.Drawing.Size(1094, 325);
             this.VideoThumbnailSecondPictureBox.TabIndex = 12;
             this.VideoThumbnailSecondPictureBox.TabStop = false;
             this.VideoThumbnailSecondPictureBox.Visible = false;
@@ -260,16 +261,28 @@
             // 
             this.VideoThumbnailThirdPictureBox.Location = new System.Drawing.Point(250, 674);
             this.VideoThumbnailThirdPictureBox.Name = "VideoThumbnailThirdPictureBox";
-            this.VideoThumbnailThirdPictureBox.Size = new System.Drawing.Size(768, 325);
+            this.VideoThumbnailThirdPictureBox.Size = new System.Drawing.Size(1094, 325);
             this.VideoThumbnailThirdPictureBox.TabIndex = 13;
             this.VideoThumbnailThirdPictureBox.TabStop = false;
             this.VideoThumbnailThirdPictureBox.Visible = false;
+            // 
+            // HideControlsButton
+            // 
+            this.HideControlsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.HideControlsButton.Location = new System.Drawing.Point(12, 701);
+            this.HideControlsButton.Name = "HideControlsButton";
+            this.HideControlsButton.Size = new System.Drawing.Size(232, 146);
+            this.HideControlsButton.TabIndex = 14;
+            this.HideControlsButton.Text = "Скрыть";
+            this.HideControlsButton.UseVisualStyleBackColor = true;
+            this.HideControlsButton.Click += new System.EventHandler(this.HideControlsButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1904, 1041);
+            this.Controls.Add(this.HideControlsButton);
             this.Controls.Add(this.VideoThumbnailThirdPictureBox);
             this.Controls.Add(this.VideoThumbnailSecondPictureBox);
             this.Controls.Add(this.VideoThumbnailFirstPictureBox);
@@ -287,6 +300,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseClick);
             this.ListBoxContextMenuStrip.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AutoGenerateNumericUpDown)).EndInit();
@@ -296,6 +310,8 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.Button HideControlsButton;
 
         private System.Windows.Forms.ToolStripMenuItem DeleteToolStripMenuItem;
 

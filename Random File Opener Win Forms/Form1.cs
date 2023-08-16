@@ -34,6 +34,9 @@ namespace Random_File_Opener_Win_Forms
 
         private readonly CustomMessageBox _messageBox = new CustomMessageBox();
 
+        private Control[] _hideableControls;
+        private PictureBox[] _nonHideableControls;
+
         public Form1()
         {
             InitializeComponent();
@@ -82,6 +85,12 @@ namespace Random_File_Opener_Win_Forms
             {
                 pictureBox.MouseUp += PictureBox_MouseUp;
             }
+
+            _nonHideableControls = Controls.OfType<PictureBox>().ToArray();
+            
+            _hideableControls = Controls.OfType<Control>()
+                .Where(u => !_nonHideableControls.Contains(u))
+                .ToArray();
 
             Initialize(currentDirectory, _filter);
         }
@@ -169,22 +178,25 @@ namespace Random_File_Opener_Win_Forms
                 .Zip(images.PadRightWithNulls(_pictureBoxesInSequence.Length),
                     (u, v) => (PictureBox: u, Image: v)))
             {
-                pictureBox.InvokeIfRequired(() =>
-                {
-                    pictureBox.Image = image;
-                    pictureBox.Visible = true;
-                });
+                PlaceImageInPictureBox(pictureBox, image);
             }
+        }
+
+        private void PlaceImageInPictureBox(PictureBox pictureBox, Bitmap image)
+        {
+            pictureBox.InvokeIfRequired(() =>
+            {
+                pictureBox.Image = image;
+                pictureBox.Visible = true;
+                if (image != null)
+                    pictureBox.Padding = new Padding { Left = ImagePictureBox.Size.Width - image.Width };
+            });
         }
 
         private void PlaceImageInBigPictureBox(Bitmap image)
         {
-            ImagePictureBox.InvokeIfRequired(() =>
-            {
-                ImagePictureBox.Image = image;
-                ImagePictureBox.Visible = true;
-            });
-            
+            PlaceImageInPictureBox(ImagePictureBox, image);
+
             _pictureBoxesInSequence.ForAll(u => u.InvokeIfRequired(() => { u.Visible = false; }));
         }
 
@@ -449,6 +461,18 @@ namespace Random_File_Opener_Win_Forms
         private void AutoGenerateNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             _autoGenerateCooldown = TimeSpan.FromMilliseconds((int)(AutoGenerateNumericUpDown.Value * 1000));
+        }
+
+        private void HideControlsButton_Click(object sender, EventArgs e)
+        {
+            _hideableControls.ForAll(u => u.Visible = false);
+            _nonHideableControls.ForAll(u => u.BackColor = Styles.Background);
+        }
+
+        private void Form1_MouseClick(object sender, MouseEventArgs e)
+        {
+            _hideableControls.ForAll(u => u.Visible = true);
+            _nonHideableControls.ForAll(u => u.BackColor = Styles.Surface);
         }
         
         private enum OpenVariants
