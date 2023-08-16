@@ -67,9 +67,9 @@
             this.GeneratedFilesListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.GeneratedFilesListBox.FormattingEnabled = true;
             this.GeneratedFilesListBox.ItemHeight = 29;
-            this.GeneratedFilesListBox.Location = new System.Drawing.Point(1350, 12);
+            this.GeneratedFilesListBox.Location = new System.Drawing.Point(1354, 12);
             this.GeneratedFilesListBox.Name = "GeneratedFilesListBox";
-            this.GeneratedFilesListBox.Size = new System.Drawing.Size(542, 990);
+            this.GeneratedFilesListBox.Size = new System.Drawing.Size(538, 1019);
             this.GeneratedFilesListBox.TabIndex = 0;
             this.GeneratedFilesListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GeneratedFilesListBox_KeyDown);
             this.GeneratedFilesListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.GeneratedFilesListBox_MouseDoubleClick);
@@ -78,7 +78,7 @@
             // NextFileButton
             // 
             this.NextFileButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.NextFileButton.Location = new System.Drawing.Point(12, 853);
+            this.NextFileButton.Location = new System.Drawing.Point(12, 883);
             this.NextFileButton.Name = "NextFileButton";
             this.NextFileButton.Size = new System.Drawing.Size(232, 146);
             this.NextFileButton.TabIndex = 1;
@@ -91,7 +91,7 @@
             this.SearchModeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.SearchModeButton.Location = new System.Drawing.Point(12, 12);
             this.SearchModeButton.Name = "SearchModeButton";
-            this.SearchModeButton.Size = new System.Drawing.Size(232, 78);
+            this.SearchModeButton.Size = new System.Drawing.Size(232, 108);
             this.SearchModeButton.TabIndex = 2;
             this.SearchModeButton.Text = "С подпапками или без";
             this.SearchModeButton.UseVisualStyleBackColor = true;
@@ -100,7 +100,7 @@
             // ChangeDirectoryButton
             // 
             this.ChangeDirectoryButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ChangeDirectoryButton.Location = new System.Drawing.Point(12, 96);
+            this.ChangeDirectoryButton.Location = new System.Drawing.Point(12, 126);
             this.ChangeDirectoryButton.Name = "ChangeDirectoryButton";
             this.ChangeDirectoryButton.Size = new System.Drawing.Size(232, 159);
             this.ChangeDirectoryButton.TabIndex = 3;
@@ -112,7 +112,7 @@
             // 
             this.DirectoryTextBox.Enabled = false;
             this.DirectoryTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.DirectoryTextBox.Location = new System.Drawing.Point(12, 261);
+            this.DirectoryTextBox.Location = new System.Drawing.Point(12, 291);
             this.DirectoryTextBox.Multiline = true;
             this.DirectoryTextBox.Name = "DirectoryTextBox";
             this.DirectoryTextBox.Size = new System.Drawing.Size(232, 52);
@@ -121,7 +121,7 @@
             // ClearButton
             // 
             this.ClearButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ClearButton.Location = new System.Drawing.Point(12, 461);
+            this.ClearButton.Location = new System.Drawing.Point(12, 491);
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(232, 78);
             this.ClearButton.TabIndex = 5;
@@ -132,7 +132,7 @@
             // FilterTextBox
             // 
             this.FilterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.FilterTextBox.Location = new System.Drawing.Point(12, 319);
+            this.FilterTextBox.Location = new System.Drawing.Point(12, 349);
             this.FilterTextBox.Multiline = true;
             this.FilterTextBox.Name = "FilterTextBox";
             this.FilterTextBox.Size = new System.Drawing.Size(232, 52);
@@ -141,7 +141,7 @@
             // ApplyFilterButton
             // 
             this.ApplyFilterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ApplyFilterButton.Location = new System.Drawing.Point(12, 377);
+            this.ApplyFilterButton.Location = new System.Drawing.Point(12, 407);
             this.ApplyFilterButton.Name = "ApplyFilterButton";
             this.ApplyFilterButton.Size = new System.Drawing.Size(232, 78);
             this.ApplyFilterButton.TabIndex = 7;
@@ -206,9 +206,9 @@
             // 
             // ImagePictureBox
             // 
-            this.ImagePictureBox.Location = new System.Drawing.Point(250, 12);
+            this.ImagePictureBox.Location = new System.Drawing.Point(571, 11);
             this.ImagePictureBox.Name = "ImagePictureBox";
-            this.ImagePictureBox.Size = new System.Drawing.Size(1094, 990);
+            this.ImagePictureBox.Size = new System.Drawing.Size(777, 1020);
             this.ImagePictureBox.TabIndex = 8;
             this.ImagePictureBox.TabStop = false;
             // 
@@ -217,7 +217,7 @@
             this.AutoGenerateButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.AutoGenerateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.AutoGenerateButton.ForeColor = System.Drawing.Color.Black;
-            this.AutoGenerateButton.Location = new System.Drawing.Point(12, 617);
+            this.AutoGenerateButton.Location = new System.Drawing.Point(12, 647);
             this.AutoGenerateButton.Name = "AutoGenerateButton";
             this.AutoGenerateButton.Size = new System.Drawing.Size(232, 78);
             this.AutoGenerateButton.TabIndex = 9;
@@ -230,7 +230,7 @@
             this.AutoGenerateNumericUpDown.DecimalPlaces = 2;
             this.AutoGenerateNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.AutoGenerateNumericUpDown.Increment = new decimal(new int[] { 25, 0, 0, 131072 });
-            this.AutoGenerateNumericUpDown.Location = new System.Drawing.Point(12, 571);
+            this.AutoGenerateNumericUpDown.Location = new System.Drawing.Point(12, 601);
             this.AutoGenerateNumericUpDown.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             this.AutoGenerateNumericUpDown.Minimum = new decimal(new int[] { 25, 0, 0, 131072 });
             this.AutoGenerateNumericUpDown.Name = "AutoGenerateNumericUpDown";
@@ -241,27 +241,27 @@
             // 
             // VideoThumbnailFirstPictureBox
             // 
-            this.VideoThumbnailFirstPictureBox.Location = new System.Drawing.Point(250, 12);
+            this.VideoThumbnailFirstPictureBox.Location = new System.Drawing.Point(571, 12);
             this.VideoThumbnailFirstPictureBox.Name = "VideoThumbnailFirstPictureBox";
-            this.VideoThumbnailFirstPictureBox.Size = new System.Drawing.Size(1094, 325);
+            this.VideoThumbnailFirstPictureBox.Size = new System.Drawing.Size(777, 335);
             this.VideoThumbnailFirstPictureBox.TabIndex = 11;
             this.VideoThumbnailFirstPictureBox.TabStop = false;
             this.VideoThumbnailFirstPictureBox.Visible = false;
             // 
             // VideoThumbnailSecondPictureBox
             // 
-            this.VideoThumbnailSecondPictureBox.Location = new System.Drawing.Point(250, 343);
+            this.VideoThumbnailSecondPictureBox.Location = new System.Drawing.Point(571, 353);
             this.VideoThumbnailSecondPictureBox.Name = "VideoThumbnailSecondPictureBox";
-            this.VideoThumbnailSecondPictureBox.Size = new System.Drawing.Size(1094, 325);
+            this.VideoThumbnailSecondPictureBox.Size = new System.Drawing.Size(777, 335);
             this.VideoThumbnailSecondPictureBox.TabIndex = 12;
             this.VideoThumbnailSecondPictureBox.TabStop = false;
             this.VideoThumbnailSecondPictureBox.Visible = false;
             // 
             // VideoThumbnailThirdPictureBox
             // 
-            this.VideoThumbnailThirdPictureBox.Location = new System.Drawing.Point(250, 674);
+            this.VideoThumbnailThirdPictureBox.Location = new System.Drawing.Point(571, 694);
             this.VideoThumbnailThirdPictureBox.Name = "VideoThumbnailThirdPictureBox";
-            this.VideoThumbnailThirdPictureBox.Size = new System.Drawing.Size(1094, 325);
+            this.VideoThumbnailThirdPictureBox.Size = new System.Drawing.Size(777, 335);
             this.VideoThumbnailThirdPictureBox.TabIndex = 13;
             this.VideoThumbnailThirdPictureBox.TabStop = false;
             this.VideoThumbnailThirdPictureBox.Visible = false;
@@ -269,7 +269,7 @@
             // HideControlsButton
             // 
             this.HideControlsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.HideControlsButton.Location = new System.Drawing.Point(12, 701);
+            this.HideControlsButton.Location = new System.Drawing.Point(12, 731);
             this.HideControlsButton.Name = "HideControlsButton";
             this.HideControlsButton.Size = new System.Drawing.Size(232, 146);
             this.HideControlsButton.TabIndex = 14;

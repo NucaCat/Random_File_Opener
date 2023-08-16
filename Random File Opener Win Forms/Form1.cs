@@ -189,7 +189,17 @@ namespace Random_File_Opener_Win_Forms
                 pictureBox.Image = image;
                 pictureBox.Visible = true;
                 if (image != null)
-                    pictureBox.Padding = new Padding { Left = ImagePictureBox.Size.Width - image.Width };
+                {
+                    var horizontalPadding = (ImagePictureBox.Size.Width - image.Width) / 2;
+                    var verticalPadding = (ImagePictureBox.Size.Height - image.Height) / 2;
+                    pictureBox.Padding = new Padding
+                    {
+                        Left =  horizontalPadding,
+                        Right = horizontalPadding,
+                        Top = verticalPadding,
+                        Bottom = verticalPadding,
+                    };
+                }
             });
         }
 
