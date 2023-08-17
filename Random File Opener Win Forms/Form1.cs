@@ -60,7 +60,7 @@ namespace Random_File_Opener_Win_Forms
 
             var settings = SettingsPuller.Pull<AppSettings>(Consts.SettingsFileName);
 
-            Styles.FillFromSettings(settings?.Styles);
+            Styler.FillFromSettings(settings?.Styles);
             Styler.ApplyStyles(this);
             Styler.ApplyStyles(_messageBox);
             Styler.ApplyStylesToMessageBox(_messageBox);

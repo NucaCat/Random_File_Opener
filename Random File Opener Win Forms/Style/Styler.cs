@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Random_File_Opener_Win_Forms.CustomComponents.MessageBox;
+using Random_File_Opener_Win_Forms.Settings;
 
 namespace Random_File_Opener_Win_Forms.Style
 {
@@ -105,5 +106,8 @@ namespace Random_File_Opener_Win_Forms.Style
             button.FlatAppearance.MouseDownBackColor = GenerateButtonColorsMap[color].Main;
             button.FlatAppearance.MouseOverBackColor = GenerateButtonColorsMap[color].Main;
         }
+
+        public static void FillFromSettings(StylesSettings styles)
+            => Styles.FillFromSettings(styles);
     }
 }
