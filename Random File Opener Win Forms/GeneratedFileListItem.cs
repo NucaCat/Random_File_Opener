@@ -10,7 +10,7 @@ namespace Random_File_Opener_Win_Forms
         public string DisplayValue { get; private set; }
         public string Path { get; private set; }
 
-        public List<string> Directories { get; private set; }
+        // public List<string> Directories { get; private set; }
         public string Extension { get; private set; }
         public string FileName { get; private set; }
 
@@ -30,9 +30,9 @@ namespace Random_File_Opener_Win_Forms
             {
                 Path = s,
                 DisplayValue = fileName + (directories.IsNotNullOrWhiteSpace() ? " (" + directories + ")" : string.Empty),
-                Directories = directories == string.Empty
-                ? new List<string>()
-                : directories.Split('\\').ToList(),
+                // Directories = directories == string.Empty
+                // ? new List<string>()
+                // : directories.Split('\\').ToList(),
                 Extension = extension,
                 FileName = fileName,
             };
