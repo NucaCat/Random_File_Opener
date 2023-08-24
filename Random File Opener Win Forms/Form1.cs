@@ -84,6 +84,7 @@ namespace Random_File_Opener_Win_Forms
             foreach (var pictureBox in Controls.OfType<PictureBox>())
             {
                 pictureBox.MouseUp += PictureBox_MouseUp;
+                pictureBox.MouseDoubleClick += PictureBox_MouseDoubleClick;
             }
 
             _nonHideableControls = Controls.OfType<PictureBox>().ToArray();
@@ -216,7 +217,7 @@ namespace Random_File_Opener_Win_Forms
             if (listItem == null)
                 return;
             
-            GetFileAndOpen(listItem, OpenVariants.OpenFile);
+            OpenFile(listItem, OpenVariants.OpenFile);
         }
 
         private void GeneratedFilesListBox_KeyDown(object sender, KeyEventArgs e)
@@ -247,7 +248,7 @@ namespace Random_File_Opener_Win_Forms
 
             if (e.KeyCode == Keys.Enter)
             {
-                GetFileAndOpen(listItem, OpenVariants.OpenInExplorer);
+                OpenFile(listItem, OpenVariants.OpenInExplorer);
                 return;
             }
 
@@ -326,7 +327,7 @@ namespace Random_File_Opener_Win_Forms
             File.Delete(selectedItem.Path);
         }
 
-        private void GetFileAndOpen(GeneratedFileListItem item, OpenVariants openVariants)
+        private void OpenFile(GeneratedFileListItem item, OpenVariants openVariants)
         {
             var startInfo = new ProcessStartInfo
             {
@@ -385,10 +386,10 @@ namespace Random_File_Opener_Win_Forms
         }
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
-            => GetFileAndOpen(_item, OpenVariants.OpenFile);
+            => OpenFile(_item, OpenVariants.OpenFile);
 
         private void OpenInExplorerToolStripMenuItem_Click(object sender, EventArgs e)
-            => GetFileAndOpen(_item, OpenVariants.OpenInExplorer);
+            => OpenFile(_item, OpenVariants.OpenInExplorer);
 
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
             => DeleteSelectedFile();
@@ -414,6 +415,18 @@ namespace Random_File_Opener_Win_Forms
                 return;
 
             HandleMouseUpOnMouseUp(e, item);
+        }
+
+        private void PictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (((PictureBox)sender).Image == null)
+                return;
+
+            var item = GeneratedFilesListBox.SelectedFile();
+            if (item == null)
+                return;
+
+            OpenFile(item, OpenVariants.OpenFile);
         }
 
         private void HandleMouseUpOnMouseUp(MouseEventArgs e, GeneratedFileListItem item)
