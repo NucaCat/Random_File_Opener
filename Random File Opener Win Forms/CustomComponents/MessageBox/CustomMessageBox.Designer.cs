@@ -34,6 +34,7 @@ namespace Random_File_Opener_Win_Forms.CustomComponents.MessageBox
             this.NoButton = new System.Windows.Forms.Button();
             this.YesButton = new System.Windows.Forms.Button();
             this.TextLabel = new System.Windows.Forms.Label();
+            this.OkButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // NoButton
@@ -67,6 +68,18 @@ namespace Random_File_Opener_Win_Forms.CustomComponents.MessageBox
             this.TextLabel.TabIndex = 0;
             this.TextLabel.Text = "label1";
             // 
+            // OkButton
+            // 
+            this.OkButton.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.OkButton.Location = new System.Drawing.Point(387, 92);
+            this.OkButton.Name = "OkButton";
+            this.OkButton.Size = new System.Drawing.Size(112, 42);
+            this.OkButton.TabIndex = 3;
+            this.OkButton.Text = "Да";
+            this.OkButton.UseVisualStyleBackColor = true;
+            this.OkButton.Visible = false;
+            this.OkButton.Click += new System.EventHandler(this.OkButton_Click);
+            // 
             // CustomMessageBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -74,6 +87,7 @@ namespace Random_File_Opener_Win_Forms.CustomComponents.MessageBox
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(511, 146);
             this.ControlBox = false;
+            this.Controls.Add(this.OkButton);
             this.Controls.Add(this.TextLabel);
             this.Controls.Add(this.YesButton);
             this.Controls.Add(this.NoButton);
@@ -84,6 +98,8 @@ namespace Random_File_Opener_Win_Forms.CustomComponents.MessageBox
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.Button OkButton;
 
         private System.Windows.Forms.Label TextLabel;
 

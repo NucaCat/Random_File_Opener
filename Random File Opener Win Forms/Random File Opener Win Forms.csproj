@@ -147,6 +147,7 @@
     <ItemGroup>
         <Compile Include="ArrayWithPointer.cs" />
         <Compile Include="CustomComponents\FlatNumericUpDown.cs" />
+        <Compile Include="CustomComponents\MessageBox\ButtonDescription.cs" />
         <Compile Include="CustomComponents\MessageBox\CustomMessageBox.cs">
           <SubType>Form</SubType>
         </Compile>

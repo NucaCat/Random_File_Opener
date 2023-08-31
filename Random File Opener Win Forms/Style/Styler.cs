@@ -89,7 +89,14 @@ namespace Random_File_Opener_Win_Forms.Style
 
             messageBox.YesButtonProvider.FlatAppearance.MouseDownBackColor = Styles.Secondary;
             messageBox.YesButtonProvider.FlatAppearance.MouseOverBackColor = Styles.Secondary;
-            
+
+
+            messageBox.OkButtonProvider.BackColor = Styles.Secondary;
+            messageBox.OkButtonProvider.ForeColor = Styles.OnSecondary;
+
+            messageBox.OkButtonProvider.FlatAppearance.MouseDownBackColor = Styles.Secondary;
+            messageBox.OkButtonProvider.FlatAppearance.MouseOverBackColor = Styles.Secondary;
+
 
             messageBox.NoButtonProvider.BackColor = Styles.Error;
             messageBox.NoButtonProvider.ForeColor = Styles.OnError;

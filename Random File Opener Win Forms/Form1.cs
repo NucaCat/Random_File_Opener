@@ -300,9 +300,19 @@ namespace Random_File_Opener_Win_Forms
             if (selectedItem == null)
                 return;
 
-            var result = _messageBox.ShowMessageBox(text: $"Вы действительно хотите удалить файл: {selectedItem.FileName}?");
+            var result = _messageBox.ShowMessageBox(text: $"Вы действительно хотите удалить файл: {selectedItem.FileName}?", CustomMessageBox.YesNoButtons);
             if (result != DialogResult.Yes)
                 return;
+
+            try
+            {
+                File.Delete(selectedItem.Path);
+            }
+            catch (Exception e)
+            {
+                _messageBox.ShowMessageBox(text: e.Message, CustomMessageBox.OkButtons);
+                return;
+            }
 
             _files.Delete(selectedItem);
             
@@ -323,8 +333,6 @@ namespace Random_File_Opener_Win_Forms
             }
 
             selectedItem.Images = Array.Empty<Bitmap>();
-            
-            File.Delete(selectedItem.Path);
         }
 
         private void OpenFile(GeneratedFileListItem item, OpenVariants openVariants)
