@@ -10,9 +10,9 @@ namespace Random_File_Opener_Win_Forms
         private int _currentIndex = 0;
         public bool IsAllGenerated { get; private set; } = false;
 
-        public void Initialize(IEnumerable<T> sequence)
+        public void Initialize(List<T> sequence)
         {
-            _entities = sequence.ToList();
+            _entities = sequence;
             _currentIndex = 0;
         }
 

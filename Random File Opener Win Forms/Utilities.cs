@@ -109,9 +109,9 @@ namespace Random_File_Opener_Win_Forms
             return padded;
         }
 
-        public static T[] Shuffle<T>(this T[] array, Random rng)
+        public static List<T> Shuffle<T>(this List<T> array, Random rng)
         {
-            var n = array.Length;
+            var n = array.Count;
             while (n > 1)
             {
                 var k = rng.Next(n--);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Drawing;
@@ -117,9 +118,29 @@ namespace Random_File_Opener_Win_Forms
             DirectoryTextBox.Text = directory.Substring(directory.LastIndexOf('\\') + 1);
 
             GeneratedFilesListBox.Items.Clear();
-            _files.Initialize(Directory.GetFiles(directory, filter, _searchOption)
-                .Shuffle(_random)
-                .Select(u => GeneratedFileListItem.FromString(u, directory)));
+
+            _files.Initialize( GetFiles(directory, filter)
+                .Select(u => GeneratedFileListItem.FromString(u, directory))
+                .ToList()
+                .Shuffle(_random));
+        }
+
+        private IEnumerable<string> GetFiles(string directory, string filter)
+        {
+            var initialFiles = Directory.GetFiles(directory, filter, _searchOption);
+
+            if (_searchOption == SearchOption.TopDirectoryOnly)
+                return initialFiles;
+
+            var directories = Directory.GetDirectories(directory, filter, _searchOption);
+
+            if (directories.IsEmpty())
+                return initialFiles;
+
+            var endFiles = directories
+                .SelectMany(u => Directory.GetFiles(u, "*", _searchOption));
+
+            return initialFiles.Concat(endFiles).Distinct();
         }
 
         private void NextFileButton_Click(object sender = null, EventArgs e = null)
