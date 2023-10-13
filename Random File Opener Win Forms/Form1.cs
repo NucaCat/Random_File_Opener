@@ -526,7 +526,88 @@ namespace Random_File_Opener_Win_Forms
             _hideableControls.ForAll(u => u.Visible = true);
             _nonHideableControls.ForAll(u => u.BackColor = Styles.Surface);
         }
-        
+
+        private void ExportButton_Click(object sender, EventArgs e)
+        {
+            var outputFolder = ShowOpenFileDialogAndGetDirectory();
+            if (outputFolder.IsNullOrWhiteSpace())
+                return;
+
+            var dialogResult = _messageBox.ShowMessageBox($"Удалить все файлы в папке {outputFolder}?", CustomMessageBox.YesNoButtons);
+            var shouldDelete = dialogResult == DialogResult.Yes;
+
+            Task.Run(CopyFilesAndClearDirectoryIfRequired(outputFolder, shouldDelete));
+        }
+
+        private static string ShowOpenFileDialogAndGetDirectory()
+        {
+            using (var openFolderDialog = new CommonOpenFileDialog
+                   {
+                       InitialDirectory = "",
+                       IsFolderPicker = true
+                   })
+            {
+                var result = openFolderDialog.ShowDialog();
+
+                if (result == CommonFileDialogResult.Ok && openFolderDialog.FileName.IsNotNullOrWhiteSpace())
+                    return openFolderDialog.FileName;
+                
+                return string.Empty;
+            }
+        }
+
+        private Func<Task> CopyFilesAndClearDirectoryIfRequired(string outputFolder, bool shouldClearOutputDirectory)
+        {
+            return async () =>
+            {
+                ExportButton.InvokeIfRequired(() => ExportButton.Enabled = false);
+                ExportProgressBar.InvokeIfRequired(() =>
+                {
+                    ExportProgressBar.Value = ExportProgressBar.Minimum;
+                    ExportProgressBar.Maximum = _files.All.Count;
+                    ExportProgressBar.Visible = true;
+                });
+
+                if (shouldClearOutputDirectory)
+                    ClearDirectory(outputFolder);
+
+                foreach (var file in _files.All.Select((u, index) => (File: u, Index: index)))
+                {
+                    var outputFileName = $"{outputFolder}\\{file.Index.ToString().PadLeft(7, '0')}.{file.File.Extension}";
+
+                    try
+                    {
+                        File.Copy(file.File.Path, outputFileName, overwrite: true);
+                        ExportProgressBar.InvokeIfRequired(() => ExportProgressBar.PerformStep());
+                    }
+                    catch (Exception exception)
+                    {
+                        _messageBox.ShowMessageBox(text: exception.Message, CustomMessageBox.OkButtons);
+                        break;
+                    }
+                }
+                
+                await Task.Delay(1000);
+
+                ExportButton.InvokeIfRequired(() => ExportButton.Enabled = true);
+                ExportProgressBar.InvokeIfRequired(() =>
+                {
+                    ExportProgressBar.Visible = false;
+                    ExportProgressBar.Value = ExportProgressBar.Minimum;
+                });
+            };
+        }
+
+        private static void ClearDirectory(string outputFolder)
+        {
+            var di = new DirectoryInfo(outputFolder);
+
+            foreach (var file in di.EnumerateFiles())
+            {
+                file.Delete();
+            }
+        }
+
         private enum OpenVariants
         {
             OpenFile = 0,

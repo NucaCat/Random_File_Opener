@@ -10,6 +10,8 @@ namespace Random_File_Opener_Win_Forms
         private int _currentIndex = 0;
         public bool IsAllGenerated { get; private set; } = false;
 
+        public IReadOnlyList<T> All => _entities;
+
         public void Initialize(List<T> sequence)
         {
             _entities = sequence;

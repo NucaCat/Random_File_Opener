@@ -69,6 +69,11 @@ namespace Random_File_Opener_Win_Forms.Style
                 listBox.BorderStyle = BorderStyle.None;
             }
 
+            foreach (var progressBar in form.Controls.OfType<ProgressBar>())
+            {
+                progressBar.Style = ProgressBarStyle.Continuous;
+            }
+
             foreach (var flatNumericUpDown in form.Controls.OfType<FlatNumericUpDown>())
             {
                 flatNumericUpDown.BackColor = Styles.Surface;
