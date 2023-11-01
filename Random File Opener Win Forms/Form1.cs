@@ -49,6 +49,8 @@ namespace Random_File_Opener_Win_Forms
 
         private void InitialInitialize()
         {
+            AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
+
             _pictureBoxesInSequence = new[]
             {
                 VideoThumbnailFirstPictureBox,
@@ -476,6 +478,31 @@ namespace Random_File_Opener_Win_Forms
                 // ReSharper disable once RedundantJumpStatement
                 return;
             }
+        }
+
+        void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs args)
+        {
+            var exceptionLogFileName = "ExceptionLog.txt";
+
+            _messageBox.ShowMessageBox($"Необработанное исключение. Лог записан в {exceptionLogFileName}", CustomMessageBox.OkButtons);
+
+            var e = (Exception) args.ExceptionObject;
+            using (var writer = new StreamWriter($"{_currentDirectory}\\{exceptionLogFileName}"))
+            {
+                writer.WriteLine($"Message: {e.Message}");
+                writer.WriteLine($"Stack trace: \n{e.StackTrace}");
+
+                writer.WriteLine("----------------------------------------------------");
+                writer.WriteLine($"Current directory: {_currentDirectory}");
+                
+                writer.WriteLine("----------------------------------------------------");
+                writer.WriteLine("Current item:");
+                writer.WriteLine($"Path: {_files.Current.Path}");
+                writer.WriteLine($"Name: {_files.Current.FileName}");
+                writer.WriteLine($"Display value: {_files.Current.DisplayValue}");
+            }
+
+            Application.Exit();
         }
 
         private void FileAddressToolStripMenuItem_Click(object sender, EventArgs e)

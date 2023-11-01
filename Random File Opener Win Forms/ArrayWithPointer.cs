@@ -18,12 +18,14 @@ namespace Random_File_Opener_Win_Forms
             _currentIndex = 0;
         }
 
+        public T Current => _entities[_currentIndex];
+
         public T GetCurrentAndMoveNext()
         {
             if (_entities.IsEmpty())
                 return null;
 
-            var current = _entities[_currentIndex];
+            var current = Current;
 
             _currentIndex++;
 
