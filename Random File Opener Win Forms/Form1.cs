@@ -484,10 +484,10 @@ namespace Random_File_Opener_Win_Forms
         {
             var exceptionLogFileName = "ExceptionLog.txt";
 
-            _messageBox.ShowMessageBox($"Необработанное исключение. Лог записан в {exceptionLogFileName}", CustomMessageBox.OkButtons);
-
             var e = (Exception) args.ExceptionObject;
-            using (var writer = new StreamWriter($"{_currentDirectory}\\{exceptionLogFileName}"))
+
+            var fullExceptionLogFileName = $"{_currentDirectory}\\{exceptionLogFileName}";
+            using (var writer = new StreamWriter(fullExceptionLogFileName))
             {
                 writer.WriteLine($"Message: {e.Message}");
                 writer.WriteLine($"Stack trace: \n{e.StackTrace}");
@@ -500,6 +500,18 @@ namespace Random_File_Opener_Win_Forms
                 writer.WriteLine($"Path: {_files.Current.Path}");
                 writer.WriteLine($"Name: {_files.Current.FileName}");
                 writer.WriteLine($"Display value: {_files.Current.DisplayValue}");
+            }
+            
+            var result = _messageBox.ShowMessageBox($"Необработанное исключение. Лог записан в {exceptionLogFileName}. Показать?", CustomMessageBox.YesNoButtons);
+            if (result == DialogResult.Yes)
+            {
+                var startInfo = new ProcessStartInfo
+                {
+                    Arguments = $"/select, \"{fullExceptionLogFileName}\"",
+                    FileName = "explorer.exe",
+                };
+
+                Process.Start(startInfo);
             }
 
             Application.Exit();
