@@ -486,7 +486,7 @@ namespace Random_File_Opener_Win_Forms
 
             var e = (Exception) args.ExceptionObject;
 
-            var fullExceptionLogFileName = $"{_currentDirectory}\\{exceptionLogFileName}";
+            var fullExceptionLogFileName = $"{Directory.GetCurrentDirectory()}\\{exceptionLogFileName}";
             using (var writer = new StreamWriter(fullExceptionLogFileName))
             {
                 writer.WriteLine($"Message: {e.Message}");
