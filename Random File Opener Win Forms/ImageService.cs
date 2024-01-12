@@ -39,7 +39,7 @@ namespace Random_File_Opener_Win_Forms
                 return Array.Empty<Bitmap>();
             
             if (Consts.ImageExtensions.Contains(file.Extension))
-                return new [] { new Bitmap(file.Path) };
+                return new [] { new Bitmap(file.PathToFile) };
 
             if (Consts.VideoExtensions.Contains(file.Extension))
                 return GetVideoThumbnails(file, Consts.VideoThumbnailPositions);
@@ -65,8 +65,8 @@ namespace Random_File_Opener_Win_Forms
         private static Bitmap GetThumbnailAtPosition(GeneratedFileListItem file, TimeSpan position)
         {
             var ffmpeg = new MyFFMpegConverter();
-            
-            var thumbnailStream = ffmpeg.GetVideoThumbnail(file.Path, position.TotalSeconds);
+
+            var thumbnailStream = ffmpeg.GetVideoThumbnail(file.PathToFile, position.TotalSeconds);
             
             if (thumbnailStream.Length == 0)
                 return null;

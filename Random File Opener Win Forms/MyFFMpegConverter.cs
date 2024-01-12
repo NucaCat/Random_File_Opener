@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -16,8 +17,8 @@ namespace Random_File_Opener_Win_Forms
         private static string WorkingDirectory { get; } = Path.GetDirectoryName(FFMpegToolPath);
         private static string FFMpegExePath { get; } = Path.Combine(FFMpegToolPath, FFMpegExeName);
         
-        private static readonly StreamBuffer[] _buffers = StreamBuffer.Get(8);
-        private static readonly ProcessStartInfoCache[] _processCaches = ProcessStartInfoCache.Get(8);
+        private static readonly List<StreamBuffer> _buffers = StreamBuffer.Get(8);
+        private static readonly List<ProcessStartInfoCache> _processCaches = ProcessStartInfoCache.Get(8);
 
         public Stream GetVideoThumbnail(string inputFile, double frameTime)
         {
@@ -56,7 +57,14 @@ namespace Random_File_Opener_Win_Forms
                 }
 
                 if (startInfo == null)
+                {
                     startInfo = new ProcessStartInfoCache { IsLocked = true };
+
+                    lock (_processCaches)
+                    {
+                        _processCaches.Add(startInfo);
+                    }
+                }
 
                 startInfo.ProcessStartInfo.Arguments = arguments;
                 if (_ffMpegProcess != null)
@@ -100,7 +108,13 @@ namespace Random_File_Opener_Win_Forms
             }
 
             if (buffer == null)
-                buffer = new StreamBuffer{ IsLocked = true };
+            {
+                buffer = new StreamBuffer { IsLocked = true };
+                lock (_buffers)
+                {
+                    _buffers.Add(buffer);
+                }
+            }
 
             int count;
             while ((count = inputStream.Read(buffer.Buffer, 0, buffer.Buffer.Length)) > 0)
@@ -177,8 +191,8 @@ namespace Random_File_Opener_Win_Forms
             public byte[] Buffer { get; } = new byte[262144];
             public bool IsLocked { get; set; }
 
-            public static StreamBuffer[] Get(int count)
-                => Enumerable.Range(0, count).Select(_ => new StreamBuffer()).ToArray();
+            public static List<StreamBuffer> Get(int count)
+                => Enumerable.Range(0, count).Select(_ => new StreamBuffer()).ToList();
         }
 
         private class ProcessStartInfoCache
@@ -197,8 +211,8 @@ namespace Random_File_Opener_Win_Forms
 
             public bool IsLocked { get; set; }
 
-            public static ProcessStartInfoCache[] Get(int count)
-                => Enumerable.Range(0, count).Select(_ => new ProcessStartInfoCache()).ToArray();
+            public static List<ProcessStartInfoCache> Get(int count)
+                => Enumerable.Range(0, count).Select(_ => new ProcessStartInfoCache()).ToList();
         }
     }
 }

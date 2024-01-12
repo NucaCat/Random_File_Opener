@@ -29,15 +29,6 @@ namespace Random_File_Opener_Win_Forms
             return substring;
         }
 
-        public static string ExtractExtension(string fileName)
-        {
-            var lastIndexOfDot = fileName.LastIndexOf('.');
-            if (lastIndexOfDot == -1)
-                return string.Empty;
-
-            return fileName.Substring(lastIndexOfDot + 1).ToUpper();
-        }
-
         public static GeneratedFileListItem ListItemFromPoint(ListBox listBox, Point point)
         {
             var indexFromPoint = listBox.IndexFromPoint(point);

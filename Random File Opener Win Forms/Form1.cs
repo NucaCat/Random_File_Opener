@@ -121,7 +121,7 @@ namespace Random_File_Opener_Win_Forms
 
             GeneratedFilesListBox.Items.Clear();
 
-            _files.Initialize( GetFiles(directory, filter)
+            _files.Initialize(GetFiles(directory, filter)
                 .Select(u => GeneratedFileListItem.FromString(u, directory))
                 .ToList()
                 .Shuffle(_random));
@@ -255,7 +255,7 @@ namespace Random_File_Opener_Win_Forms
             {
                 Clipboard.SetFileDropList(new StringCollection
                 {
-                    listItem.Path,
+                    listItem.PathToFile,
                 });
                 return;
             }
@@ -329,7 +329,7 @@ namespace Random_File_Opener_Win_Forms
 
             try
             {
-                File.Delete(selectedItem.Path);
+                File.Delete(selectedItem.PathToFile);
             }
             catch (Exception e)
             {
@@ -363,8 +363,8 @@ namespace Random_File_Opener_Win_Forms
             var startInfo = new ProcessStartInfo
             {
                 Arguments = openVariants == OpenVariants.OpenFile
-                ? item.Path
-                : $"/select, \"{item.Path}\"",
+                ? item.PathToFile
+                : $"/select, \"{item.PathToFile}\"",
                 FileName = "explorer.exe",
             };
 
@@ -497,7 +497,7 @@ namespace Random_File_Opener_Win_Forms
                 
                 writer.WriteLine("----------------------------------------------------");
                 writer.WriteLine("Current item:");
-                writer.WriteLine($"Path: {_files.Current.Path}");
+                writer.WriteLine($"Path: {_files.Current.PathToFile}");
                 writer.WriteLine($"Name: {_files.Current.FileName}");
                 writer.WriteLine($"Display value: {_files.Current.DisplayValue}");
             }
@@ -532,10 +532,10 @@ namespace Random_File_Opener_Win_Forms
                 Clipboard.SetData(DataFormats.StringFormat, _item.FileName);
             
             if (option == CopyOptions.Path)
-                Clipboard.SetData(DataFormats.StringFormat, _item.Path);
+                Clipboard.SetData(DataFormats.StringFormat, _item.PathToFile);
             
             if (option == CopyOptions.File)
-                Clipboard.SetFileDropList(new StringCollection { _item.Path });
+                Clipboard.SetFileDropList(new StringCollection { _item.PathToFile });
 
             _item = null;
         }
@@ -616,7 +616,7 @@ namespace Random_File_Opener_Win_Forms
 
                     try
                     {
-                        File.Copy(file.File.Path, outputFileName, overwrite: true);
+                        File.Copy(file.File.PathToFile, outputFileName, overwrite: true);
                         ExportProgressBar.InvokeIfRequired(() => ExportProgressBar.PerformStep());
                     }
                     catch (Exception exception)

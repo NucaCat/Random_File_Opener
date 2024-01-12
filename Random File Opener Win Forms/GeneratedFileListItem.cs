@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
+using System.IO;
 
 namespace Random_File_Opener_Win_Forms
 {
     public sealed class GeneratedFileListItem
     {
         public string DisplayValue { get; private set; }
-        public string Path { get; private set; }
+        public string PathToFile { get; private set; }
 
         // public List<string> Directories { get; private set; }
         public string Extension { get; private set; }
@@ -24,11 +23,11 @@ namespace Random_File_Opener_Win_Forms
 
             var fileName = Utilities.ExtractFileName(s, lastIndexOfSlash);
             var directories = Utilities.ExtractDirectory(directory, s, lastIndexOfSlash);
-            var extension = Utilities.ExtractExtension(fileName);
+            var extension = Path.GetExtension(fileName);
 
             return new GeneratedFileListItem
             {
-                Path = s,
+                PathToFile = s,
                 DisplayValue = fileName + (directories.IsNotNullOrWhiteSpace() ? " (" + directories + ")" : string.Empty),
                 // Directories = directories == string.Empty
                 // ? new List<string>()
