@@ -97,6 +97,8 @@ namespace Random_File_Opener_Win_Forms
                 .ToArray();
 
             Initialize(currentDirectory, _filter);
+
+            WarmupJit();
         }
 
         private async Task StartAutoGenerate()
@@ -670,5 +672,14 @@ namespace Random_File_Opener_Win_Forms
                 DwmSetWindowAttribute(Handle, 20, new[] { 1 }, 4);
         }
         #endregion dark title bar
+        
+        
+        #region JitWarmup
+        private static void WarmupJit()
+        {
+            // ReSharper disable once ObjectCreationAsStatement
+            new MyFFMpegConverter();
+        }
+        #endregion JitWarmup
     }
 }
