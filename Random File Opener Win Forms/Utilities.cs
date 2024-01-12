@@ -21,6 +21,15 @@ namespace Random_File_Opener_Win_Forms
         public static string ExtractFileName(string u, int lastIndex)
             => u.Substring(lastIndex + 1);
 
+        public static string ExtractExtension(string fileName)
+        {
+            var lastIndexOfDot = fileName.LastIndexOf('.');
+            if (lastIndexOfDot == -1)
+                return string.Empty;
+
+            return fileName.Substring(lastIndexOfDot + 1).ToUpper();
+        }
+
         public static string RemoveTrailingSlash(string substring)
         {
             if (substring.IsNotNullOrWhiteSpace() && substring.Last() == '\\')

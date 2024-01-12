@@ -23,7 +23,7 @@ namespace Random_File_Opener_Win_Forms
 
             var fileName = Utilities.ExtractFileName(s, lastIndexOfSlash);
             var directories = Utilities.ExtractDirectory(directory, s, lastIndexOfSlash);
-            var extension = Path.GetExtension(fileName);
+            var extension = Utilities.ExtractExtension(fileName);
 
             return new GeneratedFileListItem
             {
