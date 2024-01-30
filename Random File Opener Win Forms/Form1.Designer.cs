@@ -139,6 +139,7 @@
             this.FilterTextBox.Name = "FilterTextBox";
             this.FilterTextBox.Size = new System.Drawing.Size(232, 52);
             this.FilterTextBox.TabIndex = 6;
+            this.FilterTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FilterTextBox_KeyDown);
             // 
             // ApplyFilterButton
             // 

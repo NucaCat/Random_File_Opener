@@ -36,7 +36,7 @@ namespace Random_File_Opener_Win_Forms
         private readonly CustomMessageBox _messageBox = new CustomMessageBox();
 
         private Control[] _hideableControls;
-        private PictureBox[] _nonHideableControls;
+        private Control[] _nonHideableControls;
 
         public Form1()
         {
@@ -90,7 +90,10 @@ namespace Random_File_Opener_Win_Forms
                 pictureBox.MouseDoubleClick += PictureBox_MouseDoubleClick;
             }
 
-            _nonHideableControls = Controls.OfType<PictureBox>().ToArray();
+            _nonHideableControls = Array.Empty<Control>()
+                .Concat(Controls.OfType<PictureBox>())
+                .Concat(Controls.OfType<ProgressBar>())
+                .ToArray();
             
             _hideableControls = Controls.OfType<Control>()
                 .Where(u => !_nonHideableControls.Contains(u))
@@ -408,9 +411,14 @@ namespace Random_File_Opener_Win_Forms
 
         private void ApplyFilter_Click(object sender, EventArgs e)
         {
+            ApplyFilter();
+        }
+
+        private void ApplyFilter()
+        {
             if (FilterTextBox.Text == _filter)
                 return;
-            
+
             if (FilterTextBox.Text.IsNullOrWhiteSpace())
                 FilterTextBox.Text = Consts.EmptyFilter;
 
@@ -436,6 +444,16 @@ namespace Random_File_Opener_Win_Forms
             GeneratedFilesListBox.SelectedItem = item;
 
             HandleMouseUpOnMouseUp(e, item);
+        }
+
+        private void FilterTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter)
+                return;
+
+            e.Handled = true;
+            e.SuppressKeyPress = true;
+            ApplyFilter();
         }
 
         private void PictureBox_MouseUp(object sender, MouseEventArgs e)
