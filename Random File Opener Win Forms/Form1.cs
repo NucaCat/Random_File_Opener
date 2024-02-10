@@ -412,6 +412,7 @@ namespace Random_File_Opener_Win_Forms
         private void ApplyFilter_Click(object sender, EventArgs e)
         {
             ApplyFilter();
+            NextFileButton.Select();
         }
 
         private void ApplyFilter()
@@ -454,6 +455,7 @@ namespace Random_File_Opener_Win_Forms
             e.Handled = true;
             e.SuppressKeyPress = true;
             ApplyFilter();
+            NextFileButton.Select();
         }
 
         private void PictureBox_MouseUp(object sender, MouseEventArgs e)
