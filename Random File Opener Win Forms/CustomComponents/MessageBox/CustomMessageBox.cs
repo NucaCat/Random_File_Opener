@@ -65,13 +65,13 @@ namespace Random_File_Opener_Win_Forms.CustomComponents.MessageBox
                 var button = ButtonByType(buttonDescription.ButtonType);
                 button.Visible = buttonDescription.Visible;
                 button.Text = buttonDescription.ButtonText ?? button.Text;
+
+                if (button == YesButton && buttonDescription.Visible)
+                    YesButton.Select();
+
+                if (button == OkButton && buttonDescription.Visible)
+                    OkButton.Select();
             }
-
-            if (YesButton.Visible)
-                YesButton.Select();
-
-            if (OkButton.Visible)
-                OkButton.Select();
 
             ShowDialog();
 
