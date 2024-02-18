@@ -256,6 +256,8 @@ namespace Random_File_Opener_Win_Forms
             if (listItem == null)
                 return;
 
+            SuppressIfRequired(e);
+
             if (e.Control && e.KeyCode == Keys.C)
             {
                 Clipboard.SetFileDropList(new StringCollection
@@ -291,6 +293,21 @@ namespace Random_File_Opener_Win_Forms
                 DeleteSelectedFile();
                 // ReSharper disable once RedundantJumpStatement
                 return;
+            }
+        }
+
+        private static void SuppressIfRequired(KeyEventArgs e)
+        {
+            if (e.Control
+                || e.KeyCode == Keys.Down
+                || e.KeyCode == Keys.Up
+                || e.KeyCode == Keys.Left
+                || e.KeyCode == Keys.Right
+                || e.KeyCode == Keys.Enter
+                || e.KeyCode == Keys.Space
+                || e.KeyCode == Keys.Delete)
+            {
+                e.SuppressKeyPress = true;
             }
         }
 
