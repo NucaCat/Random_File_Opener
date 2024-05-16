@@ -385,7 +385,7 @@ namespace Random_File_Opener_Win_Forms
             var startInfo = new ProcessStartInfo
             {
                 Arguments = openVariants == OpenVariants.OpenFile
-                ? item.PathToFile
+                ? $"\"{item.PathToFile}\""
                 : $"/select, \"{item.PathToFile}\"",
                 FileName = "explorer.exe",
             };
