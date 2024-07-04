@@ -12,7 +12,7 @@ namespace Random_File_Opener_Win_Forms
 
         public static HashSet<string> VideoExtensions { get; } = new HashSet<string>
         {
-            "MP4", "MKV", "WMV", "AVI"
+            "MP4", "MKV", "WMV", "AVI", "TS"
         };
         
         public static string EmptyFilter { get; } = "*";

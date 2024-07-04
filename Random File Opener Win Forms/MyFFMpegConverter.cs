@@ -89,7 +89,6 @@ namespace Random_File_Opener_Win_Forms
             catch (Exception)
             {
                 EnsureFFMpegProcessStopped();
-                throw;
             }
             finally
             {
