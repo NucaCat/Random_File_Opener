@@ -26,6 +26,8 @@ namespace Random_File_Opener_Win_Forms
         private readonly Random _random = new Random();
         private string _currentDirectory = string.Empty;
         private string _filter = Consts.EmptyFilter;
+        private bool _exportOnlyVisible;
+        private bool _showPreview;
         private GenerateButtonColors _currentGenerateButtonColor = GenerateButtonColors.Red;
 
         private GeneratedFileListItem _item;
@@ -68,6 +70,8 @@ namespace Random_File_Opener_Win_Forms
             Styler.ApplyStyles(_messageBox);
             Styler.ApplyStylesToMessageBox(_messageBox);
 
+            _exportOnlyVisible = settings?.ExportOnlyVisible ?? false;
+            _showPreview = settings?.ShowPreview ?? false;
             _filter = settings?.Filter ?? _filter;
             FilterTextBox.Text = _filter;
 
@@ -177,6 +181,9 @@ namespace Random_File_Opener_Win_Forms
 
         private void AddImageToPreview(GeneratedFileListItem file)
         {
+            if (!_showPreview)
+                return;
+
             var images = file.Images.IsNotEmpty()
             ? file.Images
             : ImageService.GetFitImages(file, ImagePictureBox, _pictureBoxesInSequence);
@@ -638,18 +645,22 @@ namespace Random_File_Opener_Win_Forms
         {
             return async () =>
             {
+                var files = _files.All
+                    .WhereIf(_exportOnlyVisible, u => u.AddedToListBox);
+                
                 ExportButton.InvokeIfRequired(() => ExportButton.Enabled = false);
                 ExportProgressBar.InvokeIfRequired(() =>
                 {
                     ExportProgressBar.Value = ExportProgressBar.Minimum;
-                    ExportProgressBar.Maximum = _files.All.Count;
+                    ExportProgressBar.Maximum = files.Count();
                     ExportProgressBar.Visible = true;
                 });
 
                 if (shouldClearOutputDirectory)
                     ClearDirectory(outputFolder);
 
-                foreach (var file in _files.All.Select((u, index) => (File: u, Index: index)))
+                foreach (var file in files
+                    .Select((u, index) => (File: u, Index: index)))
                 {
                     var outputFileName = $"{outputFolder}\\{file.Index.ToString().PadLeft(7, '0')}.{file.File.Extension}";
 

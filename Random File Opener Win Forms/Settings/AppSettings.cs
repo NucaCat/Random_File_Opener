@@ -7,6 +7,8 @@ namespace Random_File_Opener_Win_Forms.Settings
         public string Filter { get; set; }
         public TimeSpan[] VideoThumbnailPositions { get; set; }
         public bool CacheImages { get; set; }
+        public bool ExportOnlyVisible { get; set; }
+        public bool ShowPreview { get; set; }
         public StylesSettings Styles { get; set; }
     }
 
