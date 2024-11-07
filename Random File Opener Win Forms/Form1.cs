@@ -77,10 +77,7 @@ namespace Random_File_Opener_Win_Forms
 
             Consts.CacheImages = settings?.CacheImages ?? Consts.CacheImages;
 
-            Consts.VideoThumbnailPositions = settings?.VideoThumbnailPositions.IsEmpty() == true
-                ? Consts.VideoThumbnailPositions
-                // ReSharper disable once PossibleNullReferenceException
-                : settings.VideoThumbnailPositions;
+            Consts.VideoThumbnailPositions = settings?.VideoThumbnailPositions ?? Consts.VideoThumbnailPositions;
 
             SearchModeButton.Text = _searchOption.ToFriendlyString();
 

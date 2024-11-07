@@ -41,7 +41,7 @@ namespace Random_File_Opener_Win_Forms
             if (Consts.ImageExtensions.Contains(file.Extension))
                 return new [] { new Bitmap(file.PathToFile) };
 
-            if (Consts.VideoExtensions.Contains(file.Extension))
+            if (Consts.VideoExtensions.Contains(file.Extension) && Consts.VideoThumbnailPositions.IsNotEmpty())
                 return GetVideoThumbnails(file, Consts.VideoThumbnailPositions);
 
             return Array.Empty<Bitmap>();

@@ -18,11 +18,7 @@ namespace Random_File_Opener_Win_Forms
         public static string EmptyFilter { get; } = "*";
         public static string SettingsFileName { get; } = "!appsettings.json";
 
-        public static TimeSpan[] VideoThumbnailPositions { get; set; } = {
-            TimeSpan.FromMinutes(1),
-            TimeSpan.FromMinutes(12),
-            TimeSpan.FromMinutes(20)
-        };
+        public static TimeSpan[] VideoThumbnailPositions { get; set; } = Array.Empty<TimeSpan>();
 
         public static bool CacheImages { get; set; } = true;
     }
