@@ -13,7 +13,7 @@ namespace Random_File_Opener_Win_Forms.Style
             = new Dictionary<GenerateButtonColors, (Color Main, Color On)>
             {
                 { GenerateButtonColors.Green, (Main: Styles.Autogenerate, On: Styles.OnAutogenerate)},
-                { GenerateButtonColors.Red, (Main: Styles.DoNoAutogenerate, On: Styles.OnDoNoAutogenerate)}
+                { GenerateButtonColors.Red, (Main: Styles.DoNotAutogenerate, On: Styles.OnDoNotAutogenerate)}
             };
         
         // TODO v.chumachenko unbind from Styles and use some interface

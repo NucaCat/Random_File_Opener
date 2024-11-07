@@ -14,6 +14,8 @@
     
     "Error": "#CF6679",
     "Autogenerate": "#03DAC6",
+    "DoNotAutogenerate": "#CF6679",
+
     "OnPrimary": "#000000",
     "OnSecondary": "#000000",
     "OnBackground": "#FFFFFF",
@@ -21,6 +23,6 @@
     "OnError": "#000000",
     
     "OnAutogenerate": "#000000",
-    "OnDoNoAutogenerate": "#000000"
+    "OnDoNotAutogenerate": "#000000"
   }
 }

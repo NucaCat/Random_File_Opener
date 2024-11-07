@@ -16,7 +16,7 @@ namespace Random_File_Opener_Win_Forms.Style
         public static Color Error { get; set; } = ColorTranslator.FromHtml("#CF6679");
         
         public static Color Autogenerate { get; set; } = Secondary;
-        public static Color DoNoAutogenerate { get; set; } = Error;
+        public static Color DoNotAutogenerate { get; set; } = Error;
 
         public static Color OnPrimary { get; set; } = ColorTranslator.FromHtml("#000000");
         public static Color OnSecondary { get; set; } = ColorTranslator.FromHtml("#000000");
@@ -25,7 +25,7 @@ namespace Random_File_Opener_Win_Forms.Style
         public static Color OnError { get; set; } = ColorTranslator.FromHtml("#000000");
 
         public static Color OnAutogenerate { get; set; } = OnSecondary;
-        public static Color OnDoNoAutogenerate { get; set; } = OnError;
+        public static Color OnDoNotAutogenerate { get; set; } = OnError;
 
         public static void FillFromSettings(StylesSettings settings)
         {
@@ -39,14 +39,14 @@ namespace Random_File_Opener_Win_Forms.Style
             Surface = settings.Surface.IsNullOrWhiteSpace() ? Surface : ColorTranslator.FromHtml(settings.Surface);
             Error = settings.Error.IsNullOrWhiteSpace() ? Error : ColorTranslator.FromHtml(settings.Error);
             Autogenerate = settings.Autogenerate.IsNullOrWhiteSpace() ? Autogenerate : ColorTranslator.FromHtml(settings.Autogenerate);
-            DoNoAutogenerate = settings.DoNoAutogenerate.IsNullOrWhiteSpace() ? DoNoAutogenerate : ColorTranslator.FromHtml(settings.DoNoAutogenerate);
+            DoNotAutogenerate = settings.DoNotAutogenerate.IsNullOrWhiteSpace() ? DoNotAutogenerate : ColorTranslator.FromHtml(settings.DoNotAutogenerate);
             OnPrimary = settings.OnPrimary.IsNullOrWhiteSpace() ? OnPrimary : ColorTranslator.FromHtml(settings.OnPrimary);
             OnSecondary = settings.OnSecondary.IsNullOrWhiteSpace() ? OnSecondary : ColorTranslator.FromHtml(settings.OnSecondary);
             OnBackground = settings.OnBackground.IsNullOrWhiteSpace() ? OnBackground : ColorTranslator.FromHtml(settings.OnBackground);
             OnSurface = settings.OnSurface.IsNullOrWhiteSpace() ? OnSurface : ColorTranslator.FromHtml(settings.OnSurface);
             OnError = settings.OnError.IsNullOrWhiteSpace() ? OnError : ColorTranslator.FromHtml(settings.OnError);
             OnAutogenerate = settings.OnAutogenerate.IsNullOrWhiteSpace() ? OnAutogenerate : ColorTranslator.FromHtml(settings.OnAutogenerate);
-            OnDoNoAutogenerate = settings.OnDoNoAutogenerate.IsNullOrWhiteSpace() ? OnDoNoAutogenerate : ColorTranslator.FromHtml(settings.OnDoNoAutogenerate);
+            OnDoNotAutogenerate = settings.OnDoNotAutogenerate.IsNullOrWhiteSpace() ? OnDoNotAutogenerate : ColorTranslator.FromHtml(settings.OnDoNotAutogenerate);
         }
     }
 }

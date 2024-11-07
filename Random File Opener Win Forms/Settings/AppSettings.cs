@@ -24,7 +24,7 @@ namespace Random_File_Opener_Win_Forms.Settings
         public string Error { get; set; }
         
         public string Autogenerate { get; set; }
-        public string DoNoAutogenerate { get; set; }
+        public string DoNotAutogenerate { get; set; }
 
         public string OnPrimary { get; set; }
         public string OnSecondary { get; set; }
@@ -33,6 +33,6 @@ namespace Random_File_Opener_Win_Forms.Settings
         public string OnError { get; set; }
 
         public string OnAutogenerate { get; set; }
-        public string OnDoNoAutogenerate { get; set; }
+        public string OnDoNotAutogenerate { get; set; }
     }
 }
