@@ -52,18 +52,13 @@ namespace Random_File_Opener_Win_Forms
                 lock (_processCaches)
                 {
                     startInfo = _processCaches.FirstOrDefault(u => !u.IsLocked);
-                    if (startInfo != null)
-                        startInfo.IsLocked = true;
-                }
 
-                if (startInfo == null)
-                {
-                    startInfo = new ProcessStartInfoCache { IsLocked = true };
-
-                    lock (_processCaches)
+                    if (startInfo == null)
                     {
+                        startInfo = new ProcessStartInfoCache { IsLocked = true };
                         _processCaches.Add(startInfo);
                     }
+                    startInfo.IsLocked = true;
                 }
 
                 startInfo.ProcessStartInfo.Arguments = arguments;
@@ -102,17 +97,13 @@ namespace Random_File_Opener_Win_Forms
             lock (_buffers)
             {
                 buffer = _buffers.FirstOrDefault(u => !u.IsLocked);
-                if (buffer != null)
-                    buffer.IsLocked = true;
-            }
 
-            if (buffer == null)
-            {
-                buffer = new StreamBuffer { IsLocked = true };
-                lock (_buffers)
+                if (buffer == null)
                 {
+                    buffer = new StreamBuffer { IsLocked = true };
                     _buffers.Add(buffer);
                 }
+                buffer.IsLocked = true;
             }
 
             int count;
