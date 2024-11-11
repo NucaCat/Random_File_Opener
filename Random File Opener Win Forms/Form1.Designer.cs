@@ -86,7 +86,7 @@
             this.NextFileButton.TabIndex = 1;
             this.NextFileButton.Text = "Следующий файл";
             this.NextFileButton.UseVisualStyleBackColor = true;
-            this.NextFileButton.Click += new System.EventHandler(this.NextFileButton_Click);
+            this.NextFileButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NextFileButton_Click);
             // 
             // SearchModeButton
             // 
@@ -97,7 +97,7 @@
             this.SearchModeButton.TabIndex = 2;
             this.SearchModeButton.Text = "С подпапками или без";
             this.SearchModeButton.UseVisualStyleBackColor = true;
-            this.SearchModeButton.Click += new System.EventHandler(this.SearchModeButton_Click);
+            this.SearchModeButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.SearchModeButton_Click);
             // 
             // ChangeDirectoryButton
             // 
@@ -108,7 +108,7 @@
             this.ChangeDirectoryButton.TabIndex = 3;
             this.ChangeDirectoryButton.Text = "Изменить папку";
             this.ChangeDirectoryButton.UseVisualStyleBackColor = true;
-            this.ChangeDirectoryButton.Click += new System.EventHandler(this.ChangeDirectory_Click);
+            this.ChangeDirectoryButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ChangeDirectory_Click);
             // 
             // DirectoryTextBox
             // 
@@ -129,7 +129,7 @@
             this.ClearButton.TabIndex = 5;
             this.ClearButton.Text = "Очистить список";
             this.ClearButton.UseVisualStyleBackColor = true;
-            this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
+            this.ClearButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ClearButton_Click);
             // 
             // FilterTextBox
             // 
@@ -150,7 +150,7 @@
             this.ApplyFilterButton.TabIndex = 7;
             this.ApplyFilterButton.Text = "Применить фильтр";
             this.ApplyFilterButton.UseVisualStyleBackColor = true;
-            this.ApplyFilterButton.Click += new System.EventHandler(this.ApplyFilter_Click);
+            this.ApplyFilterButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ApplyFilter_Click);
             // 
             // ListBoxContextMenuStrip
             // 
@@ -226,7 +226,7 @@
             this.AutoGenerateButton.TabIndex = 9;
             this.AutoGenerateButton.Text = "Автогенерация";
             this.AutoGenerateButton.UseVisualStyleBackColor = false;
-            this.AutoGenerateButton.Click += new System.EventHandler(this.AutoGenerate_Click);
+            this.AutoGenerateButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.AutoGenerate_Click);
             // 
             // AutoGenerateNumericUpDown
             // 
@@ -278,7 +278,7 @@
             this.HideControlsButton.TabIndex = 14;
             this.HideControlsButton.Text = "Скрыть";
             this.HideControlsButton.UseVisualStyleBackColor = true;
-            this.HideControlsButton.Click += new System.EventHandler(this.HideControlsButton_Click);
+            this.HideControlsButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HideControlsButton_Click);
             // 
             // ExportButton
             // 
@@ -289,7 +289,7 @@
             this.ExportButton.TabIndex = 15;
             this.ExportButton.Text = "Выгрузить";
             this.ExportButton.UseVisualStyleBackColor = true;
-            this.ExportButton.Click += new System.EventHandler(this.ExportButton_Click);
+            this.ExportButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ExportButton_Click);
             // 
             // ExportProgressBar
             // 
