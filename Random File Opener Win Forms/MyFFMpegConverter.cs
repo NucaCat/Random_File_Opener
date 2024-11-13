@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -17,8 +18,8 @@ namespace Random_File_Opener_Win_Forms
         private static string WorkingDirectory { get; } = Path.GetDirectoryName(FFMpegToolPath);
         private static string FFMpegExePath { get; } = Path.Combine(FFMpegToolPath, FFMpegExeName);
         
-        private static readonly List<StreamBuffer> _buffers = StreamBuffer.Get(8);
-        private static readonly List<ProcessStartInfoCache> _processCaches = ProcessStartInfoCache.Get(8);
+        private static readonly ConcurrentQueue<StreamBuffer> _buffers = new ConcurrentQueue<StreamBuffer>(StreamBuffer.Get(500));
+        private static readonly ConcurrentQueue<ProcessStartInfoCache> _processCaches = new ConcurrentQueue<ProcessStartInfoCache>(ProcessStartInfoCache.Get(500));
 
         public Stream GetVideoThumbnail(string inputFile, double frameTime)
         {
@@ -44,22 +45,17 @@ namespace Random_File_Opener_Win_Forms
             if (!File.Exists(FFMpegExePath))
                 return;
 
+            _processCaches.TryDequeue(out var startInfo);
+            if (startInfo is null)
+                startInfo = new ProcessStartInfoCache();
+
+            _buffers.TryDequeue(out var buffer);
+            if (buffer is null)
+                buffer = new StreamBuffer();
+
             try
             {
                 var arguments = ComposeFFMpegCommandLineArgs(input.Filename, output.Filename, output.Format, frameTime);
-
-                ProcessStartInfoCache startInfo;
-                lock (_processCaches)
-                {
-                    startInfo = _processCaches.FirstOrDefault(u => !u.IsLocked);
-
-                    if (startInfo == null)
-                    {
-                        startInfo = new ProcessStartInfoCache { IsLocked = true };
-                        _processCaches.Add(startInfo);
-                    }
-                    startInfo.IsLocked = true;
-                }
 
                 startInfo.ProcessStartInfo.Arguments = arguments;
                 if (_ffMpegProcess != null)
@@ -72,14 +68,13 @@ namespace Random_File_Opener_Win_Forms
                 _ffMpegProcess.BeginOutputReadLine();
                 _ffMpegProcess.BeginErrorReadLine();
                 WaitFFMpegProcessForExit();
-                startInfo.IsLocked = false;
                 if (_ffMpegProcess.ExitCode != 0)
                     throw new Exception(_ffMpegProcess.ExitCode.ToString());
                 _ffMpegProcess.Close();
                 _ffMpegProcess = null;
 
                 using (var inputStream = new FileStream(output.Filename, FileMode.Open, FileAccess.Read, FileShare.None))
-                    CopyStream(inputStream, output.DataStream);
+                    CopyStream(inputStream, output.DataStream, buffer);
             }
             catch (Exception)
             {
@@ -88,29 +83,19 @@ namespace Random_File_Opener_Win_Forms
             finally
             {
                 File.Delete(output.Filename);
+                if (startInfo != null)
+                    _processCaches.Enqueue(startInfo);
+                
+                if (buffer != null)
+                    _buffers.Enqueue(buffer);
             }
         }
 
-        private void CopyStream(Stream inputStream, Stream outputStream)
+        private void CopyStream(Stream inputStream, Stream outputStream, StreamBuffer buffer)
         {
-            StreamBuffer buffer;
-            lock (_buffers)
-            {
-                buffer = _buffers.FirstOrDefault(u => !u.IsLocked);
-
-                if (buffer == null)
-                {
-                    buffer = new StreamBuffer { IsLocked = true };
-                    _buffers.Add(buffer);
-                }
-                buffer.IsLocked = true;
-            }
-
             int count;
             while ((count = inputStream.Read(buffer.Buffer, 0, buffer.Buffer.Length)) > 0)
                 outputStream.Write(buffer.Buffer, 0, count);
-
-            buffer.IsLocked = false;
         }
 
         private string ComposeFFMpegCommandLineArgs(
@@ -179,7 +164,6 @@ namespace Random_File_Opener_Win_Forms
         private class StreamBuffer
         {
             public byte[] Buffer { get; } = new byte[262144];
-            public bool IsLocked { get; set; }
 
             public static List<StreamBuffer> Get(int count)
                 => Enumerable.Range(0, count).Select(_ => new StreamBuffer()).ToList();
@@ -198,8 +182,6 @@ namespace Random_File_Opener_Win_Forms
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
             };
-
-            public bool IsLocked { get; set; }
 
             public static List<ProcessStartInfoCache> Get(int count)
                 => Enumerable.Range(0, count).Select(_ => new ProcessStartInfoCache()).ToList();
