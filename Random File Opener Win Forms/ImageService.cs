@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using FFMediaToolkit.Decoding;
-using FFMediaToolkit.Graphics;
-using FFmpeg.AutoGen;
 
 namespace Random_File_Opener_Win_Forms
 {
@@ -55,36 +49,31 @@ namespace Random_File_Opener_Win_Forms
 
         private static Bitmap[] GetVideoThumbnails(GeneratedFileListItem file, params TimeSpan[] positions)
         {
-            var exists = File.Exists(file.PathToFile);
-            if (!exists)
-                return Array.Empty<Bitmap>();
+            var thumbnails = positions.Prepend(TimeSpan.FromSeconds(1))
+                .AsParallel()
+                .AsOrdered()
+                .Select(u => GetThumbnailAtPosition(file, u))
+                .Where(u => u != null)
+                .ToArray();
 
-            var mediaFile = MediaFile.Open(file.PathToFile);
-            if (mediaFile.Video is null)
-                return Array.Empty<Bitmap>();
-            
-            var thumbnails = new List<Bitmap>(positions.Length);
-        
-            foreach (var position in positions)
-            {
-                var success = mediaFile.Video.TryGetFrame(position, out var frame);
-                if (!success)
-                    break;
-                
-                thumbnails.Add(frame.ToBitmap());
-            }
-            
-            return thumbnails.ToArray();
+            if (thumbnails.Length == positions.Length + 1)
+                return thumbnails.Skip(1).ToArray();
+
+            return thumbnails;
         }
 
-        private static unsafe Bitmap ToBitmap(this ImageData bitmap)
+        private static Bitmap GetThumbnailAtPosition(GeneratedFileListItem file, TimeSpan position)
         {
-            fixed(byte* p = bitmap.Data)
-            {
-                return new Bitmap(bitmap.ImageSize.Width, bitmap.ImageSize.Height, bitmap.Stride, PixelFormat.Format24bppRgb, new IntPtr(p));
-            }
+            var ffmpeg = new MyFFMpegConverter();
+
+            var thumbnailStream = ffmpeg.GetVideoThumbnail(file.PathToFile, position.TotalSeconds);
+            
+            if (thumbnailStream.Length == 0)
+                return null;
+            
+            return new Bitmap(thumbnailStream);
         }
-        
+
         private static Bitmap ResizeImageToFitPictureBox(Bitmap sourceImage, Size sizeToFit)
         {
             var resizedSize = SizeToFitPictureBox(sourceImage, sizeToFit);

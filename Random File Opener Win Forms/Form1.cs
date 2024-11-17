@@ -8,8 +8,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using FFMediaToolkit;
-using FFMediaToolkit.Decoding;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Random_File_Opener_Win_Forms.CustomComponents.MessageBox;
 using Random_File_Opener_Win_Forms.Settings;
@@ -54,7 +52,6 @@ namespace Random_File_Opener_Win_Forms
         private void InitialInitialize()
         {
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
-            FFmpegLoader.LoadFFmpeg();
 
             _pictureBoxesInSequence = new[]
             {
