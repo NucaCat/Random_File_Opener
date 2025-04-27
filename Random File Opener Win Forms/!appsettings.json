@@ -1,9 +1,12 @@
 ﻿{
   "Filter": "*",
   "VideoThumbnailPositions": ["00:01:00", "00:12:00", "00:20:00"],
-  "CacheImages": true,
   "ExportOnlyVisible": true,
   "ShowPreview": true,
+  "Cache": {
+    "SaveCacheOnDisc": true,
+    "CacheLocation": "Cache"
+  },
   "Styles": {
     "Primary": "#BB86FC",
     "Secondary": "#03DAC6",

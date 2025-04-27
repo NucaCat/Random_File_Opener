@@ -25,6 +25,7 @@ namespace Random_File_Opener_Win_Forms
         private ArrayWithPointer<GeneratedFileListItem> _files = new ArrayWithPointer<GeneratedFileListItem>();
         private readonly Random _random = new Random();
         private string _currentDirectory = string.Empty;
+        private string _cacheDirectory = string.Empty;
         private string _filter = Consts.EmptyFilter;
         private bool _exportOnlyVisible;
         private bool _showPreview;
@@ -75,7 +76,7 @@ namespace Random_File_Opener_Win_Forms
             _filter = settings?.Filter ?? _filter;
             FilterTextBox.Text = _filter;
 
-            Consts.CacheImages = settings?.CacheImages ?? Consts.CacheImages;
+            Consts.Cache = settings?.Cache ?? Consts.Cache;
 
             Consts.VideoThumbnailPositions = settings?.VideoThumbnailPositions ?? Consts.VideoThumbnailPositions;
 
@@ -122,6 +123,9 @@ namespace Random_File_Opener_Win_Forms
         private void Initialize(string directory, string filter)
         {
             _currentDirectory = directory;
+            _cacheDirectory = $"{Directory.GetCurrentDirectory()}\\{Consts.Cache.CacheLocation}";
+            if (Consts.Cache.CacheLocation.IsNotNullOrWhiteSpace())
+                Directory.CreateDirectory(_cacheDirectory);
             _filter = filter;
             DirectoryTextBox.Text = directory.Substring(directory.LastIndexOf('\\') + 1);
 
@@ -135,20 +139,26 @@ namespace Random_File_Opener_Win_Forms
 
         private IEnumerable<string> GetFiles(string directory, string filter)
         {
-            var initialFiles = Directory.GetFiles(directory, filter, _searchOption);
+            var initialFiles = Directory.GetFiles(directory, filter, _searchOption)
+                .WhereIf(_cacheDirectory.IsNotNullOrWhiteSpace(), u => !u.StartsWith(_cacheDirectory));
 
             if (_searchOption == SearchOption.TopDirectoryOnly)
                 return initialFiles;
 
-            var directories = Directory.GetDirectories(directory, filter, _searchOption);
+            var directories = Directory.GetDirectories(directory, filter, _searchOption)
+                .WhereIf(_cacheDirectory.IsNotNullOrWhiteSpace(), u => !u.StartsWith(_cacheDirectory))
+                .ToArray();
 
             if (directories.IsEmpty())
                 return initialFiles;
 
             var endFiles = directories
-                .SelectMany(u => Directory.GetFiles(u, "*", _searchOption));
+                .SelectMany(u => Directory.GetFiles(u, "*", _searchOption))
+                .WhereIf(_cacheDirectory.IsNotNullOrWhiteSpace(), u => !u.StartsWith(_cacheDirectory));
 
-            return initialFiles.Concat(endFiles).Distinct();
+            return initialFiles
+                .Concat(endFiles)
+                .Distinct();
         }
 
         private void NextFileButton_Click(object sender = null, EventArgs e = null)
@@ -181,13 +191,8 @@ namespace Random_File_Opener_Win_Forms
             if (!_showPreview)
                 return;
 
-            var images = file.Images.IsNotEmpty()
-            ? file.Images
-            : ImageService.GetFitImages(file, ImagePictureBox, _pictureBoxesInSequence);
+            var images = GetImages(file);
 
-            if (Consts.CacheImages)
-                file.Images = images;
-            
             if (images.Length == 0)
             {
                 PlaceImageInBigPictureBox(null);
@@ -201,6 +206,36 @@ namespace Random_File_Opener_Win_Forms
             }
             
             PlaceImageInSmallPictureBoxes(images);
+        }
+
+        private Bitmap[] GetImages(GeneratedFileListItem file)
+        {
+            if (file.Images.IsNotEmpty())
+                return file.Images;
+
+            if (Consts.Cache.SaveCacheOnDisc && Consts.VideoExtensions.Contains(file.Extension))
+            {
+                file.Images = Consts.VideoThumbnailPositions
+                    .Select((u, index) => file.GetHash(_cacheDirectory, index))
+                    .Where(File.Exists)
+                    .Select(u => new Bitmap(u))
+                    .ToArray();
+                if (file.Images.IsNotEmpty())
+                    return file.Images;
+            }
+
+            var images = ImageService.GetFitImages(file, ImagePictureBox, _pictureBoxesInSequence);
+            file.Images = images;
+
+            if (Consts.Cache.SaveCacheOnDisc && file.Images.IsNotEmpty() && Consts.VideoExtensions.Contains(file.Extension))
+            {
+                foreach (var (image, index) in file.Images.Select((u, index) => (u, index)))
+                {
+                    image.Save(file.GetHash(_cacheDirectory, index));
+                }
+            }
+
+            return images;
         }
 
         private void PlaceImageInSmallPictureBoxes(Bitmap[] images)

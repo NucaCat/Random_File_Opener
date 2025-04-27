@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace Random_File_Opener_Win_Forms
 {
@@ -20,7 +21,14 @@ namespace Random_File_Opener_Win_Forms
 
         public static TimeSpan[] VideoThumbnailPositions { get; set; } = Array.Empty<TimeSpan>();
 
-        public static bool CacheImages { get; set; } = true;
+        public static CacheSettings Cache { get; set; } = new CacheSettings();
+        public static HashAlgorithm HashAlgorithm = HashAlgorithm.Create("SHA256");
+    }
+
+    public class CacheSettings
+    {
+        public bool SaveCacheOnDisc { get; set; } = true;
+        public string CacheLocation { get; set; } = "Cache";
     }
 
     internal enum GenerateButtonColors

@@ -13,6 +13,8 @@ namespace Random_File_Opener_Win_Forms
         public string Extension { get; private set; }
         public string FileName { get; private set; }
 
+        public string Directory { get; private set; }
+
         public Bitmap[] Images { get; set; } = Array.Empty<Bitmap>();
 
         public bool AddedToListBox { get; set; } = false;
@@ -29,9 +31,7 @@ namespace Random_File_Opener_Win_Forms
             {
                 PathToFile = s,
                 DisplayValue = fileName + (directories.IsNotNullOrWhiteSpace() ? " (" + directories + ")" : string.Empty),
-                // Directories = directories == string.Empty
-                // ? new List<string>()
-                // : directories.Split('\\').ToList(),
+                Directory = directories,
                 Extension = extension,
                 FileName = fileName,
             };
@@ -39,5 +39,14 @@ namespace Random_File_Opener_Win_Forms
 
         public override string ToString()
             => DisplayValue;
+
+        public string GetHash(string cacheDirectory, int index)
+        {
+            var fileName = FileName + "-" + index;
+            var hash = Utilities.GetSha256Hash(fileName);
+
+            var filePath = cacheDirectory + $"\\{hash}";
+            return filePath;
+        }
     }
 }

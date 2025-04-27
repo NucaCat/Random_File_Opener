@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Random_File_Opener_Win_Forms
@@ -130,6 +132,26 @@ namespace Random_File_Opener_Win_Forms
             {
                 action(x);
             }
+        }
+        
+        public static string GetSha256Hash(string input)
+        {
+            // Convert the input string to a byte array and compute the hash.
+            var data = Consts.HashAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+            // Create a new Stringbuilder to collect the bytes
+            // and create a string.
+            var sBuilder = new StringBuilder();
+
+            // Loop through each byte of the hashed data 
+            // and format each one as a hexadecimal string.
+            foreach (var b in data)
+            {
+                sBuilder.Append(b.ToString("x2"));
+            }
+
+            // Return the hexadecimal string.
+            return sBuilder.ToString();
         }
     }
 }
