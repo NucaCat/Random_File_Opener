@@ -47,6 +47,7 @@
             this.FileAddressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FileNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DeleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DeleteSelectedThumbnailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ImagePictureBox = new System.Windows.Forms.PictureBox();
             this.AutoGenerateButton = new System.Windows.Forms.Button();
             this.AutoGenerateNumericUpDown = new FlatNumericUpDown();
@@ -69,9 +70,9 @@
             this.GeneratedFilesListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.GeneratedFilesListBox.FormattingEnabled = true;
             this.GeneratedFilesListBox.ItemHeight = 29;
-            this.GeneratedFilesListBox.Location = new System.Drawing.Point(1354, 12);
+            this.GeneratedFilesListBox.Location = new System.Drawing.Point(1354, 13);
             this.GeneratedFilesListBox.Name = "GeneratedFilesListBox";
-            this.GeneratedFilesListBox.Size = new System.Drawing.Size(538, 1019);
+            this.GeneratedFilesListBox.Size = new System.Drawing.Size(538, 1077);
             this.GeneratedFilesListBox.TabIndex = 0;
             this.GeneratedFilesListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GeneratedFilesListBox_KeyDown);
             this.GeneratedFilesListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.GeneratedFilesListBox_MouseDoubleClick);
@@ -80,9 +81,9 @@
             // NextFileButton
             // 
             this.NextFileButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.NextFileButton.Location = new System.Drawing.Point(12, 900);
+            this.NextFileButton.Location = new System.Drawing.Point(12, 969);
             this.NextFileButton.Name = "NextFileButton";
-            this.NextFileButton.Size = new System.Drawing.Size(232, 129);
+            this.NextFileButton.Size = new System.Drawing.Size(232, 139);
             this.NextFileButton.TabIndex = 1;
             this.NextFileButton.Text = "Следующий файл";
             this.NextFileButton.UseVisualStyleBackColor = true;
@@ -93,7 +94,7 @@
             this.SearchModeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.SearchModeButton.Location = new System.Drawing.Point(12, 6);
             this.SearchModeButton.Name = "SearchModeButton";
-            this.SearchModeButton.Size = new System.Drawing.Size(232, 84);
+            this.SearchModeButton.Size = new System.Drawing.Size(232, 90);
             this.SearchModeButton.TabIndex = 2;
             this.SearchModeButton.Text = "С подпапками или без";
             this.SearchModeButton.UseVisualStyleBackColor = true;
@@ -102,9 +103,9 @@
             // ChangeDirectoryButton
             // 
             this.ChangeDirectoryButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ChangeDirectoryButton.Location = new System.Drawing.Point(12, 96);
+            this.ChangeDirectoryButton.Location = new System.Drawing.Point(12, 103);
             this.ChangeDirectoryButton.Name = "ChangeDirectoryButton";
-            this.ChangeDirectoryButton.Size = new System.Drawing.Size(232, 84);
+            this.ChangeDirectoryButton.Size = new System.Drawing.Size(232, 90);
             this.ChangeDirectoryButton.TabIndex = 3;
             this.ChangeDirectoryButton.Text = "Изменить папку";
             this.ChangeDirectoryButton.UseVisualStyleBackColor = true;
@@ -114,18 +115,18 @@
             // 
             this.DirectoryTextBox.Enabled = false;
             this.DirectoryTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.DirectoryTextBox.Location = new System.Drawing.Point(12, 328);
+            this.DirectoryTextBox.Location = new System.Drawing.Point(12, 353);
             this.DirectoryTextBox.Multiline = true;
             this.DirectoryTextBox.Name = "DirectoryTextBox";
-            this.DirectoryTextBox.Size = new System.Drawing.Size(232, 52);
+            this.DirectoryTextBox.Size = new System.Drawing.Size(232, 56);
             this.DirectoryTextBox.TabIndex = 4;
             // 
             // ClearButton
             // 
             this.ClearButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ClearButton.Location = new System.Drawing.Point(12, 535);
+            this.ClearButton.Location = new System.Drawing.Point(12, 576);
             this.ClearButton.Name = "ClearButton";
-            this.ClearButton.Size = new System.Drawing.Size(232, 85);
+            this.ClearButton.Size = new System.Drawing.Size(232, 92);
             this.ClearButton.TabIndex = 5;
             this.ClearButton.Text = "Очистить список";
             this.ClearButton.UseVisualStyleBackColor = true;
@@ -134,19 +135,19 @@
             // FilterTextBox
             // 
             this.FilterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.FilterTextBox.Location = new System.Drawing.Point(12, 386);
+            this.FilterTextBox.Location = new System.Drawing.Point(12, 416);
             this.FilterTextBox.Multiline = true;
             this.FilterTextBox.Name = "FilterTextBox";
-            this.FilterTextBox.Size = new System.Drawing.Size(232, 52);
+            this.FilterTextBox.Size = new System.Drawing.Size(232, 56);
             this.FilterTextBox.TabIndex = 6;
             this.FilterTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FilterTextBox_KeyDown);
             // 
             // ApplyFilterButton
             // 
             this.ApplyFilterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ApplyFilterButton.Location = new System.Drawing.Point(12, 444);
+            this.ApplyFilterButton.Location = new System.Drawing.Point(12, 478);
             this.ApplyFilterButton.Name = "ApplyFilterButton";
-            this.ApplyFilterButton.Size = new System.Drawing.Size(232, 85);
+            this.ApplyFilterButton.Size = new System.Drawing.Size(232, 92);
             this.ApplyFilterButton.TabIndex = 7;
             this.ApplyFilterButton.Text = "Применить фильтр";
             this.ApplyFilterButton.UseVisualStyleBackColor = true;
@@ -154,9 +155,9 @@
             // 
             // ListBoxContextMenuStrip
             // 
-            this.ListBoxContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.OpenToolStripMenuItem, this.OpenInExplorerToolStripMenuItem, this.CopyToClipboardToolStripMenuItem, this.DeleteToolStripMenuItem });
+            this.ListBoxContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.OpenToolStripMenuItem, this.OpenInExplorerToolStripMenuItem, this.CopyToClipboardToolStripMenuItem, this.DeleteToolStripMenuItem, this.DeleteSelectedThumbnailsToolStripMenuItem });
             this.ListBoxContextMenuStrip.Name = "ListBoxContextMenuStrip";
-            this.ListBoxContextMenuStrip.Size = new System.Drawing.Size(287, 100);
+            this.ListBoxContextMenuStrip.Size = new System.Drawing.Size(287, 124);
             // 
             // OpenToolStripMenuItem
             // 
@@ -207,11 +208,18 @@
             this.DeleteToolStripMenuItem.Text = "Удалить";
             this.DeleteToolStripMenuItem.Click += new System.EventHandler(this.DeleteToolStripMenuItem_Click);
             // 
+            // DeleteSelectedThumbnailsToolStripMenuItem
+            // 
+            this.DeleteSelectedThumbnailsToolStripMenuItem.Name = "DeleteSelectedThumbnailsToolStripMenuItem";
+            this.DeleteSelectedThumbnailsToolStripMenuItem.Size = new System.Drawing.Size(286, 24);
+            this.DeleteSelectedThumbnailsToolStripMenuItem.Text = "Удалить кэш превью";
+            this.DeleteSelectedThumbnailsToolStripMenuItem.Click += new System.EventHandler(this.DeleteSelectedThumbnailsToolStripMenuItem_Click);
+            // 
             // ImagePictureBox
             // 
-            this.ImagePictureBox.Location = new System.Drawing.Point(571, 11);
+            this.ImagePictureBox.Location = new System.Drawing.Point(571, 12);
             this.ImagePictureBox.Name = "ImagePictureBox";
-            this.ImagePictureBox.Size = new System.Drawing.Size(777, 1020);
+            this.ImagePictureBox.Size = new System.Drawing.Size(777, 1098);
             this.ImagePictureBox.TabIndex = 8;
             this.ImagePictureBox.TabStop = false;
             // 
@@ -220,9 +228,9 @@
             this.AutoGenerateButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.AutoGenerateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.AutoGenerateButton.ForeColor = System.Drawing.Color.Black;
-            this.AutoGenerateButton.Location = new System.Drawing.Point(12, 672);
+            this.AutoGenerateButton.Location = new System.Drawing.Point(12, 724);
             this.AutoGenerateButton.Name = "AutoGenerateButton";
-            this.AutoGenerateButton.Size = new System.Drawing.Size(232, 85);
+            this.AutoGenerateButton.Size = new System.Drawing.Size(232, 92);
             this.AutoGenerateButton.TabIndex = 9;
             this.AutoGenerateButton.Text = "Автогенерация";
             this.AutoGenerateButton.UseVisualStyleBackColor = false;
@@ -233,7 +241,7 @@
             this.AutoGenerateNumericUpDown.DecimalPlaces = 2;
             this.AutoGenerateNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.AutoGenerateNumericUpDown.Increment = new decimal(new int[] { 25, 0, 0, 131072 });
-            this.AutoGenerateNumericUpDown.Location = new System.Drawing.Point(12, 626);
+            this.AutoGenerateNumericUpDown.Location = new System.Drawing.Point(12, 674);
             this.AutoGenerateNumericUpDown.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             this.AutoGenerateNumericUpDown.Minimum = new decimal(new int[] { 25, 0, 0, 131072 });
             this.AutoGenerateNumericUpDown.Name = "AutoGenerateNumericUpDown";
@@ -244,27 +252,27 @@
             // 
             // VideoThumbnailFirstPictureBox
             // 
-            this.VideoThumbnailFirstPictureBox.Location = new System.Drawing.Point(571, 12);
+            this.VideoThumbnailFirstPictureBox.Location = new System.Drawing.Point(571, 13);
             this.VideoThumbnailFirstPictureBox.Name = "VideoThumbnailFirstPictureBox";
-            this.VideoThumbnailFirstPictureBox.Size = new System.Drawing.Size(777, 335);
+            this.VideoThumbnailFirstPictureBox.Size = new System.Drawing.Size(777, 361);
             this.VideoThumbnailFirstPictureBox.TabIndex = 11;
             this.VideoThumbnailFirstPictureBox.TabStop = false;
             this.VideoThumbnailFirstPictureBox.Visible = false;
             // 
             // VideoThumbnailSecondPictureBox
             // 
-            this.VideoThumbnailSecondPictureBox.Location = new System.Drawing.Point(571, 353);
+            this.VideoThumbnailSecondPictureBox.Location = new System.Drawing.Point(571, 380);
             this.VideoThumbnailSecondPictureBox.Name = "VideoThumbnailSecondPictureBox";
-            this.VideoThumbnailSecondPictureBox.Size = new System.Drawing.Size(777, 335);
+            this.VideoThumbnailSecondPictureBox.Size = new System.Drawing.Size(777, 361);
             this.VideoThumbnailSecondPictureBox.TabIndex = 12;
             this.VideoThumbnailSecondPictureBox.TabStop = false;
             this.VideoThumbnailSecondPictureBox.Visible = false;
             // 
             // VideoThumbnailThirdPictureBox
             // 
-            this.VideoThumbnailThirdPictureBox.Location = new System.Drawing.Point(571, 694);
+            this.VideoThumbnailThirdPictureBox.Location = new System.Drawing.Point(571, 747);
             this.VideoThumbnailThirdPictureBox.Name = "VideoThumbnailThirdPictureBox";
-            this.VideoThumbnailThirdPictureBox.Size = new System.Drawing.Size(777, 335);
+            this.VideoThumbnailThirdPictureBox.Size = new System.Drawing.Size(777, 361);
             this.VideoThumbnailThirdPictureBox.TabIndex = 13;
             this.VideoThumbnailThirdPictureBox.TabStop = false;
             this.VideoThumbnailThirdPictureBox.Visible = false;
@@ -272,9 +280,9 @@
             // HideControlsButton
             // 
             this.HideControlsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.HideControlsButton.Location = new System.Drawing.Point(12, 763);
+            this.HideControlsButton.Location = new System.Drawing.Point(12, 822);
             this.HideControlsButton.Name = "HideControlsButton";
-            this.HideControlsButton.Size = new System.Drawing.Size(232, 131);
+            this.HideControlsButton.Size = new System.Drawing.Size(232, 141);
             this.HideControlsButton.TabIndex = 14;
             this.HideControlsButton.Text = "Скрыть";
             this.HideControlsButton.UseVisualStyleBackColor = true;
@@ -283,9 +291,9 @@
             // ExportButton
             // 
             this.ExportButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ExportButton.Location = new System.Drawing.Point(12, 186);
+            this.ExportButton.Location = new System.Drawing.Point(12, 200);
             this.ExportButton.Name = "ExportButton";
-            this.ExportButton.Size = new System.Drawing.Size(232, 85);
+            this.ExportButton.Size = new System.Drawing.Size(232, 92);
             this.ExportButton.TabIndex = 15;
             this.ExportButton.Text = "Выгрузить";
             this.ExportButton.UseVisualStyleBackColor = true;
@@ -293,9 +301,9 @@
             // 
             // ExportProgressBar
             // 
-            this.ExportProgressBar.Location = new System.Drawing.Point(12, 277);
+            this.ExportProgressBar.Location = new System.Drawing.Point(12, 298);
             this.ExportProgressBar.Name = "ExportProgressBar";
-            this.ExportProgressBar.Size = new System.Drawing.Size(232, 45);
+            this.ExportProgressBar.Size = new System.Drawing.Size(232, 48);
             this.ExportProgressBar.Step = 1;
             this.ExportProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.ExportProgressBar.TabIndex = 16;
@@ -303,9 +311,9 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1904, 1041);
+            this.ClientSize = new System.Drawing.Size(1904, 1061);
             this.Controls.Add(this.ExportProgressBar);
             this.Controls.Add(this.ExportButton);
             this.Controls.Add(this.HideControlsButton);
@@ -336,6 +344,8 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.ToolStripMenuItem DeleteSelectedThumbnailsToolStripMenuItem;
 
         private System.Windows.Forms.ProgressBar ExportProgressBar;
 

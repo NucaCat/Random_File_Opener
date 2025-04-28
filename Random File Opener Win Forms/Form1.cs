@@ -391,6 +391,7 @@ namespace Random_File_Opener_Win_Forms
             try
             {
                 File.Delete(selectedItem.PathToFile);
+                DeleteCachedThumbnails(selectedItem);
             }
             catch (Exception e)
             {
@@ -417,6 +418,37 @@ namespace Random_File_Opener_Win_Forms
             }
 
             selectedItem.Images = Array.Empty<Bitmap>();
+        }
+
+        private void DeleteSelectedThumbnails()
+        {
+            var selectedItem = GeneratedFilesListBox.SelectedFile();
+            if (selectedItem == null)
+                return;
+
+            var countDeleted = DeleteCachedThumbnails(selectedItem);
+
+            _messageBox.ShowMessageBox(text: countDeleted == 0 ? "Кэш превью изображений не найден" : $"Было удалено {countDeleted} превью изображений", CustomMessageBox.OkButtons);
+        }
+
+        private int DeleteCachedThumbnails(GeneratedFileListItem selectedItem)
+        {
+            if (!Consts.VideoExtensions.Contains(selectedItem.Extension))
+                return 0;
+
+            var count = 0;
+
+            foreach (var index in Consts.VideoThumbnailPositions.Select((u, index) => index))
+            {
+                var hash = selectedItem.GetHash(_cacheDirectory, index);
+                if (File.Exists(hash))
+                {
+                    count++;
+                    File.Delete(hash);
+                }
+            }
+
+            return count;
         }
 
         private void OpenFile(GeneratedFileListItem item, OpenVariants openVariants)
@@ -491,6 +523,9 @@ namespace Random_File_Opener_Win_Forms
 
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
             => DeleteSelectedFile();
+
+        private void DeleteSelectedThumbnailsToolStripMenuItem_Click(object sender, EventArgs e)
+            => DeleteSelectedThumbnails();
 
         private void GeneratedFilesListBox_MouseUp(object sender, MouseEventArgs e)
         {
