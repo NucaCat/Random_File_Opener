@@ -70,9 +70,9 @@
             this.GeneratedFilesListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.GeneratedFilesListBox.FormattingEnabled = true;
             this.GeneratedFilesListBox.ItemHeight = 29;
-            this.GeneratedFilesListBox.Location = new System.Drawing.Point(1354, 13);
+            this.GeneratedFilesListBox.Location = new System.Drawing.Point(1158, 6);
             this.GeneratedFilesListBox.Name = "GeneratedFilesListBox";
-            this.GeneratedFilesListBox.Size = new System.Drawing.Size(538, 1077);
+            this.GeneratedFilesListBox.Size = new System.Drawing.Size(734, 1019);
             this.GeneratedFilesListBox.TabIndex = 0;
             this.GeneratedFilesListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GeneratedFilesListBox_KeyDown);
             this.GeneratedFilesListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.GeneratedFilesListBox_MouseDoubleClick);
@@ -81,9 +81,9 @@
             // NextFileButton
             // 
             this.NextFileButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.NextFileButton.Location = new System.Drawing.Point(12, 969);
+            this.NextFileButton.Location = new System.Drawing.Point(12, 933);
             this.NextFileButton.Name = "NextFileButton";
-            this.NextFileButton.Size = new System.Drawing.Size(232, 139);
+            this.NextFileButton.Size = new System.Drawing.Size(232, 92);
             this.NextFileButton.TabIndex = 1;
             this.NextFileButton.Text = "Следующий файл";
             this.NextFileButton.UseVisualStyleBackColor = true;
@@ -217,9 +217,9 @@
             // 
             // ImagePictureBox
             // 
-            this.ImagePictureBox.Location = new System.Drawing.Point(571, 12);
+            this.ImagePictureBox.Location = new System.Drawing.Point(384, 6);
             this.ImagePictureBox.Name = "ImagePictureBox";
-            this.ImagePictureBox.Size = new System.Drawing.Size(777, 1098);
+            this.ImagePictureBox.Size = new System.Drawing.Size(768, 1019);
             this.ImagePictureBox.TabIndex = 8;
             this.ImagePictureBox.TabStop = false;
             // 
@@ -228,7 +228,7 @@
             this.AutoGenerateButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.AutoGenerateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.AutoGenerateButton.ForeColor = System.Drawing.Color.Black;
-            this.AutoGenerateButton.Location = new System.Drawing.Point(12, 724);
+            this.AutoGenerateButton.Location = new System.Drawing.Point(12, 674);
             this.AutoGenerateButton.Name = "AutoGenerateButton";
             this.AutoGenerateButton.Size = new System.Drawing.Size(232, 92);
             this.AutoGenerateButton.TabIndex = 9;
@@ -241,7 +241,7 @@
             this.AutoGenerateNumericUpDown.DecimalPlaces = 2;
             this.AutoGenerateNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.AutoGenerateNumericUpDown.Increment = new decimal(new int[] { 25, 0, 0, 131072 });
-            this.AutoGenerateNumericUpDown.Location = new System.Drawing.Point(12, 674);
+            this.AutoGenerateNumericUpDown.Location = new System.Drawing.Point(12, 772);
             this.AutoGenerateNumericUpDown.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             this.AutoGenerateNumericUpDown.Minimum = new decimal(new int[] { 25, 0, 0, 131072 });
             this.AutoGenerateNumericUpDown.Name = "AutoGenerateNumericUpDown";
@@ -252,27 +252,27 @@
             // 
             // VideoThumbnailFirstPictureBox
             // 
-            this.VideoThumbnailFirstPictureBox.Location = new System.Drawing.Point(571, 13);
+            this.VideoThumbnailFirstPictureBox.Location = new System.Drawing.Point(384, 6);
             this.VideoThumbnailFirstPictureBox.Name = "VideoThumbnailFirstPictureBox";
-            this.VideoThumbnailFirstPictureBox.Size = new System.Drawing.Size(777, 361);
+            this.VideoThumbnailFirstPictureBox.Size = new System.Drawing.Size(768, 336);
             this.VideoThumbnailFirstPictureBox.TabIndex = 11;
             this.VideoThumbnailFirstPictureBox.TabStop = false;
             this.VideoThumbnailFirstPictureBox.Visible = false;
             // 
             // VideoThumbnailSecondPictureBox
             // 
-            this.VideoThumbnailSecondPictureBox.Location = new System.Drawing.Point(571, 380);
+            this.VideoThumbnailSecondPictureBox.Location = new System.Drawing.Point(384, 348);
             this.VideoThumbnailSecondPictureBox.Name = "VideoThumbnailSecondPictureBox";
-            this.VideoThumbnailSecondPictureBox.Size = new System.Drawing.Size(777, 361);
+            this.VideoThumbnailSecondPictureBox.Size = new System.Drawing.Size(768, 336);
             this.VideoThumbnailSecondPictureBox.TabIndex = 12;
             this.VideoThumbnailSecondPictureBox.TabStop = false;
             this.VideoThumbnailSecondPictureBox.Visible = false;
             // 
             // VideoThumbnailThirdPictureBox
             // 
-            this.VideoThumbnailThirdPictureBox.Location = new System.Drawing.Point(571, 747);
+            this.VideoThumbnailThirdPictureBox.Location = new System.Drawing.Point(384, 692);
             this.VideoThumbnailThirdPictureBox.Name = "VideoThumbnailThirdPictureBox";
-            this.VideoThumbnailThirdPictureBox.Size = new System.Drawing.Size(777, 361);
+            this.VideoThumbnailThirdPictureBox.Size = new System.Drawing.Size(768, 333);
             this.VideoThumbnailThirdPictureBox.TabIndex = 13;
             this.VideoThumbnailThirdPictureBox.TabStop = false;
             this.VideoThumbnailThirdPictureBox.Visible = false;
@@ -280,9 +280,9 @@
             // HideControlsButton
             // 
             this.HideControlsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.HideControlsButton.Location = new System.Drawing.Point(12, 822);
+            this.HideControlsButton.Location = new System.Drawing.Point(12, 835);
             this.HideControlsButton.Name = "HideControlsButton";
-            this.HideControlsButton.Size = new System.Drawing.Size(232, 141);
+            this.HideControlsButton.Size = new System.Drawing.Size(232, 92);
             this.HideControlsButton.TabIndex = 14;
             this.HideControlsButton.Text = "Скрыть";
             this.HideControlsButton.UseVisualStyleBackColor = true;
@@ -313,7 +313,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1904, 1061);
+            this.ClientSize = new System.Drawing.Size(1904, 1041);
             this.Controls.Add(this.ExportProgressBar);
             this.Controls.Add(this.ExportButton);
             this.Controls.Add(this.HideControlsButton);
