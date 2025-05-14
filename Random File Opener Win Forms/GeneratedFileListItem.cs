@@ -40,7 +40,7 @@ namespace Random_File_Opener_Win_Forms
         public override string ToString()
             => DisplayValue;
 
-        public string GetHash(string cacheDirectory, int index)
+        public string GetPathForHash(string cacheDirectory, int index)
         {
             var fileName = FileName + "-" + index;
             var hash = Utilities.GetSha256Hash(fileName);

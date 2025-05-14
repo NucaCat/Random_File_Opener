@@ -216,7 +216,7 @@ namespace Random_File_Opener_Win_Forms
             if (Consts.Cache.SaveCacheOnDisc && Consts.VideoExtensions.Contains(file.Extension))
             {
                 file.Images = Consts.VideoThumbnailPositions
-                    .Select((u, index) => file.GetHash(_cacheDirectory, index))
+                    .Select((u, index) => file.GetPathForHash(_cacheDirectory, index))
                     .Where(File.Exists)
                     .Select(u => new Bitmap(u))
                     .ToArray();
@@ -231,7 +231,7 @@ namespace Random_File_Opener_Win_Forms
             {
                 foreach (var (image, index) in file.Images.Select((u, index) => (u, index)))
                 {
-                    image.Save(file.GetHash(_cacheDirectory, index));
+                    image.Save(file.GetPathForHash(_cacheDirectory, index));
                 }
             }
 
@@ -440,7 +440,7 @@ namespace Random_File_Opener_Win_Forms
 
             foreach (var index in Consts.VideoThumbnailPositions.Select((u, index) => index))
             {
-                var hash = selectedItem.GetHash(_cacheDirectory, index);
+                var hash = selectedItem.GetPathForHash(_cacheDirectory, index);
                 if (File.Exists(hash))
                 {
                     count++;
