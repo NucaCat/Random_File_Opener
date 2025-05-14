@@ -70,9 +70,9 @@
             this.GeneratedFilesListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.GeneratedFilesListBox.FormattingEnabled = true;
             this.GeneratedFilesListBox.ItemHeight = 29;
-            this.GeneratedFilesListBox.Location = new System.Drawing.Point(1158, 6);
+            this.GeneratedFilesListBox.Location = new System.Drawing.Point(1350, 6);
             this.GeneratedFilesListBox.Name = "GeneratedFilesListBox";
-            this.GeneratedFilesListBox.Size = new System.Drawing.Size(734, 1019);
+            this.GeneratedFilesListBox.Size = new System.Drawing.Size(542, 1019);
             this.GeneratedFilesListBox.TabIndex = 0;
             this.GeneratedFilesListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GeneratedFilesListBox_KeyDown);
             this.GeneratedFilesListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.GeneratedFilesListBox_MouseDoubleClick);
@@ -217,7 +217,7 @@
             // 
             // ImagePictureBox
             // 
-            this.ImagePictureBox.Location = new System.Drawing.Point(384, 6);
+            this.ImagePictureBox.Location = new System.Drawing.Point(576, 6);
             this.ImagePictureBox.Name = "ImagePictureBox";
             this.ImagePictureBox.Size = new System.Drawing.Size(768, 1019);
             this.ImagePictureBox.TabIndex = 8;
@@ -252,7 +252,7 @@
             // 
             // VideoThumbnailFirstPictureBox
             // 
-            this.VideoThumbnailFirstPictureBox.Location = new System.Drawing.Point(384, 6);
+            this.VideoThumbnailFirstPictureBox.Location = new System.Drawing.Point(576, 6);
             this.VideoThumbnailFirstPictureBox.Name = "VideoThumbnailFirstPictureBox";
             this.VideoThumbnailFirstPictureBox.Size = new System.Drawing.Size(768, 336);
             this.VideoThumbnailFirstPictureBox.TabIndex = 11;
@@ -261,7 +261,7 @@
             // 
             // VideoThumbnailSecondPictureBox
             // 
-            this.VideoThumbnailSecondPictureBox.Location = new System.Drawing.Point(384, 348);
+            this.VideoThumbnailSecondPictureBox.Location = new System.Drawing.Point(576, 348);
             this.VideoThumbnailSecondPictureBox.Name = "VideoThumbnailSecondPictureBox";
             this.VideoThumbnailSecondPictureBox.Size = new System.Drawing.Size(768, 336);
             this.VideoThumbnailSecondPictureBox.TabIndex = 12;
@@ -270,7 +270,7 @@
             // 
             // VideoThumbnailThirdPictureBox
             // 
-            this.VideoThumbnailThirdPictureBox.Location = new System.Drawing.Point(384, 692);
+            this.VideoThumbnailThirdPictureBox.Location = new System.Drawing.Point(576, 692);
             this.VideoThumbnailThirdPictureBox.Name = "VideoThumbnailThirdPictureBox";
             this.VideoThumbnailThirdPictureBox.Size = new System.Drawing.Size(768, 333);
             this.VideoThumbnailThirdPictureBox.TabIndex = 13;
