@@ -163,10 +163,17 @@ namespace Random_File_Opener_Win_Forms
 
         private void NextFileButton_Click(object sender = null, EventArgs e = null)
         {
-            var file = _files.GetCurrentAndMoveNext();
+            var file = _files.GetCurrent();
             if (file == null)
                 return;
 
+            SelectFile(file);
+        }
+
+        // TODO v.chumachenko select previous on delete if not all has been generated
+        private void SelectFile(GeneratedFileListItem file)
+        {
+            _files.SelectFile(file);
             AddImageToPreview(file);
 
             if (!file.AddedToListBox)
@@ -357,7 +364,7 @@ namespace Random_File_Opener_Win_Forms
                 : UpItemToSet();
 
             GeneratedFilesListBox.SelectedItem = itemToSet;
-            AddImageToPreview((GeneratedFileListItem)itemToSet);
+            SelectFile((GeneratedFileListItem)itemToSet);
         }
 
         private object UpItemToSet()
@@ -398,24 +405,36 @@ namespace Random_File_Opener_Win_Forms
                 _messageBox.ShowMessageBox(text: e.Message, CustomMessageBox.OkButtons);
                 return;
             }
+            
+            var selectedIndex = GeneratedFilesListBox.SelectedIndex;
+
+            GeneratedFilesListBox.Items.RemoveAt(GeneratedFilesListBox.SelectedIndex);
 
             _files.Delete(selectedItem);
             
-            GeneratedFilesListBox.Items.RemoveAt(GeneratedFilesListBox.SelectedIndex);
+            if (GeneratedFilesListBox.Items.Count > selectedIndex)
+            {
+                var nextFile = (GeneratedFileListItem)GeneratedFilesListBox.Items[selectedIndex];
+                SelectFile(nextFile);
+            } else if (GeneratedFilesListBox.Items.Count != 0)
+            {
+                var nextFile = (GeneratedFileListItem)GeneratedFilesListBox.Items[0];
+                SelectFile(nextFile);
+            }
+        }
 
+        private void DisposeImages(GeneratedFileListItem selectedItem)
+        {
             selectedItem.Images.ForAll(u => u.Dispose());
 
-            if (Consts.ImageExtensions.Contains(selectedItem.Extension))
-            {
-                ImagePictureBox.Image?.Dispose();
-                ImagePictureBox.Image = null;
+            ImagePictureBox.Image?.Dispose();
+            ImagePictureBox.Image = null;
 
-                _pictureBoxesInSequence.ForAll(u =>
-                {
-                    u.Image?.Dispose();
-                    u.Image = null;
-                });
-            }
+            _pictureBoxesInSequence.ForAll(u =>
+            {
+                u.Image?.Dispose();
+                u.Image = null;
+            });
 
             selectedItem.Images = Array.Empty<Bitmap>();
         }
@@ -433,10 +452,10 @@ namespace Random_File_Opener_Win_Forms
 
         private int DeleteCachedThumbnails(GeneratedFileListItem selectedItem)
         {
+            DisposeImages(selectedItem);
+
             if (!Consts.VideoExtensions.Contains(selectedItem.Extension))
                 return 0;
-
-            selectedItem.Images.ForAll(u => u.Dispose());
 
             var count = 0;
 
@@ -582,14 +601,14 @@ namespace Random_File_Opener_Win_Forms
             if (e.Button == MouseButtons.Right)
             {
                 _item = item;
-                AddImageToPreview(item);
+                SelectFile(item);
                 ListBoxContextMenuStrip.Show(Cursor.Position);
                 return;
             }
 
             if (e.Button == MouseButtons.Left)
             {
-                AddImageToPreview(item);
+                SelectFile(item);
                 // ReSharper disable once RedundantJumpStatement
                 return;
             }

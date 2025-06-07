@@ -20,22 +20,25 @@ namespace Random_File_Opener_Win_Forms
 
         public T Current => _entities[_currentIndex];
 
-        public T GetCurrentAndMoveNext()
+        public T GetCurrent()
         {
             if (_entities.IsEmpty())
                 return null;
 
             var current = Current;
 
-            _currentIndex++;
+            return current;
+        }
+
+        private void AdvanceToIndex(int targetIndex)
+        {
+            _currentIndex = targetIndex;
 
             if (_currentIndex == _entities.Count)
             {
                 _currentIndex = 0;
                 IsAllGenerated = true;
             }
-
-            return current;
         }
 
         public void ForAll(Action<T> action)
@@ -50,6 +53,12 @@ namespace Random_File_Opener_Win_Forms
             _entities.Remove(item);
             if (_currentIndex != 0 && indexOfDeletedFile <= _currentIndex)
                 _currentIndex--;
+        }
+
+        public void SelectFile(T file)
+        {
+            var index = _entities.IndexOf(file);
+            AdvanceToIndex(index + 1);
         }
     }
 }
