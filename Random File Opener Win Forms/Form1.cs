@@ -170,7 +170,6 @@ namespace Random_File_Opener_Win_Forms
             SelectFile(file);
         }
 
-        // TODO v.chumachenko select previous on delete if not all has been generated
         private void SelectFile(GeneratedFileListItem file)
         {
             _files.SelectFile(file);
@@ -418,7 +417,7 @@ namespace Random_File_Opener_Win_Forms
                 SelectFile(nextFile);
             } else if (GeneratedFilesListBox.Items.Count != 0)
             {
-                var nextFile = (GeneratedFileListItem)GeneratedFilesListBox.Items[0];
+                var nextFile = (GeneratedFileListItem)GeneratedFilesListBox.Items[selectedIndex - 1];
                 SelectFile(nextFile);
             }
         }
