@@ -436,6 +436,8 @@ namespace Random_File_Opener_Win_Forms
             if (!Consts.VideoExtensions.Contains(selectedItem.Extension))
                 return 0;
 
+            selectedItem.Images.ForAll(u => u.Dispose());
+
             var count = 0;
 
             foreach (var index in Consts.VideoThumbnailPositions.Select((u, index) => index))
