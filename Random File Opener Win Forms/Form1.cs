@@ -32,8 +32,6 @@ namespace Random_File_Opener_Win_Forms
         private bool _showPreview;
         private GenerateButtonColors _currentGenerateButtonColor = GenerateButtonColors.Red;
 
-        private GeneratedFileListItem _item;
-
         private static bool _shouldAutoGenerate;
         private TimeSpan _autoGenerateCooldown = TimeSpan.FromSeconds(2);
 
@@ -538,10 +536,10 @@ namespace Random_File_Opener_Win_Forms
         }
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
-            => OpenFile(_item, OpenVariants.OpenFile);
+            => OpenFile(GeneratedFilesListBox.SelectedFile(), OpenVariants.OpenFile);
 
         private void OpenInExplorerToolStripMenuItem_Click(object sender, EventArgs e)
-            => OpenFile(_item, OpenVariants.OpenInExplorer);
+            => OpenFile(GeneratedFilesListBox.SelectedFile(), OpenVariants.OpenInExplorer);
 
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
             => DeleteSelectedFile();
@@ -597,11 +595,8 @@ namespace Random_File_Opener_Win_Forms
 
         private void HandleMouseUpOnMouseUp(MouseEventArgs e, GeneratedFileListItem item)
         {
-            _item = null;
-
             if (e.Button == MouseButtons.Right)
             {
-                _item = item;
                 SelectFile(item);
                 ListBoxContextMenuStrip.Show(Cursor.Position);
                 return;
@@ -672,15 +667,13 @@ namespace Random_File_Opener_Win_Forms
         private void CopyItemToClipboard(CopyOptions option)
         {
             if (option == CopyOptions.FileName)
-                Clipboard.SetData(DataFormats.StringFormat, _item.FileName);
+                Clipboard.SetData(DataFormats.StringFormat, GeneratedFilesListBox.SelectedFile().FileName);
             
             if (option == CopyOptions.Path)
-                Clipboard.SetData(DataFormats.StringFormat, _item.PathToFile);
+                Clipboard.SetData(DataFormats.StringFormat, GeneratedFilesListBox.SelectedFile().PathToFile);
             
             if (option == CopyOptions.File)
-                Clipboard.SetFileDropList(new StringCollection { _item.PathToFile });
-
-            _item = null;
+                Clipboard.SetFileDropList(new StringCollection { GeneratedFilesListBox.SelectedFile().PathToFile });
         }
 
         private void AutoGenerate_Click(object sender, EventArgs e)
