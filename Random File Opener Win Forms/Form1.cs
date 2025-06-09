@@ -13,8 +13,9 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using Random_File_Opener_Win_Forms.CustomComponents.MessageBox;
 using Random_File_Opener_Win_Forms.Settings;
 using Random_File_Opener_Win_Forms.Style;
-
+// ReSharper disable UsingStatementResourceInitialization
 // ReSharper disable LocalizableElement
+
 
 namespace Random_File_Opener_Win_Forms
 {
@@ -363,25 +364,25 @@ namespace Random_File_Opener_Win_Forms
                 : UpItemToSet();
 
             GeneratedFilesListBox.SelectedItem = itemToSet;
-            SelectFile((GeneratedFileListItem)itemToSet);
+            SelectFile(itemToSet);
         }
 
-        private object UpItemToSet()
+        private GeneratedFileListItem UpItemToSet()
         {
             var isFirst = GeneratedFilesListBox.SelectedIndex == 0;
             var itemToSet = isFirst
                 ? GeneratedFilesListBox.Items[GeneratedFilesListBox.Items.Count - 1]
                 : GeneratedFilesListBox.Items[GeneratedFilesListBox.SelectedIndex - 1];
-            return itemToSet;
+            return (GeneratedFileListItem)itemToSet;
         }
 
-        private object DownItemToSet()
+        private GeneratedFileListItem DownItemToSet()
         {
             var isLast = GeneratedFilesListBox.SelectedIndex == GeneratedFilesListBox.Items.Count - 1;
             var itemToSet = isLast
                 ? GeneratedFilesListBox.Items[0]
                 : GeneratedFilesListBox.Items[GeneratedFilesListBox.SelectedIndex + 1];
-            return itemToSet;
+            return (GeneratedFileListItem)itemToSet;
         }
 
         private void DeleteSelectedFile()
@@ -425,6 +426,7 @@ namespace Random_File_Opener_Win_Forms
         private void DisposeImages(GeneratedFileListItem selectedItem)
         {
             selectedItem.Images.ForAll(u => u.Dispose());
+            selectedItem.Images = Array.Empty<Bitmap>();
 
             ImagePictureBox.Image?.Dispose();
             ImagePictureBox.Image = null;
@@ -434,8 +436,6 @@ namespace Random_File_Opener_Win_Forms
                 u.Image?.Dispose();
                 u.Image = null;
             });
-
-            selectedItem.Images = Array.Empty<Bitmap>();
         }
 
         private void DeleteSelectedThumbnails()
