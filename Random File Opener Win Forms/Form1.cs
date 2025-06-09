@@ -189,7 +189,7 @@ namespace Random_File_Opener_Win_Forms
 
             GeneratedFilesListBox.InvokeIfRequired(() =>
             {
-                GeneratedFilesListBox.SelectedItem = file;
+                GeneratedFilesListBox.SelectSingle(file);
                 GeneratedFilesListBox.Focus();
             });
         }
@@ -364,7 +364,7 @@ namespace Random_File_Opener_Win_Forms
                 ? DownItemToSet()
                 : UpItemToSet();
 
-            GeneratedFilesListBox.SelectedItem = itemToSet;
+            GeneratedFilesListBox.SelectSingle(itemToSet);
             SelectFile((GeneratedFileListItem)itemToSet);
         }
 
@@ -388,8 +388,8 @@ namespace Random_File_Opener_Win_Forms
 
         private void DeleteSelectedFile()
         {
-            var selectedItem = GeneratedFilesListBox.SelectedFile();
-            if (selectedItem == null)
+            var selectedItem = GeneratedFilesListBox.SelectedFiles();
+            if (selectedItem.IsEmpty())
                 return;
 
             var result = _messageBox.ShowMessageBox(text: $"Вы действительно хотите удалить файл: {selectedItem.FileName}?", CustomMessageBox.YesNoButtons);
@@ -826,5 +826,14 @@ namespace Random_File_Opener_Win_Forms
             new MyFFMpegConverter();
         }
         #endregion JitWarmup
+    }
+
+    public static class SelectedObjectCollectionExtensions
+    {
+        public static void SelectSingle(this ListBox collection, object obj)
+        {
+            collection.SelectedItems.Clear();
+            collection.SelectedItems.Add(obj);
+        }
     }
 }

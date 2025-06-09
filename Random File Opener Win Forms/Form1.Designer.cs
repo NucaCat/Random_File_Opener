@@ -72,6 +72,7 @@
             this.GeneratedFilesListBox.ItemHeight = 29;
             this.GeneratedFilesListBox.Location = new System.Drawing.Point(1350, 6);
             this.GeneratedFilesListBox.Name = "GeneratedFilesListBox";
+            this.GeneratedFilesListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.GeneratedFilesListBox.Size = new System.Drawing.Size(542, 1019);
             this.GeneratedFilesListBox.TabIndex = 0;
             this.GeneratedFilesListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GeneratedFilesListBox_KeyDown);
