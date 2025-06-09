@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -52,6 +53,7 @@ namespace Random_File_Opener_Win_Forms
 
         private void InitialInitialize()
         {
+            Application.ThreadException += UnhandledExceptionHandlerThread;
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
 
             _pictureBoxesInSequence = new[]
@@ -613,11 +615,19 @@ namespace Random_File_Opener_Win_Forms
             }
         }
 
-        void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs args)
+        private void UnhandledExceptionHandlerThread(object sender, ThreadExceptionEventArgs exception)
+        {
+            HandleUnhandledException(exception.Exception);
+        }
+
+        private void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs args)
+        {
+            HandleUnhandledException((Exception)args.ExceptionObject);
+        }
+
+        private void HandleUnhandledException(Exception e)
         {
             var exceptionLogFileName = "ExceptionLog.txt";
-
-            var e = (Exception) args.ExceptionObject;
 
             var fullExceptionLogFileName = $"{Directory.GetCurrentDirectory()}\\{exceptionLogFileName}";
             using (var writer = new StreamWriter(fullExceptionLogFileName))
