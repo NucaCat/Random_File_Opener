@@ -374,6 +374,9 @@ namespace Random_File_Opener_Win_Forms
 
         private void MoveInListBox(Keys keyCode)
         {
+            Log.Logger.Debug("-----------------------");
+            Log.Logger.Debug(nameof(MoveInListBox));
+
             var itemToSet = keyCode == Keys.Down || keyCode == Keys.Right
                 ? DownItemToSet()
                 : UpItemToSet();
@@ -616,6 +619,8 @@ namespace Random_File_Opener_Win_Forms
         {
             if (e.Button == MouseButtons.Right)
             {
+                Log.Logger.Debug("-----------------------");
+                Log.Logger.Debug($"{nameof(HandleMouseUpOnMouseUp)} Right");
                 SelectFile(item);
                 ListBoxContextMenuStrip.Show(Cursor.Position);
                 return;
@@ -623,6 +628,8 @@ namespace Random_File_Opener_Win_Forms
 
             if (e.Button == MouseButtons.Left)
             {
+                Log.Logger.Debug("-----------------------");
+                Log.Logger.Debug($"{nameof(HandleMouseUpOnMouseUp)} Left");
                 SelectFile(item);
                 // ReSharper disable once RedundantJumpStatement
                 return;
