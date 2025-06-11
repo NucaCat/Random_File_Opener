@@ -13,6 +13,8 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using Random_File_Opener_Win_Forms.CustomComponents.MessageBox;
 using Random_File_Opener_Win_Forms.Settings;
 using Random_File_Opener_Win_Forms.Style;
+using Serilog;
+
 // ReSharper disable UsingStatementResourceInitialization
 // ReSharper disable LocalizableElement
 
@@ -40,6 +42,7 @@ namespace Random_File_Opener_Win_Forms
 
         private Control[] _hideableControls;
         private Control[] _nonHideableControls;
+        private readonly string _logFileName = "Log.txt";
 
         public Form1()
         {
@@ -52,6 +55,14 @@ namespace Random_File_Opener_Win_Forms
 
         private void InitialInitialize()
         {
+            var file = new FileInfo(_logFileName);
+            if (file.Exists)
+                file.Delete();
+
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File(_logFileName)
+                .MinimumLevel.Debug()
+                .CreateLogger();
             Application.ThreadException += UnhandledExceptionHandlerThread;
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
 
@@ -168,11 +179,15 @@ namespace Random_File_Opener_Win_Forms
             if (file == null)
                 return;
 
+            Log.Logger.Debug("-----------------------");
+            Log.Logger.Debug(nameof(NextFileButton_Click));
             SelectFile(file);
         }
 
         private void SelectFile(GeneratedFileListItem file)
         {
+            Log.Logger.Debug($"{nameof(SelectFile)} {file.Dump()}");
+
             _files.SelectFile(file);
             AddImageToPreview(file);
 
@@ -391,6 +406,9 @@ namespace Random_File_Opener_Win_Forms
             if (selectedItem == null)
                 return;
 
+            Log.Logger.Debug("-----------------------");
+            Log.Logger.Debug($"{nameof(DeleteSelectedFile)} {selectedItem.Dump()}");
+
             var result = _messageBox.ShowMessageBox(text: $"Вы действительно хотите удалить файл: {selectedItem.FileName}?", CustomMessageBox.YesNoButtons);
             if (result != DialogResult.Yes)
                 return;
@@ -407,6 +425,7 @@ namespace Random_File_Opener_Win_Forms
             }
             
             var selectedIndex = GeneratedFilesListBox.SelectedIndex;
+            Log.Logger.Debug($"selectedIndex: {selectedIndex}");
 
             GeneratedFilesListBox.Items.RemoveAt(GeneratedFilesListBox.SelectedIndex);
 
@@ -622,30 +641,26 @@ namespace Random_File_Opener_Win_Forms
 
         private void HandleUnhandledException(Exception e)
         {
-            var exceptionLogFileName = "ExceptionLog.txt";
+            Log.Logger.Debug("-----------------------");
+            Log.Logger.Debug(nameof(HandleUnhandledException));
 
-            var fullExceptionLogFileName = $"{Directory.GetCurrentDirectory()}\\{exceptionLogFileName}";
-            using (var writer = new StreamWriter(fullExceptionLogFileName))
-            {
-                writer.WriteLine($"Message: {e.Message}");
-                writer.WriteLine($"Stack trace: \n{e.StackTrace}");
+            Log.Logger.Debug($"Message: {e.Message}");
+            Log.Logger.Debug($"Stack trace: {e.StackTrace}");
 
-                writer.WriteLine("----------------------------------------------------");
-                writer.WriteLine($"Current directory: {_currentDirectory}");
-                
-                writer.WriteLine("----------------------------------------------------");
-                writer.WriteLine("Current item:");
-                writer.WriteLine($"Path: {_files.Current.PathToFile}");
-                writer.WriteLine($"Name: {_files.Current.FileName}");
-                writer.WriteLine($"Display value: {_files.Current.DisplayValue}");
-            }
+            Log.Logger.Debug("----------------------------------------------------");
+            Log.Logger.Debug($"Current directory: {_currentDirectory}");
             
-            var result = _messageBox.ShowMessageBox($"Необработанное исключение. Лог записан в {exceptionLogFileName}. Показать?", CustomMessageBox.YesNoButtons);
+            Log.Logger.Debug("----------------------------------------------------");
+            Log.Logger.Debug($"Current item: {_files.Current.Dump()}");
+            Log.Logger.Debug($"CurrentIndex: {_files.CurrentIndex}");
+            Log.Logger.Debug($"SelectedIndex in list box: {GeneratedFilesListBox.SelectedIndex}");
+            
+            var result = _messageBox.ShowMessageBox($"Необработанное исключение. Лог записан в {_logFileName}. Показать?", CustomMessageBox.YesNoButtons);
             if (result == DialogResult.Yes)
             {
                 var startInfo = new ProcessStartInfo
                 {
-                    Arguments = $"/select, \"{fullExceptionLogFileName}\"",
+                    Arguments = $"/select, \"{_logFileName}\"",
                     FileName = "explorer.exe",
                 };
 

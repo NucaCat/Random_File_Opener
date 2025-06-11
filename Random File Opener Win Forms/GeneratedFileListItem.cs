@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.IO;
 
 namespace Random_File_Opener_Win_Forms
 {
@@ -39,6 +38,9 @@ namespace Random_File_Opener_Win_Forms
 
         public override string ToString()
             => DisplayValue;
+
+        public string Dump()
+            =>$"{DisplayValue}, Images: {Images.Length}, AddedToListBox: {AddedToListBox}";
 
         public string GetPathForHash(string cacheDirectory, int index)
         {

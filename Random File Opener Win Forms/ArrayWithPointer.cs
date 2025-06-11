@@ -6,19 +6,19 @@ namespace Random_File_Opener_Win_Forms
 {
     internal sealed class ArrayWithPointer<T> where T : class
     {
-        private List<T> _entities = new List<T>(capacity: 0);
-        private int _currentIndex = 0;
+        public int CurrentIndex { get; private set; } = 0;
         public bool IsAllGenerated { get; private set; } = false;
-
         public IReadOnlyList<T> All => _entities;
+
+        private List<T> _entities = new List<T>(capacity: 0);
 
         public void Initialize(List<T> sequence)
         {
             _entities = sequence;
-            _currentIndex = 0;
+            CurrentIndex = 0;
         }
 
-        public T Current => _entities[_currentIndex];
+        public T Current => _entities[CurrentIndex];
 
         public T GetCurrent()
         {
@@ -32,11 +32,11 @@ namespace Random_File_Opener_Win_Forms
 
         private void AdvanceToIndex(int targetIndex)
         {
-            _currentIndex = targetIndex;
+            CurrentIndex = targetIndex;
 
-            if (_currentIndex == _entities.Count)
+            if (CurrentIndex == _entities.Count)
             {
-                _currentIndex = 0;
+                CurrentIndex = 0;
                 IsAllGenerated = true;
             }
         }
@@ -51,8 +51,8 @@ namespace Random_File_Opener_Win_Forms
             var indexOfDeletedFile = _entities.IndexOf(item); 
             
             _entities.Remove(item);
-            if (_currentIndex != 0 && indexOfDeletedFile <= _currentIndex)
-                _currentIndex--;
+            if (CurrentIndex != 0 && indexOfDeletedFile <= CurrentIndex)
+                CurrentIndex--;
         }
 
         public void SelectFile(T file)
