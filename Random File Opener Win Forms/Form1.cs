@@ -42,7 +42,7 @@ namespace Random_File_Opener_Win_Forms
 
         private Control[] _hideableControls;
         private Control[] _nonHideableControls;
-        private readonly string _logFileName = "Log.txt";
+        private readonly string _logFileName = "!Log.txt";
 
         public Form1()
         {
