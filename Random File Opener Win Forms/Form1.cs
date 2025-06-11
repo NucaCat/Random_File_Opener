@@ -60,7 +60,7 @@ namespace Random_File_Opener_Win_Forms
                 file.Delete();
 
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.File(_logFileName)
+                .WriteTo.File(_logFileName, outputTemplate: "{Message:lj}{NewLine}")
                 .MinimumLevel.Debug()
                 .CreateLogger();
             Application.ThreadException += UnhandledExceptionHandlerThread;
