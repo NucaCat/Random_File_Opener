@@ -220,13 +220,13 @@ namespace Random_File_Opener_Win_Forms
                 PlaceImageInBigPictureBox(null);
                 return;
             }
-            
+
             if (images.Length == 1)
             {
                 PlaceImageInBigPictureBox(images[0]);
                 return;
             }
-            
+
             PlaceImageInSmallPictureBoxes(images);
         }
 
@@ -262,7 +262,11 @@ namespace Random_File_Opener_Win_Forms
 
         private void PlaceImageInSmallPictureBoxes(Bitmap[] images)
         {
-            ImagePictureBox.InvokeIfRequired(() => { ImagePictureBox.Visible = false; });
+            ImagePictureBox.InvokeIfRequired(() =>
+            {
+                ImagePictureBox.Image = null;
+                ImagePictureBox.Visible = false;
+            });
 
             foreach (var (pictureBox, image) in _pictureBoxesInSequence
                 .Zip(images.PadRightWithNulls(_pictureBoxesInSequence.Length),
@@ -297,7 +301,11 @@ namespace Random_File_Opener_Win_Forms
         {
             PlaceImageInPictureBox(ImagePictureBox, image);
 
-            _pictureBoxesInSequence.ForAll(u => u.InvokeIfRequired(() => { u.Visible = false; }));
+            _pictureBoxesInSequence.ForAll(u => u.InvokeIfRequired(() =>
+            {
+                u.Image = null;
+                u.Visible = false;
+            }));
         }
 
         private void GeneratedFilesListBox_MouseDoubleClick(object sender, MouseEventArgs e)
