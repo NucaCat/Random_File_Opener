@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
+using System.Linq;
 
 namespace Random_File_Opener_Win_Forms
 {
@@ -17,22 +19,26 @@ namespace Random_File_Opener_Win_Forms
         public Bitmap[] Images { get; set; } = Array.Empty<Bitmap>();
 
         public bool AddedToListBox { get; set; } = false;
+        public double LengthMegabytes { get; set; }
 
-        public static GeneratedFileListItem FromString(string s, string directory)
+        public static GeneratedFileListItem FromString(FileInfo fileInfo, string directory)
         {
-            var lastIndexOfSlash = s.LastIndexOf("\\", StringComparison.InvariantCulture);
+            var lastIndexOfSlash = fileInfo.FullName.LastIndexOf("\\", StringComparison.InvariantCulture);
 
-            var fileName = Utilities.ExtractFileName(s, lastIndexOfSlash);
-            var directories = Utilities.ExtractDirectory(directory, s, lastIndexOfSlash);
-            var extension = Utilities.ExtractExtension(fileName);
+            var directories = Utilities.ExtractDirectory(directory, fileInfo.FullName, lastIndexOfSlash);
+            var extension = fileInfo.Extension.IsNullOrWhiteSpace() ? string.Empty : fileInfo.Extension.Substring(1).ToUpper();
+
+            var directoriesPart = directories.IsNotNullOrWhiteSpace() ? " (" + directories + ")" : string.Empty;
+            var fileLengthMegabytes = Math.Round(fileInfo.Length / 1e+6, 2);
 
             return new GeneratedFileListItem
             {
-                PathToFile = s,
-                DisplayValue = fileName + (directories.IsNotNullOrWhiteSpace() ? " (" + directories + ")" : string.Empty),
+                PathToFile = fileInfo.FullName,
+                DisplayValue = $"{fileInfo.Name}({fileLengthMegabytes}MB){directoriesPart}",
                 Directory = directories,
                 Extension = extension,
-                FileName = fileName,
+                FileName = fileInfo.Name,
+                LengthMegabytes = fileLengthMegabytes,
             };
         }
 

@@ -86,7 +86,7 @@ namespace Random_File_Opener_Win_Forms
             _exportOnlyVisible = settings?.ExportOnlyVisible ?? false;
             _showPreview = settings?.ShowPreview ?? false;
             _filter = settings?.Filter ?? _filter;
-            FilterTextBox.Text = _filter;
+            FilterTextBox.Text = SanitizeFilterForUi(_filter);
 
             Consts.Cache = settings?.Cache ?? Consts.Cache;
 
@@ -149,10 +149,10 @@ namespace Random_File_Opener_Win_Forms
                 .Shuffle(_random));
         }
 
-        private IEnumerable<string> GetFiles(string directory, string filter)
+        private IEnumerable<FileInfo> GetFiles(string directory, string filter)
         {
-            var initialFiles = Directory.GetFiles(directory, filter, _searchOption)
-                .WhereIf(_cacheDirectory.IsNotNullOrWhiteSpace(), u => !u.StartsWith(_cacheDirectory));
+            var initialFiles = new DirectoryInfo(directory).EnumerateFiles(filter, _searchOption)
+                .WhereIf(_cacheDirectory.IsNotNullOrWhiteSpace(), u => !u.FullName.StartsWith(_cacheDirectory));
 
             if (_searchOption == SearchOption.TopDirectoryOnly)
                 return initialFiles;
@@ -165,12 +165,12 @@ namespace Random_File_Opener_Win_Forms
                 return initialFiles;
 
             var endFiles = directories
-                .SelectMany(u => Directory.GetFiles(u, "*", _searchOption))
-                .WhereIf(_cacheDirectory.IsNotNullOrWhiteSpace(), u => !u.StartsWith(_cacheDirectory));
+                .SelectMany(u => new DirectoryInfo(u).EnumerateFiles("*", _searchOption))
+                .WhereIf(_cacheDirectory.IsNotNullOrWhiteSpace(), u => !u.FullName.StartsWith(_cacheDirectory));
 
             return initialFiles
                 .Concat(endFiles)
-                .Distinct();
+                .DistinctBy(u => u.FullName);
         }
 
         private void NextFileButton_Click(object sender = null, EventArgs e = null)
@@ -558,12 +558,13 @@ namespace Random_File_Opener_Win_Forms
             if (FilterTextBox.Text == _filter)
                 return;
 
-            if (FilterTextBox.Text.IsNullOrWhiteSpace())
-                FilterTextBox.Text = Consts.EmptyFilter;
+            FilterTextBox.Text = SanitizeFilterForUi(FilterTextBox.Text);
+            _filter = FilterTextBox.Text.IsNullOrWhiteSpace() ? "*" : $"*{FilterTextBox.Text}*";
 
-            _filter = FilterTextBox.Text;
             Initialize(_currentDirectory, _filter);
         }
+
+        private string SanitizeFilterForUi(string text) => text.Replace("*", "");
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
             => OpenFile(GeneratedFilesListBox.SelectedFile(), OpenVariants.OpenFile);
