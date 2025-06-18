@@ -48,6 +48,7 @@
             this.FileNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DeleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DeleteSelectedThumbnailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.UseFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ImagePictureBox = new System.Windows.Forms.PictureBox();
             this.AutoGenerateButton = new System.Windows.Forms.Button();
             this.AutoGenerateNumericUpDown = new FlatNumericUpDown();
@@ -155,9 +156,9 @@
             // 
             // ListBoxContextMenuStrip
             // 
-            this.ListBoxContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.OpenToolStripMenuItem, this.OpenInExplorerToolStripMenuItem, this.CopyToClipboardToolStripMenuItem, this.DeleteToolStripMenuItem, this.DeleteSelectedThumbnailsToolStripMenuItem });
+            this.ListBoxContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.OpenToolStripMenuItem, this.OpenInExplorerToolStripMenuItem, this.CopyToClipboardToolStripMenuItem, this.DeleteToolStripMenuItem, this.DeleteSelectedThumbnailsToolStripMenuItem, this.UseFolderToolStripMenuItem });
             this.ListBoxContextMenuStrip.Name = "ListBoxContextMenuStrip";
-            this.ListBoxContextMenuStrip.Size = new System.Drawing.Size(287, 124);
+            this.ListBoxContextMenuStrip.Size = new System.Drawing.Size(287, 148);
             // 
             // OpenToolStripMenuItem
             // 
@@ -214,6 +215,13 @@
             this.DeleteSelectedThumbnailsToolStripMenuItem.Size = new System.Drawing.Size(286, 24);
             this.DeleteSelectedThumbnailsToolStripMenuItem.Text = "Удалить кэш превью";
             this.DeleteSelectedThumbnailsToolStripMenuItem.Click += new System.EventHandler(this.DeleteSelectedThumbnailsToolStripMenuItem_Click);
+            // 
+            // UseFolderToolStripMenuItem
+            // 
+            this.UseFolderToolStripMenuItem.Name = "UseFolderToolStripMenuItem";
+            this.UseFolderToolStripMenuItem.Size = new System.Drawing.Size(286, 24);
+            this.UseFolderToolStripMenuItem.Text = "Использовать папку";
+            this.UseFolderToolStripMenuItem.Click += new System.EventHandler(this.UseFolderToolStripMenuItem_Click);
             // 
             // ImagePictureBox
             // 
@@ -344,6 +352,8 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.ToolStripMenuItem UseFolderToolStripMenuItem;
 
         private System.Windows.Forms.ToolStripMenuItem DeleteSelectedThumbnailsToolStripMenuItem;
 

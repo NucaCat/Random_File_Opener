@@ -695,16 +695,32 @@ namespace Random_File_Opener_Win_Forms
         private void FileNameToolStripMenuItem_Click(object sender, EventArgs e)
             => CopyItemToClipboard(CopyOptions.FileName);
 
+        private void UseFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var selectedFile = GeneratedFilesListBox.SelectedFile();
+            if (selectedFile is null)
+                return;
+
+            var directory = selectedFile.Directory.IsNullOrWhiteSpace()
+                ? _currentDirectory
+                : $"{_currentDirectory}\\{selectedFile.Directory}";
+            Initialize(directory, _filter);
+        }
+
         private void CopyItemToClipboard(CopyOptions option)
         {
+            var selectedFile = GeneratedFilesListBox.SelectedFile();
+            if (selectedFile is null)
+                return;
+            
             if (option == CopyOptions.FileName)
-                Clipboard.SetData(DataFormats.StringFormat, GeneratedFilesListBox.SelectedFile().FileName);
+                Clipboard.SetData(DataFormats.StringFormat, selectedFile.FileName);
             
             if (option == CopyOptions.Path)
-                Clipboard.SetData(DataFormats.StringFormat, GeneratedFilesListBox.SelectedFile().PathToFile);
+                Clipboard.SetData(DataFormats.StringFormat, selectedFile.PathToFile);
             
             if (option == CopyOptions.File)
-                Clipboard.SetFileDropList(new StringCollection { GeneratedFilesListBox.SelectedFile().PathToFile });
+                Clipboard.SetFileDropList(new StringCollection { selectedFile.PathToFile });
         }
 
         private void AutoGenerate_Click(object sender, EventArgs e)
