@@ -347,7 +347,7 @@ namespace Random_File_Opener_Win_Forms
 
             if (e.KeyCode == Keys.Enter)
             {
-                OpenFile(listItem, OpenVariants.OpenInExplorer);
+                OpenFile(listItem, OpenVariants.OpenFile);
                 return;
             }
 
