@@ -8,24 +8,24 @@
     "CacheLocation": "Cache"
   },
   "Styles": {
-    "Primary": "#BB86FC",
-    "Secondary": "#03DAC6",
-    "PrimaryVariant": "#3700B3",
+    "Primary": "267, 95%, 76%",
+    "Secondary": "174, 97%, 43%",
+    "PrimaryVariant": "258, 100%, 35%",
     
-    "Background": "#121212",
-    "Surface": "#2A2531",
+    "Background": "0, 0%, 7%",
+    "Surface": "265, 14%, 17%",
     
-    "Error": "#CF6679",
-    "Autogenerate": "#03DAC6",
-    "DoNotAutogenerate": "#CF6679",
+    "Error": "349, 52%, 61%",
+    "Autogenerate": "174, 97%, 43%",
+    "DoNotAutogenerate": "349, 52%, 61%",
 
-    "OnPrimary": "#000000",
-    "OnSecondary": "#000000",
-    "OnBackground": "#FFFFFF",
-    "OnSurface": "#FFFFFF",
-    "OnError": "#000000",
+    "OnPrimary": "0, 0%, 0%",
+    "OnSecondary": "0, 0%, 0%",
+    "OnBackground": "0, 0%, 100%",
+    "OnSurface": "0, 0%, 100%",
+    "OnError": "0, 0%, 0%",
     
-    "OnAutogenerate": "#000000",
-    "OnDoNotAutogenerate": "#000000"
+    "OnAutogenerate": "0, 0%, 0%",
+    "OnDoNotAutogenerate": "0, 0%, 0%"
   }
 }
