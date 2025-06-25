@@ -9,13 +9,6 @@ namespace Random_File_Opener_Win_Forms.Style
 {
     internal static class Styler
     {
-        private static Dictionary<GenerateButtonColors, (Color Main, Color On)> GenerateButtonColorsMap { get; } 
-            = new Dictionary<GenerateButtonColors, (Color Main, Color On)>
-            {
-                { GenerateButtonColors.Green, (Main: Styles.Autogenerate, On: Styles.OnAutogenerate)},
-                { GenerateButtonColors.Red, (Main: Styles.DoNotAutogenerate, On: Styles.OnDoNotAutogenerate)}
-            };
-        
         // TODO v.chumachenko unbind from Styles and use some interface
         public static void ApplyStyles(Form form)
         {
@@ -112,11 +105,11 @@ namespace Random_File_Opener_Win_Forms.Style
         
         public static void ChangeAutogenerateButtonColor(Button button, GenerateButtonColors color)
         {
-            button.BackColor = GenerateButtonColorsMap[color].Main;
-            button.ForeColor = GenerateButtonColorsMap[color].On;
+            button.BackColor = Styles.GenerateButtonColorsMap[color].Main;
+            button.ForeColor = Styles.GenerateButtonColorsMap[color].On;
             
-            button.FlatAppearance.MouseDownBackColor = GenerateButtonColorsMap[color].Main;
-            button.FlatAppearance.MouseOverBackColor = GenerateButtonColorsMap[color].Main;
+            button.FlatAppearance.MouseDownBackColor = Styles.GenerateButtonColorsMap[color].Main;
+            button.FlatAppearance.MouseOverBackColor = Styles.GenerateButtonColorsMap[color].Main;
         }
 
         public static void FillFromSettings(StylesSettings styles)

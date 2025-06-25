@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using Random_File_Opener_Win_Forms.Settings;
 
@@ -28,6 +29,13 @@ namespace Random_File_Opener_Win_Forms.Style
         public static Color OnAutogenerate { get; set; } = OnSecondary;
         public static Color OnDoNotAutogenerate { get; set; } = OnError;
         
+        public static Dictionary<GenerateButtonColors, (Color Main, Color On)> GenerateButtonColorsMap { get; set; } 
+            = new Dictionary<GenerateButtonColors, (Color Main, Color On)>
+            {
+                { GenerateButtonColors.Green, (Main: Autogenerate, On: OnAutogenerate)},
+                { GenerateButtonColors.Red, (Main: DoNotAutogenerate, On: OnDoNotAutogenerate)}
+            };
+        
         public static void FillFromSettings(StylesSettings settings)
         {
             if (settings == null)
@@ -48,6 +56,11 @@ namespace Random_File_Opener_Win_Forms.Style
             OnError = settings.OnError.IsNullOrWhiteSpace() ? OnError : HslStringToColor(settings.OnError);
             OnAutogenerate = settings.OnAutogenerate.IsNullOrWhiteSpace() ? OnAutogenerate : HslStringToColor(settings.OnAutogenerate);
             OnDoNotAutogenerate = settings.OnDoNotAutogenerate.IsNullOrWhiteSpace() ? OnDoNotAutogenerate : HslStringToColor(settings.OnDoNotAutogenerate);
+            GenerateButtonColorsMap = new Dictionary<GenerateButtonColors, (Color Main, Color On)>
+            {
+                { GenerateButtonColors.Green, (Main: Autogenerate, On: OnAutogenerate)},
+                { GenerateButtonColors.Red, (Main: DoNotAutogenerate, On: OnDoNotAutogenerate)}
+            };
         }
 
         private static Color HslStringToColor(string hslString)
