@@ -12,20 +12,20 @@
     "Secondary": "174, 97%, 43%",
     "PrimaryVariant": "258, 100%, 35%",
     
-    "Background": "0, 0%, 7%",
+    "Background": "0, 3%, 7%",
     "Surface": "265, 14%, 17%",
     
     "Error": "349, 52%, 61%",
     "Autogenerate": "174, 97%, 43%",
     "DoNotAutogenerate": "349, 52%, 61%",
 
-    "OnPrimary": "0, 0%, 0%",
-    "OnSecondary": "0, 0%, 0%",
-    "OnBackground": "0, 0%, 100%",
-    "OnSurface": "0, 0%, 100%",
-    "OnError": "0, 0%, 0%",
+    "OnPrimary": "0, 3%, 0%",
+    "OnSecondary": "0, 3%, 0%",
+    "OnBackground": "0, 3%, 95%",
+    "OnSurface": "0, 3%, 95%",
+    "OnError": "0, 3%, 0%",
     
-    "OnAutogenerate": "0, 0%, 0%",
-    "OnDoNotAutogenerate": "0, 0%, 0%"
+    "OnAutogenerate": "0, 3%, 0%",
+    "OnDoNotAutogenerate": "0, 3%, 0%"
   }
 }
