@@ -181,10 +181,12 @@ namespace Random_File_Opener_Win_Forms
 
             Log.Logger.Debug("-----------------------");
             Log.Logger.Debug(nameof(NextFileButton_Click));
-            SelectFile(file, SelectFileMode.One);
+            SelectFile(file);
+            GeneratedFilesListBox.ClearSelected();
+            GeneratedFilesListBox.SelectedItem = file;
         }
 
-        private void SelectFile(GeneratedFileListItem file, SelectFileMode mode)
+        private void SelectFile(GeneratedFileListItem file)
         {
             Log.Logger.Debug($"{nameof(SelectFile)} {file.Dump()}");
 
@@ -203,9 +205,6 @@ namespace Random_File_Opener_Win_Forms
 
             GeneratedFilesListBox.InvokeIfRequired(() =>
             {
-                if (mode == SelectFileMode.One)
-                    GeneratedFilesListBox.ClearSelected();
-                GeneratedFilesListBox.SelectedItem = file;
                 GeneratedFilesListBox.Focus();
             });
         }
@@ -351,7 +350,7 @@ namespace Random_File_Opener_Win_Forms
                 || e.KeyCode == Keys.Left 
                 || e.KeyCode == Keys.Right)
             {
-                MoveInListBox(e.KeyCode, e.Control);
+                MoveInListBox(e.KeyCode);
                 return;
             }
 
@@ -404,7 +403,7 @@ namespace Random_File_Opener_Win_Forms
             }
         }
 
-        private void MoveInListBox(Keys keyCode, bool control)
+        private void MoveInListBox(Keys keyCode)
         {
             Log.Logger.Debug("-----------------------");
             Log.Logger.Debug(nameof(MoveInListBox));
@@ -413,8 +412,7 @@ namespace Random_File_Opener_Win_Forms
                 ? DownItemToSet()
                 : UpItemToSet();
 
-            // TODO v.chumachenko maybe make this
-            SelectFile(itemToSet, SelectFileMode.One);
+            SelectFile(itemToSet);
         }
 
         private GeneratedFileListItem UpItemToSet()
@@ -469,11 +467,11 @@ namespace Random_File_Opener_Win_Forms
             if (GeneratedFilesListBox.Items.Count > selectedIndex)
             {
                 var nextFile = (GeneratedFileListItem)GeneratedFilesListBox.Items[selectedIndex];
-                SelectFile(nextFile, SelectFileMode.One);
+                SelectFile(nextFile);
             } else if (GeneratedFilesListBox.Items.Count != 0)
             {
                 var nextFile = (GeneratedFileListItem)GeneratedFilesListBox.Items[selectedIndex - 1];
-                SelectFile(nextFile, SelectFileMode.One);
+                SelectFile(nextFile);
             }
         }
 
@@ -702,10 +700,6 @@ namespace Random_File_Opener_Win_Forms
 
         private void HandleMouseUpOnMouseUp(MouseEventArgs e, GeneratedFileListItem item)
         {
-            var control = (ModifierKeys & Keys.Control) != 0;
-            var shift = (ModifierKeys & Keys.Shift) != 0;
-            var mode = control || shift ? SelectFileMode.Multiple : SelectFileMode.One;
-            
             if (e.Button == MouseButtons.Right)
             {
                 Log.Logger.Debug("-----------------------");
@@ -721,8 +715,7 @@ namespace Random_File_Opener_Win_Forms
                 Log.Logger.Debug("-----------------------");
                 Log.Logger.Debug($"{nameof(HandleMouseUpOnMouseUp)} Left");
 
-                if (!(mode == SelectFileMode.Multiple && !GeneratedFilesListBox.SelectedItems.Contains(item)))
-                    SelectFile(item, mode);
+                SelectFile(item);
                 // ReSharper disable once RedundantJumpStatement
                 return;
             }
@@ -946,12 +939,6 @@ namespace Random_File_Opener_Win_Forms
             FileName = 0,
             Path = 1,
             File = 2,
-        }
-
-        private enum SelectFileMode
-        {
-            One,
-            Multiple
         }
 
         #region dark title bar 
