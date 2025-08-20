@@ -30,6 +30,7 @@ namespace Random_File_Opener_Win_Forms
         private readonly Random _random = new Random();
         private string _currentDirectory = string.Empty;
         private string _cacheDirectory = string.Empty;
+        private string[] _projectFiles = Array.Empty<string>();
         private string _filter = Consts.EmptyFilter;
         private bool _exportOnlyVisible;
         private bool _showPreview;
@@ -112,6 +113,20 @@ namespace Random_File_Opener_Win_Forms
             _hideableControls = Controls.OfType<Control>()
                 .Where(u => !_nonHideableControls.Contains(u))
                 .ToArray();
+            
+            var projectDirectory = Directory.GetCurrentDirectory();
+            
+            _cacheDirectory = $"{projectDirectory}\\{Consts.Cache.CacheLocation}";
+            if (Consts.Cache.CacheLocation.IsNotNullOrWhiteSpace())
+                Directory.CreateDirectory(_cacheDirectory);
+            _projectFiles = new[]
+            {
+                $"{projectDirectory}\\ffmpeg.exe",
+                $"{projectDirectory}\\!appsettings.json",
+                $"{projectDirectory}\\!Log.txt",
+                $"{projectDirectory}\\{Path.GetFileName(GetType().Assembly.Location)}",
+                _cacheDirectory
+            };
 
             Initialize(currentDirectory, _filter);
 
@@ -135,9 +150,7 @@ namespace Random_File_Opener_Win_Forms
         private void Initialize(string directory, string filter)
         {
             _currentDirectory = directory;
-            _cacheDirectory = $"{Directory.GetCurrentDirectory()}\\{Consts.Cache.CacheLocation}";
-            if (Consts.Cache.CacheLocation.IsNotNullOrWhiteSpace())
-                Directory.CreateDirectory(_cacheDirectory);
+
             _filter = filter;
             DirectoryTextBox.Text = directory.Substring(directory.LastIndexOf('\\') + 1);
 
@@ -152,7 +165,7 @@ namespace Random_File_Opener_Win_Forms
         private IEnumerable<FileInfo> GetFiles(string directory, string filter)
         {
             var initialFiles = new DirectoryInfo(directory).EnumerateFiles(filter, _searchOption)
-                .WhereIf(_cacheDirectory.IsNotNullOrWhiteSpace(), u => !u.FullName.StartsWith(_cacheDirectory));
+                .FilterFiles(_projectFiles);
 
             if (_searchOption == SearchOption.TopDirectoryOnly)
                 return initialFiles;
@@ -166,7 +179,7 @@ namespace Random_File_Opener_Win_Forms
 
             var endFiles = directories
                 .SelectMany(u => new DirectoryInfo(u).EnumerateFiles("*", _searchOption))
-                .WhereIf(_cacheDirectory.IsNotNullOrWhiteSpace(), u => !u.FullName.StartsWith(_cacheDirectory));
+                .FilterFiles(_projectFiles);
 
             return initialFiles
                 .Concat(endFiles)

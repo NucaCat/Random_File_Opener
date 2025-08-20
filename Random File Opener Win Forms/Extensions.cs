@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Random_File_Opener_Win_Forms
@@ -39,5 +40,8 @@ namespace Random_File_Opener_Win_Forms
                 }
             }
         }
+
+        public static IEnumerable<FileInfo> FilterFiles(this IEnumerable<FileInfo> files, string[] excludedFiles)
+            => files.WhereIf(excludedFiles.IsNotEmpty(), u => !excludedFiles.Any(v => u.FullName.StartsWith(v)));
     }
 }
