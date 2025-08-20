@@ -320,9 +320,21 @@ namespace Random_File_Opener_Win_Forms
 
         private void GeneratedFilesListBox_KeyDown(object sender, KeyEventArgs e)
         {
-            e.Handled = true;
+            if (e.KeyCode == Keys.Space)
+            {
+                NextFileButton_Click();
+                return;
+            }
 
-            SuppressIfRequired(e);
+            if ((e.KeyCode == Keys.Down
+                 || e.KeyCode == Keys.Up
+                 || e.KeyCode == Keys.Left
+                 || e.KeyCode == Keys.Right)
+                && !e.Shift)
+            {
+                MoveInListBox(e.KeyCode);
+                return;
+            }
 
             if (GeneratedFilesListBox.SelectedItems.Count > 1)
                 GeneratedFilesListBox_KeyDownForMultipleFiles(e);
@@ -345,24 +357,9 @@ namespace Random_File_Opener_Win_Forms
                 return;
             }
 
-            if (e.KeyCode == Keys.Down 
-                || e.KeyCode == Keys.Up 
-                || e.KeyCode == Keys.Left 
-                || e.KeyCode == Keys.Right)
-            {
-                MoveInListBox(e.KeyCode);
-                return;
-            }
-
             if (e.KeyCode == Keys.Enter)
             {
                 OpenFile(listItem, OpenVariants.OpenFile);
-                return;
-            }
-
-            if (e.KeyCode == Keys.Space)
-            {
-                NextFileButton_Click();
                 return;
             }
 
