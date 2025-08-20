@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace Random_File_Opener_Win_Forms
 {
-    internal sealed class ArrayWithPointer<T> where T : class
+    internal sealed class ArrayWithPointer<T> where T : class, ISoftDeleteable
     {
         public int CurrentIndex { get; private set; } = 0;
         public bool IsAllGenerated { get; private set; } = false;
-        public IReadOnlyList<T> All => _entities;
+        public IEnumerable<T> All => _entities.ExcludeDeleted();
 
         private List<T> _entities = new List<T>(capacity: 0);
 
@@ -22,6 +22,9 @@ namespace Random_File_Opener_Win_Forms
 
         public T GetCurrent()
         {
+            if (CurrentIndex >= _entities.Count)
+                return null;
+
             if (_entities.IsEmpty())
                 return null;
 
@@ -32,12 +35,24 @@ namespace Random_File_Opener_Win_Forms
 
         private void AdvanceToIndex(int targetIndex)
         {
-            CurrentIndex = targetIndex;
-
-            if (CurrentIndex == _entities.Count)
+            while (true)
             {
-                CurrentIndex = 0;
-                IsAllGenerated = true;
+                CurrentIndex = targetIndex;
+
+                if (CurrentIndex >= _entities.Count)
+                {
+                    CurrentIndex = 0;
+                    IsAllGenerated = true;
+                    return;
+                }
+
+                if (Current.IsDeleted)
+                {
+                    targetIndex = CurrentIndex + 1;
+                    continue;
+                }
+
+                break;
             }
         }
 
@@ -50,14 +65,14 @@ namespace Random_File_Opener_Win_Forms
         {
             var indexOfDeletedFile = _entities.IndexOf(item); 
             
-            _entities.Remove(item);
+            item.SoftDelete();
             if (CurrentIndex != 0 && indexOfDeletedFile <= CurrentIndex)
                 CurrentIndex--;
         }
 
         public void Delete(T[] items)
         {
-            _entities.RemoveAll(items.Contains);
+            items.SoftDelete();
             CurrentIndex = 0;
         }
 

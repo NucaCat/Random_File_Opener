@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Random_File_Opener_Win_Forms
 {
-    public sealed class GeneratedFileListItem
+    public sealed class GeneratedFileListItem : ISoftDeleteable
     {
         public string DisplayValue { get; private set; }
         public string PathToFile { get; private set; }
@@ -20,6 +20,7 @@ namespace Random_File_Opener_Win_Forms
 
         public bool AddedToListBox { get; set; } = false;
         public double LengthMegabytes { get; set; }
+        public bool IsDeleted { get; set; }
 
         public static GeneratedFileListItem FromString(FileInfo fileInfo, string directory)
         {

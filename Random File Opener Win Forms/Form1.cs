@@ -179,6 +179,9 @@ namespace Random_File_Opener_Win_Forms
             if (file == null)
                 return;
 
+            if (file.IsDeleted)
+                _messageBox.ShowMessageBox($"Файл удален: {file.FileName}", CustomMessageBox.OkButtons);
+
             Log.Logger.Debug("-----------------------");
             Log.Logger.Debug(nameof(NextFileButton_Click));
             SelectFile(file);
@@ -333,7 +336,7 @@ namespace Random_File_Opener_Win_Forms
                  || e.KeyCode == Keys.Right)
                 && !e.Shift)
             {
-                MoveInListBox(e.KeyCode);
+                MoveInListBox(e);
                 return;
             }
 
@@ -401,34 +404,41 @@ namespace Random_File_Opener_Win_Forms
             }
         }
 
-        private void MoveInListBox(Keys keyCode)
+        private void MoveInListBox(KeyEventArgs e)
         {
             Log.Logger.Debug("-----------------------");
             Log.Logger.Debug(nameof(MoveInListBox));
 
-            var itemToSet = keyCode == Keys.Down || keyCode == Keys.Right
+            var (itemToSet, isLast) = e.KeyCode == Keys.Down || e.KeyCode == Keys.Right
                 ? DownItemToSet()
                 : UpItemToSet();
 
             SelectFile(itemToSet);
+            if (isLast)
+            {
+                GeneratedFilesListBox.ClearSelected();
+                GeneratedFilesListBox.SelectedItem = itemToSet;
+                e.Handled = true;
+                SuppressIfRequired(e);
+            }
         }
 
-        private GeneratedFileListItem UpItemToSet()
+        private (GeneratedFileListItem, bool) UpItemToSet()
         {
             var isFirst = GeneratedFilesListBox.SelectedIndex == 0;
             var itemToSet = isFirst
                 ? GeneratedFilesListBox.Items[GeneratedFilesListBox.Items.Count - 1]
                 : GeneratedFilesListBox.Items[GeneratedFilesListBox.SelectedIndex - 1];
-            return (GeneratedFileListItem)itemToSet;
+            return ((GeneratedFileListItem)itemToSet, isFirst);
         }
 
-        private GeneratedFileListItem DownItemToSet()
+        private (GeneratedFileListItem, bool) DownItemToSet()
         {
             var isLast = GeneratedFilesListBox.SelectedIndex == GeneratedFilesListBox.Items.Count - 1;
             var itemToSet = isLast
                 ? GeneratedFilesListBox.Items[0]
                 : GeneratedFilesListBox.Items[GeneratedFilesListBox.SelectedIndex + 1];
-            return (GeneratedFileListItem)itemToSet;
+            return ((GeneratedFileListItem)itemToSet, isLast);
         }
 
         private void DeleteSelectedFile()
@@ -466,10 +476,12 @@ namespace Random_File_Opener_Win_Forms
             {
                 var nextFile = (GeneratedFileListItem)GeneratedFilesListBox.Items[selectedIndex];
                 SelectFile(nextFile);
+                GeneratedFilesListBox.SelectedItem = nextFile;
             } else if (GeneratedFilesListBox.Items.Count != 0)
             {
                 var nextFile = (GeneratedFileListItem)GeneratedFilesListBox.Items[selectedIndex - 1];
                 SelectFile(nextFile);
+                GeneratedFilesListBox.SelectedItem = nextFile;
             }
         }
 

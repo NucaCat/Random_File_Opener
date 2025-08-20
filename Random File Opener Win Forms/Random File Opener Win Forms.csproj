@@ -176,6 +176,7 @@
         <Compile Include="Form1.Designer.cs">
             <DependentUpon>Form1.cs</DependentUpon>
         </Compile>
+        <Compile Include="ISoftDeleteable.cs" />
         <Compile Include="ImageService.cs" />
         <Compile Include="GeneratedFileListItem.cs" />
         <Compile Include="MyFFMpegConverter.cs" />
