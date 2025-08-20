@@ -326,6 +326,7 @@ namespace Random_File_Opener_Win_Forms
                 return;
             }
 
+            // проблема с определением удаления выбора
             if ((e.KeyCode == Keys.Down
                  || e.KeyCode == Keys.Up
                  || e.KeyCode == Keys.Left
