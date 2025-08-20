@@ -55,6 +55,12 @@ namespace Random_File_Opener_Win_Forms
                 CurrentIndex--;
         }
 
+        public void Delete(T[] items)
+        {
+            _entities.RemoveAll(items.Contains);
+            CurrentIndex = 0;
+        }
+
         public void SelectFile(T file)
         {
             var index = _entities.IndexOf(file);

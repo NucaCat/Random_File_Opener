@@ -126,6 +126,9 @@ namespace Random_File_Opener_Win_Forms
         public static GeneratedFileListItem SelectedFile(this ListBox lb)
             => (GeneratedFileListItem)lb.SelectedItem;
 
+        public static GeneratedFileListItem[] SelectedFiles(this ListBox lb)
+            => lb.SelectedItems.Cast<GeneratedFileListItem>().ToArray();
+
         public static void ForAll<T>(this IEnumerable<T> sequence, Action<T> action)
         {
             foreach (var x in sequence)
