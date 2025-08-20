@@ -185,8 +185,11 @@ namespace Random_File_Opener_Win_Forms
             Log.Logger.Debug("-----------------------");
             Log.Logger.Debug(nameof(NextFileButton_Click));
             SelectFile(file);
-            GeneratedFilesListBox.ClearSelected();
-            GeneratedFilesListBox.SelectedItem = file;
+            GeneratedFilesListBox.InvokeIfRequired(() =>
+            {
+                GeneratedFilesListBox.ClearSelected();
+                GeneratedFilesListBox.SelectedItem = file;
+            });
         }
 
         private void SelectFile(GeneratedFileListItem file)
@@ -416,8 +419,11 @@ namespace Random_File_Opener_Win_Forms
             SelectFile(itemToSet);
             if (isLast)
             {
-                GeneratedFilesListBox.ClearSelected();
-                GeneratedFilesListBox.SelectedItem = itemToSet;
+                GeneratedFilesListBox.InvokeIfRequired(() =>
+                {
+                    GeneratedFilesListBox.ClearSelected();
+                    GeneratedFilesListBox.SelectedItem = itemToSet;
+                });
                 e.Handled = true;
                 SuppressIfRequired(e);
             }
@@ -476,12 +482,18 @@ namespace Random_File_Opener_Win_Forms
             {
                 var nextFile = (GeneratedFileListItem)GeneratedFilesListBox.Items[selectedIndex];
                 SelectFile(nextFile);
-                GeneratedFilesListBox.SelectedItem = nextFile;
+                GeneratedFilesListBox.InvokeIfRequired(() =>
+                {
+                    GeneratedFilesListBox.SelectedItem = nextFile;
+                });
             } else if (GeneratedFilesListBox.Items.Count != 0)
             {
                 var nextFile = (GeneratedFileListItem)GeneratedFilesListBox.Items[selectedIndex - 1];
                 SelectFile(nextFile);
-                GeneratedFilesListBox.SelectedItem = nextFile;
+                GeneratedFilesListBox.InvokeIfRequired(() =>
+                {
+                    GeneratedFilesListBox.SelectedItem = nextFile;
+                });
             }
         }
 
