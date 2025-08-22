@@ -304,11 +304,11 @@ namespace Random_File_Opener_Win_Forms
                 pictureBox.Visible = true;
                 if (image != null)
                 {
-                    var horizontalPadding = (pictureBox.Size.Width - image.Width) / 2;
+                    var horizontalPadding = pictureBox.Size.Width - image.Width;
                     var verticalPadding = (pictureBox.Size.Height - image.Height) / 2;
                     pictureBox.Padding = new Padding
                     {
-                        Left =  horizontalPadding,
+                        Left = horizontalPadding,
                         Right = horizontalPadding,
                         Top = verticalPadding,
                         Bottom = verticalPadding,
@@ -519,11 +519,10 @@ namespace Random_File_Opener_Win_Forms
             Log.Logger.Debug("-----------------------");
             Log.Logger.Debug($"{nameof(DeleteSelectedFiles)}");
 
-            var result = _messageBox.ShowMessageBox(text: $"Вы действительно хотите удалить файлы?", CustomMessageBox.YesNoButtons);
+            var result = _messageBox.ShowMessageBox(text: $"Вы действительно хотите удалить {selectedItems.Length} файлов?", CustomMessageBox.YesNoButtons);
             if (result != DialogResult.Yes)
                 return;
 
-            
             foreach (var item in selectedItems)
             {
                 try
