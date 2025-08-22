@@ -222,10 +222,11 @@ namespace Random_File_Opener_Win_Forms
                 });
             }
 
-            GeneratedFilesListBox.InvokeIfRequired(() =>
-            {
-                GeneratedFilesListBox.Focus();
-            });
+            GeneratedFilesListBox.InvokeIfRequired(() => { GeneratedFilesListBox.Focus(); });
+            
+            FileNameLabel.InvokeIfRequired(() => { FileNameLabel.Text = $"Файл: {file.FileName}"; });
+            FileSizeLabel.InvokeIfRequired(() => { FileSizeLabel.Text = $"Размер: {file.LengthMegabytes}Mb"; });
+            FilePathTextBox.InvokeIfRequired(() => { FilePathTextBox.Text = file.Directory; });
         }
 
         private void AddImageToPreview(GeneratedFileListItem file)
@@ -994,5 +995,10 @@ namespace Random_File_Opener_Win_Forms
             new MyFFMpegConverter();
         }
         #endregion JitWarmup
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

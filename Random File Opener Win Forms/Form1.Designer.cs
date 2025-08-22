@@ -58,12 +58,18 @@
             this.HideControlsButton = new System.Windows.Forms.Button();
             this.ExportButton = new System.Windows.Forms.Button();
             this.ExportProgressBar = new System.Windows.Forms.ProgressBar();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.FilePathTextBox = new System.Windows.Forms.TextBox();
+            this.FilePathLabel = new System.Windows.Forms.Label();
+            this.FileSizeLabel = new System.Windows.Forms.Label();
+            this.FileNameLabel = new System.Windows.Forms.Label();
             this.ListBoxContextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AutoGenerateNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VideoThumbnailFirstPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VideoThumbnailSecondPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VideoThumbnailThirdPictureBox)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // GeneratedFilesListBox
@@ -74,7 +80,7 @@
             this.GeneratedFilesListBox.Location = new System.Drawing.Point(1024, 6);
             this.GeneratedFilesListBox.Name = "GeneratedFilesListBox";
             this.GeneratedFilesListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.GeneratedFilesListBox.Size = new System.Drawing.Size(868, 1019);
+            this.GeneratedFilesListBox.Size = new System.Drawing.Size(868, 700);
             this.GeneratedFilesListBox.TabIndex = 0;
             this.GeneratedFilesListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GeneratedFilesListBox_KeyDown);
             this.GeneratedFilesListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.GeneratedFilesListBox_MouseDoubleClick);
@@ -318,11 +324,61 @@
             this.ExportProgressBar.TabIndex = 16;
             this.ExportProgressBar.Visible = false;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.FilePathTextBox);
+            this.panel1.Controls.Add(this.FilePathLabel);
+            this.panel1.Controls.Add(this.FileSizeLabel);
+            this.panel1.Controls.Add(this.FileNameLabel);
+            this.panel1.Location = new System.Drawing.Point(1024, 712);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(868, 317);
+            this.panel1.TabIndex = 17;
+            // 
+            // FilePathTextBox
+            // 
+            this.FilePathTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FilePathTextBox.Location = new System.Drawing.Point(6, 149);
+            this.FilePathTextBox.Multiline = true;
+            this.FilePathTextBox.Name = "FilePathTextBox";
+            this.FilePathTextBox.ReadOnly = true;
+            this.FilePathTextBox.Size = new System.Drawing.Size(859, 164);
+            this.FilePathTextBox.TabIndex = 3;
+            // 
+            // FilePathLabel
+            // 
+            this.FilePathLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FilePathLabel.Location = new System.Drawing.Point(6, 100);
+            this.FilePathLabel.Name = "FilePathLabel";
+            this.FilePathLabel.Size = new System.Drawing.Size(859, 46);
+            this.FilePathLabel.TabIndex = 2;
+            this.FilePathLabel.Text = "Путь:";
+            // 
+            // FileSizeLabel
+            // 
+            this.FileSizeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FileSizeLabel.Location = new System.Drawing.Point(6, 54);
+            this.FileSizeLabel.Name = "FileSizeLabel";
+            this.FileSizeLabel.Size = new System.Drawing.Size(859, 46);
+            this.FileSizeLabel.TabIndex = 1;
+            this.FileSizeLabel.Text = "Размер:";
+            this.FileSizeLabel.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // FileNameLabel
+            // 
+            this.FileNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FileNameLabel.Location = new System.Drawing.Point(6, 8);
+            this.FileNameLabel.Name = "FileNameLabel";
+            this.FileNameLabel.Size = new System.Drawing.Size(859, 46);
+            this.FileNameLabel.TabIndex = 0;
+            this.FileNameLabel.Text = "Файл:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1904, 1041);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.ExportProgressBar);
             this.Controls.Add(this.ExportButton);
             this.Controls.Add(this.HideControlsButton);
@@ -350,9 +406,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.VideoThumbnailFirstPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VideoThumbnailSecondPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VideoThumbnailThirdPictureBox)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.Label FilePathLabel;
+        private System.Windows.Forms.TextBox FilePathTextBox;
+
+        private System.Windows.Forms.Label FileSizeLabel;
+
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label FileNameLabel;
 
         private System.Windows.Forms.ToolStripMenuItem UseFolderToolStripMenuItem;
 

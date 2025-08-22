@@ -14,7 +14,7 @@ namespace Random_File_Opener_Win_Forms.Style
         {
             form.BackColor = Styles.Background;
 
-            foreach(var button in form.Controls.OfType<Button>())
+            foreach(var button in GetControlsOfType<Button>(form))
             {
                 button.BackColor = Styles.Primary;
                 button.ForeColor = Styles.OnPrimary;
@@ -25,7 +25,7 @@ namespace Random_File_Opener_Win_Forms.Style
                 button.FlatAppearance.MouseOverBackColor = Styles.Primary;
             }
             
-            foreach(var textBox in form.Controls.OfType<TextBox>())
+            foreach(var textBox in GetControlsOfType<TextBox>(form))
             {
                 textBox.BackColor = Styles.Surface;
                 textBox.ForeColor = Styles.OnSurface;
@@ -33,7 +33,7 @@ namespace Random_File_Opener_Win_Forms.Style
                 textBox.BorderStyle = BorderStyle.None;
             }
             
-            foreach(var textBox in form.Controls.OfType<Label>())
+            foreach(var textBox in GetControlsOfType<Label>(form))
             {
                 textBox.BackColor = Styles.Surface;
                 textBox.ForeColor = Styles.OnSurface;
@@ -41,13 +41,13 @@ namespace Random_File_Opener_Win_Forms.Style
                 textBox.BorderStyle = BorderStyle.None;
             }
             
-            foreach(var groupBox in form.Controls.OfType<GroupBox>())
+            foreach(var groupBox in GetControlsOfType<GroupBox>(form))
             {
                 groupBox.BackColor = Styles.Surface;
                 groupBox.ForeColor = Styles.OnSurface;
             }
             
-            foreach(var pictureBox in form.Controls.OfType<PictureBox>())
+            foreach(var pictureBox in GetControlsOfType<PictureBox>(form))
             {
                 pictureBox.BackColor = Styles.Surface;
                 pictureBox.ForeColor = Styles.OnSurface;
@@ -55,19 +55,19 @@ namespace Random_File_Opener_Win_Forms.Style
                 pictureBox.BorderStyle = BorderStyle.None;
             }
 
-            foreach (var listBox in form.Controls.OfType<ListBox>())
+            foreach (var listBox in GetControlsOfType<ListBox>(form))
             {
                 listBox.BackColor = Styles.Surface;
                 listBox.ForeColor = Styles.OnSurface;
                 listBox.BorderStyle = BorderStyle.None;
             }
 
-            foreach (var progressBar in form.Controls.OfType<ProgressBar>())
+            foreach (var progressBar in GetControlsOfType<ProgressBar>(form))
             {
                 progressBar.Style = ProgressBarStyle.Continuous;
             }
 
-            foreach (var flatNumericUpDown in form.Controls.OfType<FlatNumericUpDown>())
+            foreach (var flatNumericUpDown in GetControlsOfType<FlatNumericUpDown>(form))
             {
                 flatNumericUpDown.BackColor = Styles.Surface;
                 flatNumericUpDown.ForeColor = Styles.OnSurface;
@@ -78,6 +78,14 @@ namespace Random_File_Opener_Win_Forms.Style
                 flatNumericUpDown.Controls[0].BackColor = Styles.Primary;
                 flatNumericUpDown.Controls[0].ForeColor = Styles.Primary;
             }
+        }
+
+        private static IEnumerable<T> GetControlsOfType<T>(Form form)
+        {
+            var panelControls = form.Controls.OfType<Panel>()
+                .SelectMany(u => u.Controls.OfType<T>());
+            return form.Controls.OfType<T>()
+                .Concat(panelControls);
         }
 
         public static void ApplyStylesToMessageBox(CustomMessageBox messageBox)
