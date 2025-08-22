@@ -89,9 +89,9 @@
             // NextFileButton
             // 
             this.NextFileButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.NextFileButton.Location = new System.Drawing.Point(12, 933);
+            this.NextFileButton.Location = new System.Drawing.Point(12, 911);
             this.NextFileButton.Name = "NextFileButton";
-            this.NextFileButton.Size = new System.Drawing.Size(232, 92);
+            this.NextFileButton.Size = new System.Drawing.Size(232, 87);
             this.NextFileButton.TabIndex = 1;
             this.NextFileButton.Text = "Следующий файл";
             this.NextFileButton.UseVisualStyleBackColor = true;
@@ -234,7 +234,7 @@
             // 
             this.ImagePictureBox.Location = new System.Drawing.Point(250, 6);
             this.ImagePictureBox.Name = "ImagePictureBox";
-            this.ImagePictureBox.Size = new System.Drawing.Size(768, 1019);
+            this.ImagePictureBox.Size = new System.Drawing.Size(768, 992);
             this.ImagePictureBox.TabIndex = 8;
             this.ImagePictureBox.TabStop = false;
             // 
@@ -269,25 +269,25 @@
             // 
             this.VideoThumbnailFirstPictureBox.Location = new System.Drawing.Point(250, 6);
             this.VideoThumbnailFirstPictureBox.Name = "VideoThumbnailFirstPictureBox";
-            this.VideoThumbnailFirstPictureBox.Size = new System.Drawing.Size(768, 336);
+            this.VideoThumbnailFirstPictureBox.Size = new System.Drawing.Size(768, 327);
             this.VideoThumbnailFirstPictureBox.TabIndex = 11;
             this.VideoThumbnailFirstPictureBox.TabStop = false;
             this.VideoThumbnailFirstPictureBox.Visible = false;
             // 
             // VideoThumbnailSecondPictureBox
             // 
-            this.VideoThumbnailSecondPictureBox.Location = new System.Drawing.Point(250, 350);
+            this.VideoThumbnailSecondPictureBox.Location = new System.Drawing.Point(250, 339);
             this.VideoThumbnailSecondPictureBox.Name = "VideoThumbnailSecondPictureBox";
-            this.VideoThumbnailSecondPictureBox.Size = new System.Drawing.Size(768, 336);
+            this.VideoThumbnailSecondPictureBox.Size = new System.Drawing.Size(768, 327);
             this.VideoThumbnailSecondPictureBox.TabIndex = 12;
             this.VideoThumbnailSecondPictureBox.TabStop = false;
             this.VideoThumbnailSecondPictureBox.Visible = false;
             // 
             // VideoThumbnailThirdPictureBox
             // 
-            this.VideoThumbnailThirdPictureBox.Location = new System.Drawing.Point(250, 692);
+            this.VideoThumbnailThirdPictureBox.Location = new System.Drawing.Point(250, 671);
             this.VideoThumbnailThirdPictureBox.Name = "VideoThumbnailThirdPictureBox";
-            this.VideoThumbnailThirdPictureBox.Size = new System.Drawing.Size(768, 333);
+            this.VideoThumbnailThirdPictureBox.Size = new System.Drawing.Size(768, 327);
             this.VideoThumbnailThirdPictureBox.TabIndex = 13;
             this.VideoThumbnailThirdPictureBox.TabStop = false;
             this.VideoThumbnailThirdPictureBox.Visible = false;
@@ -295,9 +295,9 @@
             // HideControlsButton
             // 
             this.HideControlsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.HideControlsButton.Location = new System.Drawing.Point(12, 835);
+            this.HideControlsButton.Location = new System.Drawing.Point(12, 818);
             this.HideControlsButton.Name = "HideControlsButton";
-            this.HideControlsButton.Size = new System.Drawing.Size(232, 92);
+            this.HideControlsButton.Size = new System.Drawing.Size(232, 87);
             this.HideControlsButton.TabIndex = 14;
             this.HideControlsButton.Text = "Скрыть";
             this.HideControlsButton.UseVisualStyleBackColor = true;
@@ -330,19 +330,20 @@
             this.panel1.Controls.Add(this.FilePathLabel);
             this.panel1.Controls.Add(this.FileSizeLabel);
             this.panel1.Controls.Add(this.FileNameLabel);
-            this.panel1.Location = new System.Drawing.Point(1024, 712);
+            this.panel1.Location = new System.Drawing.Point(1024, 709);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(868, 317);
+            this.panel1.Size = new System.Drawing.Size(868, 289);
             this.panel1.TabIndex = 17;
             // 
             // FilePathTextBox
             // 
             this.FilePathTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FilePathTextBox.Location = new System.Drawing.Point(6, 149);
+            this.FilePathTextBox.Location = new System.Drawing.Point(12, 149);
             this.FilePathTextBox.Multiline = true;
             this.FilePathTextBox.Name = "FilePathTextBox";
             this.FilePathTextBox.ReadOnly = true;
-            this.FilePathTextBox.Size = new System.Drawing.Size(859, 164);
+            this.FilePathTextBox.Size = new System.Drawing.Size(848, 131);
             this.FilePathTextBox.TabIndex = 3;
             // 
             // FilePathLabel
@@ -362,7 +363,6 @@
             this.FileSizeLabel.Size = new System.Drawing.Size(859, 46);
             this.FileSizeLabel.TabIndex = 1;
             this.FileSizeLabel.Text = "Размер:";
-            this.FileSizeLabel.Click += new System.EventHandler(this.label2_Click);
             // 
             // FileNameLabel
             // 
@@ -377,7 +377,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1904, 1041);
+            this.ClientSize = new System.Drawing.Size(1904, 1001);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.ExportProgressBar);
             this.Controls.Add(this.ExportButton);

@@ -13,8 +13,16 @@ namespace Random_File_Opener_Win_Forms.Style
         public static void ApplyStyles(Form form)
         {
             form.BackColor = Styles.Background;
+            
+            foreach(var textBox in form.GetAllControls().OfType<Panel>())
+            {
+                textBox.BackColor = Styles.Surface;
+                textBox.ForeColor = Styles.OnSurface;
 
-            foreach(var button in GetControlsOfType<Button>(form))
+                textBox.BorderStyle = BorderStyle.None;
+            }
+
+            foreach(var button in form.GetAllControls().OfType<Button>())
             {
                 button.BackColor = Styles.Primary;
                 button.ForeColor = Styles.OnPrimary;
@@ -25,7 +33,7 @@ namespace Random_File_Opener_Win_Forms.Style
                 button.FlatAppearance.MouseOverBackColor = Styles.Primary;
             }
             
-            foreach(var textBox in GetControlsOfType<TextBox>(form))
+            foreach(var textBox in form.GetAllControls().OfType<TextBox>())
             {
                 textBox.BackColor = Styles.Surface;
                 textBox.ForeColor = Styles.OnSurface;
@@ -33,7 +41,7 @@ namespace Random_File_Opener_Win_Forms.Style
                 textBox.BorderStyle = BorderStyle.None;
             }
             
-            foreach(var textBox in GetControlsOfType<Label>(form))
+            foreach(var textBox in form.GetAllControls().OfType<Label>())
             {
                 textBox.BackColor = Styles.Surface;
                 textBox.ForeColor = Styles.OnSurface;
@@ -41,13 +49,13 @@ namespace Random_File_Opener_Win_Forms.Style
                 textBox.BorderStyle = BorderStyle.None;
             }
             
-            foreach(var groupBox in GetControlsOfType<GroupBox>(form))
+            foreach(var groupBox in form.GetAllControls().OfType<GroupBox>())
             {
                 groupBox.BackColor = Styles.Surface;
                 groupBox.ForeColor = Styles.OnSurface;
             }
             
-            foreach(var pictureBox in GetControlsOfType<PictureBox>(form))
+            foreach(var pictureBox in form.GetAllControls().OfType<PictureBox>())
             {
                 pictureBox.BackColor = Styles.Surface;
                 pictureBox.ForeColor = Styles.OnSurface;
@@ -55,19 +63,19 @@ namespace Random_File_Opener_Win_Forms.Style
                 pictureBox.BorderStyle = BorderStyle.None;
             }
 
-            foreach (var listBox in GetControlsOfType<ListBox>(form))
+            foreach (var listBox in form.GetAllControls().OfType<ListBox>())
             {
                 listBox.BackColor = Styles.Surface;
                 listBox.ForeColor = Styles.OnSurface;
                 listBox.BorderStyle = BorderStyle.None;
             }
 
-            foreach (var progressBar in GetControlsOfType<ProgressBar>(form))
+            foreach (var progressBar in form.GetAllControls().OfType<ProgressBar>())
             {
                 progressBar.Style = ProgressBarStyle.Continuous;
             }
 
-            foreach (var flatNumericUpDown in GetControlsOfType<FlatNumericUpDown>(form))
+            foreach (var flatNumericUpDown in form.GetAllControls().OfType<FlatNumericUpDown>())
             {
                 flatNumericUpDown.BackColor = Styles.Surface;
                 flatNumericUpDown.ForeColor = Styles.OnSurface;
@@ -80,12 +88,19 @@ namespace Random_File_Opener_Win_Forms.Style
             }
         }
 
-        private static IEnumerable<T> GetControlsOfType<T>(Form form)
+        public static IEnumerable<Control> GetAllControls(this Control parent)
         {
-            var panelControls = form.Controls.OfType<Panel>()
-                .SelectMany(u => u.Controls.OfType<T>());
-            return form.Controls.OfType<T>()
-                .Concat(panelControls);
+            foreach (Control control in parent.Controls)
+            {
+                yield return control;
+                if (control.HasChildren)
+                {
+                    foreach (var grandChild in GetAllControls(control))
+                    {
+                        yield return grandChild;
+                    }
+                }
+            }
         }
 
         public static void ApplyStylesToMessageBox(CustomMessageBox messageBox)
