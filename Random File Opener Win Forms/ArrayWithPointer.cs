@@ -4,11 +4,10 @@ using System.Linq;
 
 namespace Random_File_Opener_Win_Forms
 {
-    internal sealed class ArrayWithPointer<T> where T : class, ISoftDeleteable
+    internal sealed class ArrayWithPointer<T> where T : class
     {
         public int CurrentIndex { get; private set; } = 0;
-        public bool IsAllGenerated { get; private set; } = false;
-        public IEnumerable<T> All => _entities.ExcludeDeleted();
+        public IReadOnlyList<T> All => _entities;
 
         private List<T> _entities = new List<T>(capacity: 0);
 
@@ -22,9 +21,6 @@ namespace Random_File_Opener_Win_Forms
 
         public T GetCurrent()
         {
-            if (CurrentIndex >= _entities.Count)
-                return null;
-
             if (_entities.IsEmpty())
                 return null;
 
@@ -35,25 +31,10 @@ namespace Random_File_Opener_Win_Forms
 
         private void AdvanceToIndex(int targetIndex)
         {
-            while (true)
-            {
-                CurrentIndex = targetIndex;
+            CurrentIndex = targetIndex;
 
-                if (CurrentIndex >= _entities.Count)
-                {
-                    CurrentIndex = 0;
-                    IsAllGenerated = true;
-                    return;
-                }
-
-                if (Current.IsDeleted)
-                {
-                    targetIndex = CurrentIndex + 1;
-                    continue;
-                }
-
-                break;
-            }
+            if (CurrentIndex >= _entities.Count)
+                CurrentIndex = 0;
         }
 
         public void ForAll(Action<T> action)
@@ -65,14 +46,14 @@ namespace Random_File_Opener_Win_Forms
         {
             var indexOfDeletedFile = _entities.IndexOf(item); 
             
-            item.SoftDelete();
+            _entities.Remove(item);
             if (CurrentIndex != 0 && indexOfDeletedFile <= CurrentIndex)
                 CurrentIndex--;
         }
 
         public void Delete(T[] items)
         {
-            items.SoftDelete();
+            _entities.RemoveAll(items.Contains);
             CurrentIndex = 0;
         }
 
