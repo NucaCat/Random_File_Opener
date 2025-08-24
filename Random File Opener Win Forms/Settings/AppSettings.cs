@@ -9,6 +9,7 @@ namespace Random_File_Opener_Win_Forms.Settings
         public CacheSettings Cache { get; set; }
         public bool ExportOnlyVisible { get; set; }
         public bool ShowPreview { get; set; }
+        public bool RetainFileOnListClear { get; set; }
         public StylesSettings Styles { get; set; }
     }
 

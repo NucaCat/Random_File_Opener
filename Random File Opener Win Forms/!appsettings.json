@@ -3,8 +3,9 @@
   "VideoThumbnailPositions": ["00:01:00", "00:12:00", "00:20:00"],
   "ExportOnlyVisible": true,
   "ShowPreview": true,
+  "RetainFileOnListClear": true,
   "Cache": {
-    "SaveCacheOnDisc": true,
+    "SaveCacheOnDisc": false,
     "CacheLocation": "Cache"
   },
   "Styles": {

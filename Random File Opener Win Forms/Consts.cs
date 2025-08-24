@@ -20,6 +20,7 @@ namespace Random_File_Opener_Win_Forms
         public static string SettingsFileName { get; } = "!appsettings.json";
 
         public static TimeSpan[] VideoThumbnailPositions { get; set; } = Array.Empty<TimeSpan>();
+        public static bool RetainFileOnListClear { get; set; }
 
         public static CacheSettings Cache { get; set; } = new CacheSettings();
         public static HashAlgorithm HashAlgorithm = HashAlgorithm.Create("SHA256");

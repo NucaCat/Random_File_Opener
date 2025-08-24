@@ -93,6 +93,8 @@ namespace Random_File_Opener_Win_Forms
 
             Consts.VideoThumbnailPositions = settings?.VideoThumbnailPositions ?? Consts.VideoThumbnailPositions;
 
+            Consts.RetainFileOnListClear = settings?.RetainFileOnListClear ?? false;
+
             SearchModeButton.Text = _searchOption.ToFriendlyString();
 
             Styler.ChangeAutogenerateButtonColor(AutoGenerateButton, _currentGenerateButtonColor);
@@ -638,7 +640,12 @@ namespace Random_File_Opener_Win_Forms
         {
             _files.ForAll(u => u.AddedToListBox = false);
 
+            var selectedFile = GeneratedFilesListBox.SelectedFile();
+
             GeneratedFilesListBox.Items.Clear();
+
+            if (selectedFile != null)
+                _files.SelectFile(selectedFile);
         }
 
         private void ApplyFilter_Click(object sender, EventArgs e)
@@ -828,6 +835,20 @@ namespace Random_File_Opener_Win_Forms
                 ? _currentDirectory
                 : $"{_currentDirectory}\\{selectedFile.Directory}";
             Initialize(directory, _filter);
+
+            if (!Consts.RetainFileOnListClear)
+                return;
+
+            selectedFile = _files.All.FirstOrDefault(u => u.PathToFile == selectedFile.PathToFile);
+            if (selectedFile == null) 
+                return;
+
+            _files.MoveItemToFirstPosition(selectedFile);
+            SelectFile(selectedFile);GeneratedFilesListBox.InvokeIfRequired(() =>
+            {
+                GeneratedFilesListBox.ClearSelected();
+                GeneratedFilesListBox.SelectedItem = selectedFile;
+            });
         }
 
         private void CopyItemToClipboard(CopyOptions option)

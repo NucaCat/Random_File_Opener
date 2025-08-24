@@ -62,5 +62,11 @@ namespace Random_File_Opener_Win_Forms
             var index = _entities.IndexOf(file);
             AdvanceToIndex(index + 1);
         }
+
+        public void MoveItemToFirstPosition(T selectedFile)
+        {
+            _entities.Remove(selectedFile);
+            _entities.Insert(0, selectedFile);
+        }
     }
 }
