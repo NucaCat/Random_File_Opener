@@ -59,7 +59,6 @@
             this.ExportButton = new System.Windows.Forms.Button();
             this.ExportProgressBar = new System.Windows.Forms.ProgressBar();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.FilePathTextBox = new System.Windows.Forms.TextBox();
             this.FilePathLabel = new System.Windows.Forms.Label();
             this.FileSizeLabel = new System.Windows.Forms.Label();
             this.FileNameLabel = new System.Windows.Forms.Label();
@@ -326,7 +325,6 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.FilePathTextBox);
             this.panel1.Controls.Add(this.FilePathLabel);
             this.panel1.Controls.Add(this.FileSizeLabel);
             this.panel1.Controls.Add(this.FileNameLabel);
@@ -336,31 +334,21 @@
             this.panel1.Size = new System.Drawing.Size(868, 274);
             this.panel1.TabIndex = 17;
             // 
-            // FilePathTextBox
-            // 
-            this.FilePathTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FilePathTextBox.Location = new System.Drawing.Point(12, 138);
-            this.FilePathTextBox.Multiline = true;
-            this.FilePathTextBox.Name = "FilePathTextBox";
-            this.FilePathTextBox.ReadOnly = true;
-            this.FilePathTextBox.Size = new System.Drawing.Size(848, 133);
-            this.FilePathTextBox.TabIndex = 3;
-            // 
             // FilePathLabel
             // 
             this.FilePathLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FilePathLabel.Location = new System.Drawing.Point(6, 93);
+            this.FilePathLabel.Location = new System.Drawing.Point(6, 115);
             this.FilePathLabel.Name = "FilePathLabel";
-            this.FilePathLabel.Size = new System.Drawing.Size(859, 43);
+            this.FilePathLabel.Size = new System.Drawing.Size(859, 100);
             this.FilePathLabel.TabIndex = 2;
             this.FilePathLabel.Text = "Путь:";
             // 
             // FileSizeLabel
             // 
             this.FileSizeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FileSizeLabel.Location = new System.Drawing.Point(6, 50);
+            this.FileSizeLabel.Location = new System.Drawing.Point(6, 215);
             this.FileSizeLabel.Name = "FileSizeLabel";
-            this.FileSizeLabel.Size = new System.Drawing.Size(859, 43);
+            this.FileSizeLabel.Size = new System.Drawing.Size(859, 40);
             this.FileSizeLabel.TabIndex = 1;
             this.FileSizeLabel.Text = "Размер:";
             // 
@@ -369,7 +357,7 @@
             this.FileNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FileNameLabel.Location = new System.Drawing.Point(6, 7);
             this.FileNameLabel.Name = "FileNameLabel";
-            this.FileNameLabel.Size = new System.Drawing.Size(859, 43);
+            this.FileNameLabel.Size = new System.Drawing.Size(859, 100);
             this.FileNameLabel.TabIndex = 0;
             this.FileNameLabel.Text = "Файл:";
             // 
@@ -407,13 +395,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.VideoThumbnailSecondPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VideoThumbnailThirdPictureBox)).EndInit();
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
 
         private System.Windows.Forms.Label FilePathLabel;
-        private System.Windows.Forms.TextBox FilePathTextBox;
 
         private System.Windows.Forms.Label FileSizeLabel;
 
