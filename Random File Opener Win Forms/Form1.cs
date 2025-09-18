@@ -844,7 +844,8 @@ namespace Random_File_Opener_Win_Forms
                 return;
 
             _files.MoveItemToFirstPosition(selectedFile);
-            SelectFile(selectedFile);GeneratedFilesListBox.InvokeIfRequired(() =>
+            SelectFile(selectedFile);
+            GeneratedFilesListBox.InvokeIfRequired(() =>
             {
                 GeneratedFilesListBox.ClearSelected();
                 GeneratedFilesListBox.SelectedItem = selectedFile;

@@ -89,9 +89,9 @@
             // NextFileButton
             // 
             this.NextFileButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.NextFileButton.Location = new System.Drawing.Point(12, 911);
+            this.NextFileButton.Location = new System.Drawing.Point(12, 892);
             this.NextFileButton.Name = "NextFileButton";
-            this.NextFileButton.Size = new System.Drawing.Size(232, 87);
+            this.NextFileButton.Size = new System.Drawing.Size(232, 91);
             this.NextFileButton.TabIndex = 1;
             this.NextFileButton.Text = "Следующий файл";
             this.NextFileButton.UseVisualStyleBackColor = true;
@@ -102,7 +102,7 @@
             this.SearchModeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.SearchModeButton.Location = new System.Drawing.Point(12, 6);
             this.SearchModeButton.Name = "SearchModeButton";
-            this.SearchModeButton.Size = new System.Drawing.Size(232, 90);
+            this.SearchModeButton.Size = new System.Drawing.Size(232, 91);
             this.SearchModeButton.TabIndex = 2;
             this.SearchModeButton.Text = "С подпапками или без";
             this.SearchModeButton.UseVisualStyleBackColor = true;
@@ -113,7 +113,7 @@
             this.ChangeDirectoryButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ChangeDirectoryButton.Location = new System.Drawing.Point(12, 103);
             this.ChangeDirectoryButton.Name = "ChangeDirectoryButton";
-            this.ChangeDirectoryButton.Size = new System.Drawing.Size(232, 90);
+            this.ChangeDirectoryButton.Size = new System.Drawing.Size(232, 91);
             this.ChangeDirectoryButton.TabIndex = 3;
             this.ChangeDirectoryButton.Text = "Изменить папку";
             this.ChangeDirectoryButton.UseVisualStyleBackColor = true;
@@ -123,18 +123,18 @@
             // 
             this.DirectoryTextBox.Enabled = false;
             this.DirectoryTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.DirectoryTextBox.Location = new System.Drawing.Point(12, 353);
+            this.DirectoryTextBox.Location = new System.Drawing.Point(12, 348);
             this.DirectoryTextBox.Multiline = true;
             this.DirectoryTextBox.Name = "DirectoryTextBox";
-            this.DirectoryTextBox.Size = new System.Drawing.Size(232, 56);
+            this.DirectoryTextBox.Size = new System.Drawing.Size(232, 52);
             this.DirectoryTextBox.TabIndex = 4;
             // 
             // ClearButton
             // 
             this.ClearButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ClearButton.Location = new System.Drawing.Point(12, 576);
+            this.ClearButton.Location = new System.Drawing.Point(12, 557);
             this.ClearButton.Name = "ClearButton";
-            this.ClearButton.Size = new System.Drawing.Size(232, 92);
+            this.ClearButton.Size = new System.Drawing.Size(232, 91);
             this.ClearButton.TabIndex = 5;
             this.ClearButton.Text = "Очистить список";
             this.ClearButton.UseVisualStyleBackColor = true;
@@ -143,19 +143,19 @@
             // FilterTextBox
             // 
             this.FilterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.FilterTextBox.Location = new System.Drawing.Point(12, 416);
+            this.FilterTextBox.Location = new System.Drawing.Point(12, 406);
             this.FilterTextBox.Multiline = true;
             this.FilterTextBox.Name = "FilterTextBox";
-            this.FilterTextBox.Size = new System.Drawing.Size(232, 56);
+            this.FilterTextBox.Size = new System.Drawing.Size(232, 52);
             this.FilterTextBox.TabIndex = 6;
             this.FilterTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FilterTextBox_KeyDown);
             // 
             // ApplyFilterButton
             // 
             this.ApplyFilterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ApplyFilterButton.Location = new System.Drawing.Point(12, 478);
+            this.ApplyFilterButton.Location = new System.Drawing.Point(12, 464);
             this.ApplyFilterButton.Name = "ApplyFilterButton";
-            this.ApplyFilterButton.Size = new System.Drawing.Size(232, 92);
+            this.ApplyFilterButton.Size = new System.Drawing.Size(232, 91);
             this.ApplyFilterButton.TabIndex = 7;
             this.ApplyFilterButton.Text = "Применить фильтр";
             this.ApplyFilterButton.UseVisualStyleBackColor = true;
@@ -165,19 +165,19 @@
             // 
             this.ListBoxContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.OpenToolStripMenuItem, this.OpenInExplorerToolStripMenuItem, this.CopyToClipboardToolStripMenuItem, this.DeleteToolStripMenuItem, this.DeleteSelectedThumbnailsToolStripMenuItem, this.UseFolderToolStripMenuItem });
             this.ListBoxContextMenuStrip.Name = "ListBoxContextMenuStrip";
-            this.ListBoxContextMenuStrip.Size = new System.Drawing.Size(287, 148);
+            this.ListBoxContextMenuStrip.Size = new System.Drawing.Size(239, 136);
             // 
             // OpenToolStripMenuItem
             // 
             this.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
-            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(286, 24);
+            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.OpenToolStripMenuItem.Text = "Открыть";
             this.OpenToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
             // 
             // OpenInExplorerToolStripMenuItem
             // 
             this.OpenInExplorerToolStripMenuItem.Name = "OpenInExplorerToolStripMenuItem";
-            this.OpenInExplorerToolStripMenuItem.Size = new System.Drawing.Size(286, 24);
+            this.OpenInExplorerToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.OpenInExplorerToolStripMenuItem.Text = "Открыть в проводнике";
             this.OpenInExplorerToolStripMenuItem.Click += new System.EventHandler(this.OpenInExplorerToolStripMenuItem_Click);
             // 
@@ -185,48 +185,48 @@
             // 
             this.CopyToClipboardToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.FileToolStripMenuItem, this.FileAddressToolStripMenuItem, this.FileNameToolStripMenuItem });
             this.CopyToClipboardToolStripMenuItem.Name = "CopyToClipboardToolStripMenuItem";
-            this.CopyToClipboardToolStripMenuItem.Size = new System.Drawing.Size(286, 24);
+            this.CopyToClipboardToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.CopyToClipboardToolStripMenuItem.Text = "Скопировать в буфер обмена";
             // 
             // FileToolStripMenuItem
             // 
             this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
-            this.FileToolStripMenuItem.Size = new System.Drawing.Size(146, 24);
+            this.FileToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.FileToolStripMenuItem.Text = "Файл";
             this.FileToolStripMenuItem.Click += new System.EventHandler(this.FileToolStripMenuItem_Click);
             // 
             // FileAddressToolStripMenuItem
             // 
             this.FileAddressToolStripMenuItem.Name = "FileAddressToolStripMenuItem";
-            this.FileAddressToolStripMenuItem.Size = new System.Drawing.Size(146, 24);
+            this.FileAddressToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.FileAddressToolStripMenuItem.Text = "Адрес";
             this.FileAddressToolStripMenuItem.Click += new System.EventHandler(this.FileAddressToolStripMenuItem_Click);
             // 
             // FileNameToolStripMenuItem
             // 
             this.FileNameToolStripMenuItem.Name = "FileNameToolStripMenuItem";
-            this.FileNameToolStripMenuItem.Size = new System.Drawing.Size(146, 24);
+            this.FileNameToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.FileNameToolStripMenuItem.Text = "Название";
             this.FileNameToolStripMenuItem.Click += new System.EventHandler(this.FileNameToolStripMenuItem_Click);
             // 
             // DeleteToolStripMenuItem
             // 
             this.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem";
-            this.DeleteToolStripMenuItem.Size = new System.Drawing.Size(286, 24);
+            this.DeleteToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.DeleteToolStripMenuItem.Text = "Удалить";
             this.DeleteToolStripMenuItem.Click += new System.EventHandler(this.DeleteToolStripMenuItem_Click);
             // 
             // DeleteSelectedThumbnailsToolStripMenuItem
             // 
             this.DeleteSelectedThumbnailsToolStripMenuItem.Name = "DeleteSelectedThumbnailsToolStripMenuItem";
-            this.DeleteSelectedThumbnailsToolStripMenuItem.Size = new System.Drawing.Size(286, 24);
+            this.DeleteSelectedThumbnailsToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.DeleteSelectedThumbnailsToolStripMenuItem.Text = "Удалить кэш превью";
             this.DeleteSelectedThumbnailsToolStripMenuItem.Click += new System.EventHandler(this.DeleteSelectedThumbnailsToolStripMenuItem_Click);
             // 
             // UseFolderToolStripMenuItem
             // 
             this.UseFolderToolStripMenuItem.Name = "UseFolderToolStripMenuItem";
-            this.UseFolderToolStripMenuItem.Size = new System.Drawing.Size(286, 24);
+            this.UseFolderToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.UseFolderToolStripMenuItem.Text = "Использовать папку";
             this.UseFolderToolStripMenuItem.Click += new System.EventHandler(this.UseFolderToolStripMenuItem_Click);
             // 
@@ -234,7 +234,7 @@
             // 
             this.ImagePictureBox.Location = new System.Drawing.Point(250, 6);
             this.ImagePictureBox.Name = "ImagePictureBox";
-            this.ImagePictureBox.Size = new System.Drawing.Size(768, 992);
+            this.ImagePictureBox.Size = new System.Drawing.Size(768, 974);
             this.ImagePictureBox.TabIndex = 8;
             this.ImagePictureBox.TabStop = false;
             // 
@@ -243,9 +243,9 @@
             this.AutoGenerateButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.AutoGenerateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.AutoGenerateButton.ForeColor = System.Drawing.Color.Black;
-            this.AutoGenerateButton.Location = new System.Drawing.Point(12, 674);
+            this.AutoGenerateButton.Location = new System.Drawing.Point(12, 654);
             this.AutoGenerateButton.Name = "AutoGenerateButton";
-            this.AutoGenerateButton.Size = new System.Drawing.Size(232, 92);
+            this.AutoGenerateButton.Size = new System.Drawing.Size(232, 91);
             this.AutoGenerateButton.TabIndex = 9;
             this.AutoGenerateButton.Text = "Автогенерация";
             this.AutoGenerateButton.UseVisualStyleBackColor = false;
@@ -256,7 +256,7 @@
             this.AutoGenerateNumericUpDown.DecimalPlaces = 2;
             this.AutoGenerateNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.AutoGenerateNumericUpDown.Increment = new decimal(new int[] { 25, 0, 0, 131072 });
-            this.AutoGenerateNumericUpDown.Location = new System.Drawing.Point(12, 772);
+            this.AutoGenerateNumericUpDown.Location = new System.Drawing.Point(12, 749);
             this.AutoGenerateNumericUpDown.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             this.AutoGenerateNumericUpDown.Minimum = new decimal(new int[] { 25, 0, 0, 131072 });
             this.AutoGenerateNumericUpDown.Name = "AutoGenerateNumericUpDown";
@@ -269,25 +269,25 @@
             // 
             this.VideoThumbnailFirstPictureBox.Location = new System.Drawing.Point(250, 6);
             this.VideoThumbnailFirstPictureBox.Name = "VideoThumbnailFirstPictureBox";
-            this.VideoThumbnailFirstPictureBox.Size = new System.Drawing.Size(768, 327);
+            this.VideoThumbnailFirstPictureBox.Size = new System.Drawing.Size(768, 321);
             this.VideoThumbnailFirstPictureBox.TabIndex = 11;
             this.VideoThumbnailFirstPictureBox.TabStop = false;
             this.VideoThumbnailFirstPictureBox.Visible = false;
             // 
             // VideoThumbnailSecondPictureBox
             // 
-            this.VideoThumbnailSecondPictureBox.Location = new System.Drawing.Point(250, 339);
+            this.VideoThumbnailSecondPictureBox.Location = new System.Drawing.Point(250, 333);
             this.VideoThumbnailSecondPictureBox.Name = "VideoThumbnailSecondPictureBox";
-            this.VideoThumbnailSecondPictureBox.Size = new System.Drawing.Size(768, 327);
+            this.VideoThumbnailSecondPictureBox.Size = new System.Drawing.Size(768, 321);
             this.VideoThumbnailSecondPictureBox.TabIndex = 12;
             this.VideoThumbnailSecondPictureBox.TabStop = false;
             this.VideoThumbnailSecondPictureBox.Visible = false;
             // 
             // VideoThumbnailThirdPictureBox
             // 
-            this.VideoThumbnailThirdPictureBox.Location = new System.Drawing.Point(250, 671);
+            this.VideoThumbnailThirdPictureBox.Location = new System.Drawing.Point(250, 662);
             this.VideoThumbnailThirdPictureBox.Name = "VideoThumbnailThirdPictureBox";
-            this.VideoThumbnailThirdPictureBox.Size = new System.Drawing.Size(768, 327);
+            this.VideoThumbnailThirdPictureBox.Size = new System.Drawing.Size(768, 321);
             this.VideoThumbnailThirdPictureBox.TabIndex = 13;
             this.VideoThumbnailThirdPictureBox.TabStop = false;
             this.VideoThumbnailThirdPictureBox.Visible = false;
@@ -295,9 +295,9 @@
             // HideControlsButton
             // 
             this.HideControlsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.HideControlsButton.Location = new System.Drawing.Point(12, 818);
+            this.HideControlsButton.Location = new System.Drawing.Point(12, 795);
             this.HideControlsButton.Name = "HideControlsButton";
-            this.HideControlsButton.Size = new System.Drawing.Size(232, 87);
+            this.HideControlsButton.Size = new System.Drawing.Size(232, 91);
             this.HideControlsButton.TabIndex = 14;
             this.HideControlsButton.Text = "Скрыть";
             this.HideControlsButton.UseVisualStyleBackColor = true;
@@ -308,7 +308,7 @@
             this.ExportButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ExportButton.Location = new System.Drawing.Point(12, 200);
             this.ExportButton.Name = "ExportButton";
-            this.ExportButton.Size = new System.Drawing.Size(232, 92);
+            this.ExportButton.Size = new System.Drawing.Size(232, 91);
             this.ExportButton.TabIndex = 15;
             this.ExportButton.Text = "Выгрузить";
             this.ExportButton.UseVisualStyleBackColor = true;
@@ -316,9 +316,9 @@
             // 
             // ExportProgressBar
             // 
-            this.ExportProgressBar.Location = new System.Drawing.Point(12, 298);
+            this.ExportProgressBar.Location = new System.Drawing.Point(12, 297);
             this.ExportProgressBar.Name = "ExportProgressBar";
-            this.ExportProgressBar.Size = new System.Drawing.Size(232, 48);
+            this.ExportProgressBar.Size = new System.Drawing.Size(232, 45);
             this.ExportProgressBar.Step = 1;
             this.ExportProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.ExportProgressBar.TabIndex = 16;
@@ -333,49 +333,49 @@
             this.panel1.Location = new System.Drawing.Point(1024, 709);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(868, 289);
+            this.panel1.Size = new System.Drawing.Size(868, 274);
             this.panel1.TabIndex = 17;
             // 
             // FilePathTextBox
             // 
             this.FilePathTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FilePathTextBox.Location = new System.Drawing.Point(12, 149);
+            this.FilePathTextBox.Location = new System.Drawing.Point(12, 138);
             this.FilePathTextBox.Multiline = true;
             this.FilePathTextBox.Name = "FilePathTextBox";
             this.FilePathTextBox.ReadOnly = true;
-            this.FilePathTextBox.Size = new System.Drawing.Size(848, 131);
+            this.FilePathTextBox.Size = new System.Drawing.Size(848, 133);
             this.FilePathTextBox.TabIndex = 3;
             // 
             // FilePathLabel
             // 
             this.FilePathLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FilePathLabel.Location = new System.Drawing.Point(6, 100);
+            this.FilePathLabel.Location = new System.Drawing.Point(6, 93);
             this.FilePathLabel.Name = "FilePathLabel";
-            this.FilePathLabel.Size = new System.Drawing.Size(859, 46);
+            this.FilePathLabel.Size = new System.Drawing.Size(859, 43);
             this.FilePathLabel.TabIndex = 2;
             this.FilePathLabel.Text = "Путь:";
             // 
             // FileSizeLabel
             // 
             this.FileSizeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FileSizeLabel.Location = new System.Drawing.Point(6, 54);
+            this.FileSizeLabel.Location = new System.Drawing.Point(6, 50);
             this.FileSizeLabel.Name = "FileSizeLabel";
-            this.FileSizeLabel.Size = new System.Drawing.Size(859, 46);
+            this.FileSizeLabel.Size = new System.Drawing.Size(859, 43);
             this.FileSizeLabel.TabIndex = 1;
             this.FileSizeLabel.Text = "Размер:";
             // 
             // FileNameLabel
             // 
             this.FileNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FileNameLabel.Location = new System.Drawing.Point(6, 8);
+            this.FileNameLabel.Location = new System.Drawing.Point(6, 7);
             this.FileNameLabel.Name = "FileNameLabel";
-            this.FileNameLabel.Size = new System.Drawing.Size(859, 46);
+            this.FileNameLabel.Size = new System.Drawing.Size(859, 43);
             this.FileNameLabel.TabIndex = 0;
             this.FileNameLabel.Text = "Файл:";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1904, 1001);
             this.Controls.Add(this.panel1);
