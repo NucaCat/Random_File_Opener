@@ -228,7 +228,7 @@ namespace Random_File_Opener_Win_Forms
             
             FileNameLabel.InvokeIfRequired(() => { FileNameLabel.Text = $"Файл: {file.FileName}"; });
             FileSizeLabel.InvokeIfRequired(() => { FileSizeLabel.Text = $"Размер: {file.LengthMegabytes}Mb"; });
-            FilePathLabel.InvokeIfRequired(() => { FilePathLabel.Text = $"Путь: {file.Directory}Mb"; });
+            FilePathLabel.InvokeIfRequired(() => { FilePathLabel.Text = $"Путь: {file.Directory}"; });
         }
 
         private void AddImageToPreview(GeneratedFileListItem file)
